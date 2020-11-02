@@ -16,13 +16,15 @@ export default function ElectronicLife(){
     let gridArray = worldArray.map((row, yPos) => {
       return row.split("").map((tile, xPos) => {
         if(tile === "b")
-          creatureArray.push({
-            creatureType: tile,
-            x: xPos,
-            y: yPos,
-            hasMoved: false,
-            facing: {x:0, y:0}
-          });
+          creatureArray.push(
+            CreatureTemplate(tile,xPos, yPos, false)
+              
+            // {creatureType: tile,
+            // x: xPos,
+            // y: yPos,
+            // hasMoved: false,
+            // facing: {x:0, y:0}}
+          );
         return tile;
       })
     });
@@ -34,13 +36,13 @@ export default function ElectronicLife(){
   const [ creatures, setCreatures ] = useState(initdata[1]);
 
   const takeTurn = () => {
-    //functions are copying state. unnecessary... 
+    //functions are copying state....
     let newCreatures = new Array(creatures.length).fill().map((creature, i) => {
       return Object.assign({}, creatures[i]);
     });
     let newGrid = new Array(grid.length).fill().map((row, i) => {
       return new Array(grid[i].length).fill().map((cell, j) => {
-        return grid[j][i];
+        return grid[i][j];
       })
     });
 

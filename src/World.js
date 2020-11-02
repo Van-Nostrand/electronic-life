@@ -16,9 +16,12 @@ const getTile = (tileType, key) => {
 }
 
 export const World = ({worldMap = []}) => {
+
   let worldArray = worldMap.map((row, i) => {
     return (
-      <div className="world-row-div" key={`world-div-row-${i}`} >
+      <div 
+        className="world-row-div" 
+        key={`world-div-row-${i}`} >
         {row.map((tile, j) => {
           return getTile(tile, j);
         })}
@@ -26,9 +29,8 @@ export const World = ({worldMap = []}) => {
     );
   });
 
-
   return(
-    <div className="world-div">
+    <div className="world-div" >
       {worldArray ? worldArray : null}
     </div>
   )

@@ -1,13 +1,14 @@
-export const CreatureTemplate = ({creatureType, x, y, hasMoved, facing, foodChain, speed}) => {
-  return new Object({
+export const CreatureTemplate = (creatureType, x, y, hasMoved, facing = {x: 0, y:-1}, foodChain = 0, speed = 1, view = []) => {
+  return {
     creatureType,
     x,
     y,
     hasMoved,
     facing,
     foodChain,
-    speed
-  });
+    speed,
+    view
+  };
 }
 
 export class CreatureClass{
