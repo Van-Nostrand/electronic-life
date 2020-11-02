@@ -1,4 +1,4 @@
-#button-panel-div{
+#button-panel{
   display: flex;
   flex-flow: row;
 }

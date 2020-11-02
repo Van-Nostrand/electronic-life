@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Vector from "./Vector";
+import {Vector} from "./Vector";
 
 class Grid extends Component{
   constructor(props){
