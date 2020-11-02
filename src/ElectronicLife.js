@@ -9,7 +9,6 @@ import {
 import {CreatureTemplate} from "./Creature";
 
 export default function ElectronicLife(){
-
   
   let initdata = (function(){
     let worldArray = DEFAULT_PLAN;
@@ -40,8 +39,8 @@ export default function ElectronicLife(){
       return Object.assign({}, creatures[i]);
     });
     let newGrid = new Array(grid.length).fill().map((row, i) => {
-      return new Array(grid[i].length).fill().map((vector, j) => {
-        return grid[i][j];
+      return new Array(grid[i].length).fill().map((cell, j) => {
+        return grid[j][i];
       })
     });
 
