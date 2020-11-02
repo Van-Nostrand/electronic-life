@@ -1,5 +1,3 @@
-// import { POPULATE_WORLD, TAKE_TURN, START_TIMER } from './actionCreators';
-
 export const DEFAULT_PLAN = [
   "############################",
   "#      #    #      b      ##",
@@ -31,14 +29,9 @@ export const DEFAULT_PLAN = [
   "############################"
 ];
 
-// const initialState = {
-//   grid: [],
-//   creatures: []
-// }
-
 export const DIRECTION_NAMES = "n ne e se s sw w nw".split(" ");
 
-export const DIRECTIONS2 = {
+export const DIRECTION_BY_STRING = {
   "n": {x: 0, y: -1}, //n
   "ne": {x: 1, y: -1}, //ne
   "e": {x: 1, y: 0},  //e
@@ -60,48 +53,31 @@ export const DIRECTIONS = [
   {x: -1, y: -1} //nw
 ];
 
-export default function rootReducer(state = initialState, action){
-  switch(action.type){
-    case POPULATE_WORLD:
-      let worldArray = DEFAULT_PLAN;
-      let creatureArray = [];
-      let gridArray = worldArray.map((row, yPos) => {
-        return row.split("").map((tile, xPos) => {
-          if(tile === "b")
-            creatureArray.push({
-              creatureType: tile,
-              x: xPos,
-              y: yPos,
-              hasMoved: false,
-              facing: {x:0, y:0}
-            });
-          return tile;
-        })
-      })
+export const STRING_FROM_COORDINATE = {
+  "0,-1": "n",
+  "1,-1": "ne",
+  "1,0": "e",
+  "1,1": "se",
+  "0,1": "s",
+  "-1,1": "sw",
+  "-1,0": "w",
+  "-1,-1": "nw"
+}
 
-      return {grid: gridArray, creatures: creatureArray};
-
-    case TAKE_TURN:
-      let newCreatures = new Array(state.creatures.length).fill().map((creature, i) => {
-        return Object.assign({}, state.creatures[i]);
-      });
-      let newGrid = new Array(state.grid.length).fill().map((row, i) => {
-        return new Array(state.grid[i].length).fill().map((vector, j) => {
-          return state.grid[i][j];
-        })
-      });
-
-      newCreatures = updateCreatures(newCreatures, newGrid);
-      newGrid = updateGrid(newCreatures, newGrid);
-
-      // checkValidMoves(newCreatures, newGrid);
-
-      return {grid: newGrid , creatures: newCreatures};
-
-    case START_TIMER:
-      return state;
-    default:
-      return state;
+export const GET_CARDINAL_STRING = (x, y) => {
+  if(x === 0){
+    if(y === 1) return "s";
+    else return "n";
+  }
+  else if (x === 1){
+    if(y === 0) return "e";
+    else if(y === 1) return "se";
+    else if(y === -1) return "ne";
+  }
+  else if (x === -1){
+    if(y === 0) return "w";
+    else if (y === 1) return "sw";
+    else if (y === -1) return "nw";
   }
 }
 

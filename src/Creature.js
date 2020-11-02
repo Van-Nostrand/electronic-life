@@ -1,4 +1,4 @@
-export const Creature = ({creatureType, x, y, hasMoved, facing, foodChain, speed}) => {
+export const CreatureTemplate = ({creatureType, x, y, hasMoved, facing, foodChain, speed}) => {
   return new Object({
     creatureType,
     x,
@@ -10,12 +10,17 @@ export const Creature = ({creatureType, x, y, hasMoved, facing, foodChain, speed
   });
 }
 
-// export class Creature{
-//   constructor(props){
-//     super(props);
+export class CreatureClass{
+  constructor(props){
 
-//   }
-
-//   return
-
-// }
+    this.state = {
+      creatureType: props.creatureType, 
+      x: props.x, 
+      y: props.y, 
+      hasMoved: props.hasMoved, 
+      facing: props.facing, 
+      foodChain: props.foodChain, 
+      speed: props.speed
+    }
+  }
+}

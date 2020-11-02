@@ -1,20 +1,23 @@
-{
-  --default-tile-size: 15;
+:root{
+  --default-tile-size: 2.5rem;
   --default-number-of-tiles: 28;
 }
 
-#world-div{
-  width: 420px;
+html{
+  font-size: 62.5%;
+}
+
+.world-div{
+  /* width: 420px; */
   border: 1px solid black;
   display: flex;
   flex-flow: row;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 }
 
 .wall-div, .plain-tile-div, .bouncing-critter-div {
-  width: 15px;
-  height: 15px;
-  /* border: 1px dashed black; */
+  width: var(--default-tile-size);
+  height: var(--default-tile-size);
 }
 
 .wall-div {
