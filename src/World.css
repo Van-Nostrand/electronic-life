@@ -1,0 +1,31 @@
+{
+  --default-tile-size: 15;
+  --default-number-of-tiles: 28;
+}
+
+#world-div{
+  width: 420px;
+  border: 1px solid black;
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+}
+
+.wall-div, .plain-tile-div, .bouncing-critter-div {
+  width: 15px;
+  height: 15px;
+  /* border: 1px dashed black; */
+}
+
+.wall-div {
+  background: rgb(0,0,0);
+}
+.plain-tile-div{
+  background: rgba(149, 149, 149, 1);
+}
+.bouncing-critter-div{
+  background: rgba(222, 150, 26, 1);
+}
+.wall-follower-div{
+  background: rgba(35, 177, 66, 1);
+}
