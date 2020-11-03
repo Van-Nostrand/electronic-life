@@ -113,7 +113,7 @@ class BouncingCritter{
 }
 
 class World{
-  constructor(mapArray, legend, portal){
+  constructor(mapArray, legend, portal, worldDiv){
     this.grid = new Grid(mapArray[0].length, mapArray.length);
     this.legend = legend;
     mapArray.forEach((line, y) => {
@@ -122,6 +122,7 @@ class World{
       }
     });
     this.portal = portal;
+    // this.worldRef = worldDiv;
   }
 
   toString(){
@@ -145,7 +146,7 @@ class World{
         this.letAct(critter, vector);
       }
     }, this);
-    this.portal.textContent = this.toString();
+    this.portal.innerHTML = this.toString();
   }
 
   letAct(critter, vector){
@@ -160,7 +161,10 @@ class World{
   }
 
   start(){
-    setInterval(this.turn, 1000);
+    setInterval(() => {
+      console.log("setinterval!")
+      this.turn;
+    }, 1000);
   }
 
   checkDestination(action, vector){
@@ -197,14 +201,16 @@ class LifelikeWorld extends World{
 function Wall(){}
 
 let world = new World(PLAN, {"#": Wall, "o": BouncingCritter}, WORLD_DIV);
-
+world.start();
 WORLD_DIV.textContent = world.toString();
 
-uncomment to test 5 turns
-for (var i = 0; i < 5; i++) {
-  world.turn();
-  WORLD_DIV.textContent = world.toString();
-}
+////////////////////////////
+// uncomment to test 5 turns
+////////////////////////////
+// for (var i = 0; i < 5; i++) {
+//   world.turn();
+//   WORLD_DIV.textContent = world.toString();
+// }
 
 function dirPlus(dir, n) {
   var index = DIRECTION_NAMES.indexOf(dir);

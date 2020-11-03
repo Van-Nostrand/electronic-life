@@ -4,9 +4,9 @@ import "./ElectronicLife.css";
 import {
   DEFAULT_PLAN,
   updateGrid,
-  updateCreatures
 } from "./CONSTANTS";
 import {CreatureTemplate} from "./Creature";
+import {updateCreatures} from "./hooks/updateCreatures";
 
 export default function ElectronicLife(){
   
@@ -15,22 +15,19 @@ export default function ElectronicLife(){
     let creatureArray = [];
     let gridArray = worldArray.map((row, yPos) => {
       return row.split("").map((tile, xPos) => {
-        if(tile === "b")
+        if(tile === "b"){
           creatureArray.push(
             CreatureTemplate(tile,xPos, yPos, false)
-              
-            // {creatureType: tile,
-            // x: xPos,
-            // y: yPos,
-            // hasMoved: false,
-            // facing: {x:0, y:0}}
           );
-        return tile;
+          return " ";
+        }
+        else {
+          return tile;
+        }
       })
     });
     return [gridArray, creatureArray];
   })();
-
 
   const [ grid, setGrid ] = useState(initdata[0]);
   const [ creatures, setCreatures ] = useState(initdata[1]);
@@ -40,16 +37,9 @@ export default function ElectronicLife(){
     let newCreatures = new Array(creatures.length).fill().map((creature, i) => {
       return Object.assign({}, creatures[i]);
     });
-    let newGrid = new Array(grid.length).fill().map((row, i) => {
-      return new Array(grid[i].length).fill().map((cell, j) => {
-        return grid[i][j];
-      })
-    });
 
-    newCreatures = updateCreatures(newCreatures, newGrid);
-    newGrid = updateGrid(newCreatures, newGrid);
-
-    setGrid(oldgrid => newGrid);
+    newCreatures = updateCreatures(newCreatures, grid);
+    
     setCreatures(oldcreatures => newCreatures);
   }
 
@@ -65,7 +55,7 @@ export default function ElectronicLife(){
         <div className="div-button" id="dbutton2"></div>
         <div className="div-button" id="dbutton3"></div>
       </div>
-      <World worldMap={grid}/>
+      <World worldMap={grid} creatures={creatures} />
 
     </div>
 
