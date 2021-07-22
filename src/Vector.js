@@ -1,10 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 
-// class Vector extends Component{
-export const Vector = (props) => {
+export default function Vector(props) {
   return (
     <div className="vector-div"></div>
   )
 }
 
-// export default Vector;

@@ -1,6 +1,6 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import "./World.css";
-// import View from "./View";
 import { BouncingCritter, WallFollower } from "./VariousCritters";
 
 const getTile = (tileType, row, column = 0) => {
@@ -27,13 +27,14 @@ const getCreature = (creature, number) => {
 //   }
 // }
 
-export const World = ({worldMap = [], creatures = []}) => {
+export const World = ({ worldMap, creatures }) => {
   console.log(worldMap);
   let worldArray = worldMap.map((row, i) => {
     return (
       <div 
         className="world-row-div" 
-        key={`world-div-row-${i}`} >
+        key={`world-div-row-${i}`} 
+      >
         {row.map((tile, j) => {
           return getTile(tile, j, i);
         })}
@@ -58,3 +59,13 @@ export const World = ({worldMap = [], creatures = []}) => {
     </div>
   )
 };
+
+World.defaultProps = {
+  worldMap: [],
+  creatures: []
+}
+
+World.propTypes = {
+  worldMap: PropTypes.array,
+  creatures: PropTypes.array
+}

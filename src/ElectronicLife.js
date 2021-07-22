@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {World} from "./World";
+import React, { useState, useEffect } from 'react';
+import { World } from "./World";
 import "./ElectronicLife.css";
 import {
   DEFAULT_PLAN,
   updateGrid,
 } from "./CONSTANTS";
-import {CreatureTemplate} from "./Creature";
-import {updateCreatures} from "./hooks/updateCreatures";
+import { CreatureTemplate } from "./Creature";
+import { updateCreatures } from "./functions/updateCreatures";
 
 export default function ElectronicLife(){
   
