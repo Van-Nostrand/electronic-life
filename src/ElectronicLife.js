@@ -8,42 +8,41 @@ import {
 import { CreatureTemplate } from "./Creature";
 import { updateCreatures } from "./functions/updateCreatures";
 
+const initdata = (function() {
+  let worldArray = DEFAULT_PLAN;
+  let creatureArray = [];
+  let gridArray = worldArray.map((row, x) => {
+    return row.split("").map((tile, y) => {
+      if(tile === "b"){
+        creatureArray.push(
+          CreatureTemplate(tile, x, y, false)
+        );
+        return " ";
+      }
+      else {
+        return tile;
+      }
+    })
+  });
+  return [gridArray, creatureArray];
+})();
+
 export default function ElectronicLife(){
-  
-  let initdata = (function(){
-    let worldArray = DEFAULT_PLAN;
-    let creatureArray = [];
-    let gridArray = worldArray.map((row, yPos) => {
-      return row.split("").map((tile, xPos) => {
-        if(tile === "b"){
-          creatureArray.push(
-            CreatureTemplate(tile,xPos, yPos, false)
-          );
-          return " ";
-        }
-        else {
-          return tile;
-        }
-      })
-    });
-    return [gridArray, creatureArray];
-  })();
 
   const [ grid, setGrid ] = useState(initdata[0]);
   const [ creatures, setCreatures ] = useState(initdata[1]);
 
-  const takeTurn = () => {
-    //functions are copying state....
-    let newCreatures = new Array(creatures.length).fill().map((creature, i) => {
-      return Object.assign({}, creatures[i]);
-    });
-
-    newCreatures = updateCreatures(newCreatures, grid);
-    
-    setCreatures(oldcreatures => newCreatures);
-  }
 
   useEffect(() => {
+    // setup the game here... 
+    const takeTurn = () => {
+      let newCreatures = creatures.map((creature, i) => {
+        return Object.assign({}, creature);
+      });
+      newCreatures = updateCreatures(newCreatures, grid);
+      setCreatures(newCreatures);
+    }
+
     const gameTicks = setInterval(() => takeTurn(), 1000);
     return () => clearInterval(gameTicks);
   }, []);
@@ -58,7 +57,5 @@ export default function ElectronicLife(){
       <World worldMap={grid} creatures={creatures} />
 
     </div>
-
   );
-  
 }

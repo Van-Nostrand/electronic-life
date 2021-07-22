@@ -1,4 +1,3 @@
-import {useState, useEffect} from "react";
 
 //update the creatures array
 export const updateCreatures = (creatureArray, gridArray) => {
@@ -32,14 +31,17 @@ export const updateCreatures = (creatureArray, gridArray) => {
         // if no other creatures are moving there, write the data to the creature and flag it as having moved
         // if the move is invalid, restart the process
 
-      let newView = DIRECTIONS[Math.floor(Math.random()*8)]; 
+      // debugger;
+
+
+      let randomNumber = Math.floor(Math.random()*8);
+      let newView = DIRECTIONS[randomNumber]; 
       x = creature.x + newView.x;
       y = creature.y + newView.y;
 
       let chosenTile = gridArray[x][y];
       // if the chosen cell is empty
-      if(chosenTile === " "){        
-
+      if(chosenTile === " "){
         facing = {x: newView.x, y: newView.y};
         hasMoved = true;
       }
