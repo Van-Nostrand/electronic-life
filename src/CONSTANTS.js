@@ -88,7 +88,7 @@ export function updateCreatures(creatureArray, gridArray) {
   //state has already been copied. it is already a new array.
   let newCreatures = [];
   creatureArray.forEach((creature, i) => {
-
+    console.log("creature is ",creature);
 
     //while the creature has not moved yet
     while(!creature.hasMoved){

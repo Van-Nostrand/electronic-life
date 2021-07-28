@@ -14,9 +14,8 @@ export function CreatureTemplate(creatureType, x, y, hasMoved, facing = {x: 0, y
   };
 }
 
-export class CreatureClass{
+export class Creature{
   constructor(props){
-
     this.state = {
       creatureType: props.creatureType, 
       x: props.x, 
@@ -27,4 +26,34 @@ export class CreatureClass{
       speed: props.speed
     }
   }
+
+  getLocation() {
+    return { x: this.x, y: this.y };
+  }
+
+  setLocation(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  getFacing() {
+    return this.facing;
+  }
+
+  setFacing(x, y) {
+    this.facing = {x, y};
+  }
+
+  getFoodChain() {
+    return this.foodChain;
+  }
+
+  getType() {
+    return this.creatureType;
+  }
+
+  getSpeed() {
+    return this.speed;
+  }
+
 }

@@ -5,7 +5,6 @@ import { BouncingCritter, WallFollower } from "./components";
 
 
 export default function World({ worldMap, creatures }) {
-  // console.log(worldMap);
 
   const getTile = (tileType, row, column = 0) => {
     switch(true){
@@ -16,40 +15,44 @@ export default function World({ worldMap, creatures }) {
   }
   const getCreature = (creature, number) => {
     switch(true){
-      case creature.creatureType === "b": return <BouncingCritter x={creature.x} y={creature.y} key={`bc-${number}`} />;
-      case creature.creatureType === "w": return <WallFollower x={creature.x} y={creature.y} key={`wf-${number}`} />;
+      case creature.creatureType === "b": 
+        return <BouncingCritter x={creature.x} y={creature.y} key={`bc-${number}`} />;
+        break;
+      case creature.creatureType === "w": 
+        return <WallFollower x={creature.x} y={creature.y} key={`wf-${number}`} />;
+        break;
       default: console.log("error getting creatures");
     }
   }
-  // const getTile = (tileType, row, column) => {
-  //   switch(true){
-  //     case tileType === "#": return <Wall key={`wall-${row}-${column}`} />;
-  //     case tileType === "b": return <BouncingCritter key={`bc-${row}-${column}`} />;
-  //     case tileType === "w": return <WallFollower key={`wf-${row}-${column}`} />;
-  //     case tileType === " ": return <PlainTile key={`tile-${row}-${column}`} />;
-  //     default: console.log("error getting tiles");
-  //   }
-  // }
-  let worldArray = worldMap.map((row, i) => {
-    return (
-      <div 
-        className="world-row-div" 
-        key={`world-div-row-${i}`} 
-      >
-        {row.map((tile, j) => {
-          return getTile(tile, j, i);
-        })}
-      </div>
-    );
-  });
 
-  let creatureArray = creatures.map((creature, i) => {
-    return (
-      <div className="creature" key={`creature-${i}`}>
-        { getCreature(creature, i) }
-      </div>
-    )
-  })
+  const buildWorld = () => {
+    return worldMap.map((row, i) => {
+      return (
+        <div 
+          className="world-row-div" 
+          key={`world-div-row-${i}`} 
+        >
+          {row.map((tile, j) => {
+            return getTile(tile, j, i);
+          })}
+        </div>
+      );
+    });
+  }
+
+  const buildCreatures = () => {
+    return creatures.map((creature, i) => {
+      debugger;
+      return (
+        <div className="creature" key={`creature-${i}`}>
+          { getCreature(creature, i) }
+        </div>
+      )
+    })
+  }
+ 
+  let worldArray = buildWorld();
+  let creatureArray = buildCreatures();
 
   return(
     <div className="world-div" >

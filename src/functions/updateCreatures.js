@@ -24,63 +24,34 @@ export const updateCreatures = (creatureArray, gridArray) => {
     {x: -1, y: 0}, //w
     {x: -1, y: -1} //nw
   ];
+
   
   //state has already been copied. it is already a new array.
   creatureArray = creatureArray.map((creature, i) => {
     
-    
-    let facing, x, y;
     let hasChosenDirection = false;
-    
     //while the creature has not moved yet
     while(!hasChosenDirection){
-
-      // decide if the creature will turn
-        // if yes, decide how much the creature will turn by
-      // find the new cell
-      // decide if the new cell is empty
-        // if the cell is empty, check that other creatures aren't already moving there
-        // if no other creatures are moving there, write the data to the creature and flag it as having moved
-        // if the move is invalid, restart the process
-
-      // if
-        // the cell the critter is facing is blocked, turn
-      // else
-        // the cell is clear
-        // random chance to turn
       let facedCell = gridArray[creature.y + creature.facing.y][creature.x + creature.facing.x];
       if (facedCell === "#" || facedCell === "b") {
         // turn
         let newFacing = CARDINAL_DIRECTIONS[Math.floor(Math.random()*8)]; 
-        let testCell = gridArray[critter.y + newFacing.y][critter.x + newFacing.x];
-        
-        if (testCell === " ") {
-          creature.facing = {x: newFacing.x, y: newFacing.y};
-          creature.x = creature.x + newFacing.x;
-          creature.y = creature.y + newFacing.y;
-          hasChosenDirection = true;
-        }
+        creature.facing = { x: newFacing.x, y: newFacing.y };
       }
       else if (facedCell === " ") {
         // cell is clear, random turn chance?
+        // console.log('src/functions/updateCreatures.js: creature is ', creature);
+        // console.log('creature.x + creature.facing.x is ', creature.x + creature.facing.x);
+        // console.log('creature.y + creature.facing.y is ', creature.y + creature.facing.y);
         creature.x = creature.x + creature.facing.x;
         creature.y = creature.y + creature.facing.y;
+        creature.hasMoved = true;
         hasChosenDirection = true;
-      }
-
-      let randomNumber = Math.floor(Math.random()*8);
-      let newFacing = CARDINAL_DIRECTIONS[randomNumber]; 
-      x = creature.x + newFacing.x;
-      y = creature.y + newFacing.y;
-
-      let chosenTile = gridArray[y][x];
-      // if the chosen cell is empty
-      if(chosenTile === " "){
-        facing = {x: newFacing.x, y: newFacing.y};
-        hasChosenDirection = true;
+        // console.log('src/functions/updateCreatures.js: creature is ', creature);
       }
     }
-    return {...creature, facing, hasMoved, x, y};
+    // todo - double check: I'm mutating the creature object, but it's from deep copied state... is that ok?
+    return creature;
   });
   
   return creatureArray;
