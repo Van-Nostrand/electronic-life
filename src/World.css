@@ -15,12 +15,17 @@ html{
   font-size: 62.5%;
 }
 
-.world-div{
+.world-div {
   /* width: 420px; */
   border: 1px solid black;
   display: flex;
-  flex-flow: row;
+  flex-flow: column nowrap;
   /* flex-wrap: wrap; */
+}
+
+.world-row-div {
+  display: flex;
+  flex-flow: row;
 }
 
 .wall-div, .plain-tile, .bouncing-critter-div {
@@ -32,6 +37,8 @@ html{
   background: rgb(0,0,0);
 }
 .plain-tile{
+  border: 1px solid white;
+  box-sizing: border-box;
   background: rgba(149, 149, 149, 1);
 }
 .bouncing-critter-div{

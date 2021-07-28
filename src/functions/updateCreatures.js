@@ -2,7 +2,19 @@
 //update the creatures array
 export const updateCreatures = (creatureArray, gridArray) => {
 
-  const DIRECTIONS = [
+  // creatureArray is  
+  // Array(7) [ {…}, {…}, {…}, {…}, {…}, {…}, {…} ]
+  // 0: Object { creatureType: "b", x: 1, y: 19, … }
+  // creatureType: "b"
+  // facing: Object { x: 0, y: -1 }
+  // foodChain: 0
+  // hasMoved: false
+  // speed: 1
+  // view: Array []
+  // x: 1
+  // y: 19
+  
+  const CARDINAL_DIRECTIONS = [
     {x: 0, y: -1}, //n
     {x: 1, y: -1}, //ne
     {x: 1, y: 0},  //e
@@ -16,12 +28,12 @@ export const updateCreatures = (creatureArray, gridArray) => {
   //state has already been copied. it is already a new array.
   creatureArray = creatureArray.map((creature, i) => {
     
-    let facing = {};
-    let hasMoved = false;
-    let x, y;
+    
+    let facing, x, y;
+    let hasChosenDirection = false;
     
     //while the creature has not moved yet
-    while(!hasMoved){
+    while(!hasChosenDirection){
 
       // decide if the creature will turn
         // if yes, decide how much the creature will turn by
@@ -31,19 +43,41 @@ export const updateCreatures = (creatureArray, gridArray) => {
         // if no other creatures are moving there, write the data to the creature and flag it as having moved
         // if the move is invalid, restart the process
 
-      // debugger;
-
+      // if
+        // the cell the critter is facing is blocked, turn
+      // else
+        // the cell is clear
+        // random chance to turn
+      let facedCell = gridArray[creature.y + creature.facing.y][creature.x + creature.facing.x];
+      if (facedCell === "#" || facedCell === "b") {
+        // turn
+        let newFacing = CARDINAL_DIRECTIONS[Math.floor(Math.random()*8)]; 
+        let testCell = gridArray[critter.y + newFacing.y][critter.x + newFacing.x];
+        
+        if (testCell === " ") {
+          creature.facing = {x: newFacing.x, y: newFacing.y};
+          creature.x = creature.x + newFacing.x;
+          creature.y = creature.y + newFacing.y;
+          hasChosenDirection = true;
+        }
+      }
+      else if (facedCell === " ") {
+        // cell is clear, random turn chance?
+        creature.x = creature.x + creature.facing.x;
+        creature.y = creature.y + creature.facing.y;
+        hasChosenDirection = true;
+      }
 
       let randomNumber = Math.floor(Math.random()*8);
-      let newView = DIRECTIONS[randomNumber]; 
-      x = creature.x + newView.x;
-      y = creature.y + newView.y;
+      let newFacing = CARDINAL_DIRECTIONS[randomNumber]; 
+      x = creature.x + newFacing.x;
+      y = creature.y + newFacing.y;
 
-      let chosenTile = gridArray[x][y];
+      let chosenTile = gridArray[y][x];
       // if the chosen cell is empty
       if(chosenTile === " "){
-        facing = {x: newView.x, y: newView.y};
-        hasMoved = true;
+        facing = {x: newFacing.x, y: newFacing.y};
+        hasChosenDirection = true;
       }
     }
     return {...creature, facing, hasMoved, x, y};

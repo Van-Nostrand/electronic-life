@@ -1,5 +1,6 @@
-
-
+/*
+I'm not crazy about doing things this way... 
+*/
 export function CreatureTemplate(creatureType, x, y, hasMoved, facing = {x: 0, y:-1}, foodChain = 0, speed = 1, view = []) {
   return {
     creatureType,

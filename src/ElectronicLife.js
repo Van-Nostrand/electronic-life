@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { World } from "./World";
+import World from "./World";
 import "./ElectronicLife.css";
 import {
   DEFAULT_PLAN,
@@ -9,6 +9,7 @@ import { CreatureTemplate } from "./Creature";
 import { updateCreatures } from "./functions/updateCreatures";
 
 const initdata = (function() {
+  console.log("initdata is running")
   let worldArray = DEFAULT_PLAN;
   let creatureArray = [];
   let gridArray = worldArray.map((row, x) => {
