@@ -1,8 +1,16 @@
 import React from 'react';
 
 // seems unimplemented?
-export default function WallFollower(props) {
+export default function WallFollower({x, y, tileSize}) {
+
+  const critterStyle = {
+    transform: `translate(${x * tileSize}rem,${y * tileSize}rem)`
+  }
   return(
-    <div className="creature wall-follower-div"></div>
+    <div style={critterStyle} className="creature wall-follower"></div>
   )
+}
+
+WallFollower.defaultProps = {
+  tileSize: 2.5
 }

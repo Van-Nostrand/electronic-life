@@ -5,18 +5,21 @@ import {
   DEFAULT_PLAN,
   updateGrid,
 } from "./CONSTANTS";
-import { CreatureTemplate } from "./Creature";
+import { CreatureTemplate, Creature } from "./Creature";
 import { updateCreatures } from "./functions/updateCreatures";
 
 const initdata = (function() {
-  console.log("initdata is running")
-  let worldArray = DEFAULT_PLAN;
   let creatureArray = [];
-  let gridArray = worldArray.map((row, x) => {
-    return row.split("").map((tile, y) => {
+  let worldMap = DEFAULT_PLAN.map((row, y) => {
+    return row.split("").map((tile, x) => {
       if(tile === "b"){
         creatureArray.push(
           CreatureTemplate(tile, x, y, false)
+          // new Creature({
+          //   creatureType: tile,
+          //   x: x,
+          //   y: y
+          // })
         );
         return " ";
       }
@@ -25,22 +28,19 @@ const initdata = (function() {
       }
     })
   });
-  return [gridArray, creatureArray];
+  return [worldMap, creatureArray];
 })();
 
 export default function ElectronicLife(){
 
-  const [ grid, setGrid ] = useState(initdata[0]);
+  const [ world, setWorld ] = useState(initdata[0]);
   const [ creatures, setCreatures ] = useState(initdata[1]);
-
 
   useEffect(() => {
     // setup the game here... 
     const takeTurn = () => {
-      let newCreatures = creatures.map((creature, i) => {
-        return Object.assign({}, creature);
-      });
-      newCreatures = updateCreatures(newCreatures, grid);
+      
+      let newCreatures = updateCreatures(creatures, world);
       setCreatures(newCreatures);
     }
 
@@ -55,7 +55,7 @@ export default function ElectronicLife(){
         <div className="div-button" id="dbutton2"></div>
         <div className="div-button" id="dbutton3"></div>
       </div>
-      <World worldMap={grid} creatures={creatures} />
+      <World worldMap={world} creatures={creatures} />
 
     </div>
   );

@@ -1,7 +1,5 @@
-/*
-I'm not crazy about doing things this way... 
-*/
-export function CreatureTemplate(creatureType, x, y, hasMoved, facing = {x: 0, y:-1}, foodChain = 0, speed = 1, view = []) {
+
+export function CreatureTemplate(creatureType, x, y, hasMoved = false, facing = {x: 0, y:-1}, foodChain = 0, speed = 1, view = []) {
   return {
     creatureType,
     x,
@@ -14,7 +12,9 @@ export function CreatureTemplate(creatureType, x, y, hasMoved, facing = {x: 0, y
   };
 }
 
+// Don't think I'll be using this...
 export class Creature{
+// export class Creature{
   constructor(props){
     this.state = {
       creatureType: props.creatureType, 
@@ -54,6 +54,14 @@ export class Creature{
 
   getSpeed() {
     return this.speed;
+  }
+
+  getClassString() {
+    let str;
+    switch(true) {
+      case this.creatureType === "b":
+        str = "creature bouncing-critter"
+    }
   }
 
 }

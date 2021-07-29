@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import "./World.css";
 import { BouncingCritter, WallFollower } from "./components";
+import { viewAllSurroundingTiles } from './functions/helperFunctions';
 
 
 export default function World({ worldMap, creatures }) {
@@ -42,7 +43,6 @@ export default function World({ worldMap, creatures }) {
 
   const buildCreatures = () => {
     return creatures.map((creature, i) => {
-      debugger;
       return (
         <div className="creature" key={`creature-${i}`}>
           { getCreature(creature, i) }
@@ -54,12 +54,12 @@ export default function World({ worldMap, creatures }) {
   let worldArray = buildWorld();
   let creatureArray = buildCreatures();
 
+  // viewAllSurroundingTiles(creatureArray[0], worldArray);
+
   return(
     <div className="world-div" >
       {worldArray ? worldArray : null}
-      <div className="creature-container">
-        {creatureArray ? creatureArray : null}
-      </div>
+      {creatureArray ? creatureArray : null}
     </div>
   )
 };

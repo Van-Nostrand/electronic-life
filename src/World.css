@@ -28,7 +28,7 @@ html{
   flex-flow: row;
 }
 
-.wall-div, .plain-tile, .bouncing-critter-div {
+.wall-div, .plain-tile, .bouncing-critter {
   width: var(--default-tile-size);
   height: var(--default-tile-size);
 }
@@ -41,7 +41,7 @@ html{
   box-sizing: border-box;
   background: rgba(149, 149, 149, 1);
 }
-.bouncing-critter-div{
+.bouncing-critter{
   background: rgba(222, 150, 26, 1);
 }
 .wall-follower-div{
@@ -49,7 +49,7 @@ html{
 }
 
 .creature{
-  position: relative;
+  position: absolute;
 }
 
 .creature-container{
