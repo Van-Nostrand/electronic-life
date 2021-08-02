@@ -13,21 +13,21 @@ export const updateCreatures = (creatureArray, worldArray) => {
     {x: -1, y: -1} //nw
   ];
   
-  //state has already been copied. it is already a new array.
+  //state has already been copied. it is already a new array. So I can now modify it.
   creatureArray = creatureArray.map((creature, i) => {
     
     let hasChosenDirection = false;
     //while the creature has not moved yet
     while(!hasChosenDirection){
       let facedCell = worldArray[creature.y + creature.facing.y][creature.x + creature.facing.x];
-      // if the cell the creature is facing contains another creature or a wall... 
-      if (facedCell === "#" || facedCell === "b") {
+      // if the cell the creature is facing is not empty 
+      if (facedCell !== " ") {
         // turn
         let newFacing = CARDINAL_DIRECTIONS[Math.floor(Math.random()*8)]; 
         creature.facing = { x: newFacing.x, y: newFacing.y };
       }
-      // else if the cell is a clear space
-      else if (facedCell === " ") {
+      // else the cell is a clear space
+      else {
         creature.x = creature.x + creature.facing.x;
         creature.y = creature.y + creature.facing.y;
         creature.hasMoved = true;

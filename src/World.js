@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import "./World.css";
 import { BouncingCritter, WallFollower } from "./components";
-import { viewAllSurroundingTiles } from './functions/helperFunctions';
+import { viewAllSurroundingTiles, findNearestWall } from './functions/helperFunctions';
 
 
 export default function World({ worldMap, creatures }) {
@@ -53,8 +53,13 @@ export default function World({ worldMap, creatures }) {
  
   let worldArray = buildWorld();
   let creatureArray = buildCreatures();
+  // debugger;
 
-  // viewAllSurroundingTiles(creatureArray[0], worldArray);
+  ///////////////////////////////////////////// 
+  /// Testing
+  let surroundings = viewAllSurroundingTiles(creatures[0], worldMap, 4);
+  // print2dArray(surroundings)
+  
 
   return(
     <div className="world-div" >
@@ -63,6 +68,10 @@ export default function World({ worldMap, creatures }) {
     </div>
   )
 };
+
+const print2dArray = (arr) => {
+  arr.forEach(row => console.log(row.join()))
+}
 
 World.defaultProps = {
   worldMap: [],

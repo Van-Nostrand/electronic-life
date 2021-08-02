@@ -1,4 +1,4 @@
-
+// x and y are indices, so account for 0!!
 export function CreatureTemplate(creatureType, x, y, hasMoved = false, facing = {x: 0, y:-1}, foodChain = 0, speed = 1, view = []) {
   return {
     creatureType,
@@ -13,18 +13,16 @@ export function CreatureTemplate(creatureType, x, y, hasMoved = false, facing = 
 }
 
 // Don't think I'll be using this...
-export class Creature{
+export class Creature {
 // export class Creature{
-  constructor(props){
-    this.state = {
-      creatureType: props.creatureType, 
-      x: props.x, 
-      y: props.y, 
-      hasMoved: props.hasMoved, 
-      facing: props.facing, 
-      foodChain: props.foodChain, 
-      speed: props.speed
-    }
+  constructor(properties = {}) {
+    this.creatureType = properties.creatureType || "b"; 
+    this.x = properties.x || -1; 
+    this.y = properties.y || -1; 
+    this.hasMoved = properties.hasMoved || false; 
+    this.facing = properties.facing || {x: -1, y: -1}; 
+    this.foodChain = properties.foodChain || 0; 
+    this.speed = properties.speed || 1;
   }
 
   getLocation() {
@@ -63,5 +61,4 @@ export class Creature{
         str = "creature bouncing-critter"
     }
   }
-
 }

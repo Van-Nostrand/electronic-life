@@ -12,17 +12,18 @@ const initdata = (function() {
   let creatureArray = [];
   let worldMap = DEFAULT_PLAN.map((row, y) => {
     return row.split("").map((tile, x) => {
-      if(tile === "b"){
+      if (tile === "b") {
         creatureArray.push(
           CreatureTemplate(tile, x, y, false)
-          // new Creature({
-          //   creatureType: tile,
-          //   x: x,
-          //   y: y
-          // })
         );
         return " ";
       }
+      else if (tile === "w") {
+        creatureArray.push(
+          CreatureTemplate(tile, x, y, false)
+        )
+      }
+      
       else {
         return tile;
       }

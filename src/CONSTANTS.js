@@ -1,6 +1,6 @@
 // export const DEFAULT_PLAN = [
 //   "############################",
-//   "#      #b   #             ##",
+//   "#      #b   #      w      ##",
 //   "#      #    #              #",
 //   "#      ##                  #",
 //   "#                          #",
@@ -8,7 +8,7 @@
 //   "#             #            #",
 //   "#             #####        #",
 //   "#    b                     #",
-//   "#                          #",
+//   "#               w          #",
 //   "#                          #",
 //   "#                    #     #",
 //   "#     ##      b      #     #",
@@ -29,11 +29,20 @@
 //   "############################"
 // ];
 export const DEFAULT_PLAN = [
-  "#####",
-  "#b  #",
-  "#   #",
-  "#####"
+  "############",
+  "#      #  ##",
+  "#          #",
+  "# ##   ##  #",
+  "#    #     #",
+  "#b         #",
+  "############"
 ];
+// export const DEFAULT_PLAN = [
+//   "#####",
+//   "#b  #",
+//   "#   #",
+//   "#####"
+// ];
 
 export const DIRECTION_NAMES = "n ne e se s sw w nw".split(" ");
 
@@ -59,7 +68,7 @@ export const DIRECTIONS = [
   { x: -1, y: -1 } //nw
 ];
 
-export const STRING_FROM_COORDINATE = {
+export const CARDINAL_STRING_FROM_COORDINATE = {
   "0,-1": "n",
   "1,-1": "ne",
   "1,0": "e",
@@ -70,7 +79,7 @@ export const STRING_FROM_COORDINATE = {
   "-1,-1": "nw"
 }
 
-export const GET_CARDINAL_STRING = (x, y) => {
+export const getCardinalString = (x, y) => {
   if (x === 0) {
     if (y === 1) return "s";
     else return "n";
@@ -85,48 +94,6 @@ export const GET_CARDINAL_STRING = (x, y) => {
     else if (y === 1) return "sw";
     else if (y === -1) return "nw";
   }
-}
-
-//update the creatures array
-export function updateCreatures(creatureArray, gridArray) {
-  // debugger;
-
-  //state has already been copied. it is already a new array.
-  let newCreatures = [];
-  creatureArray.forEach((creature, i) => {
-    console.log("creature is ",creature);
-
-    //while the creature has not moved yet
-    while(!creature.hasMoved){
-
-      // decide if the creature will turn
-        // if yes, decide how much the creature will turn by
-      // find the new cell
-      // decide if the new cell is empty
-        // if the cell is empty, check that other creatures aren't already moving there
-        // if no other creatures are moving there, write the data to the creature and flag it as having moved
-        // if the move is invalid, restart the process
-      let newView = DIRECTIONS[Math.floor(Math.random()*8)]; 
-      // debugger;
-      let chosenTile = gridArray[creature.x + newView.x][creature.y + newView.y];
-      // if the chosen cell is empty
-      if(chosenTile === " "){        
-      
-        // I think this is checking that cells aren't already occupied.
-        // if that's true, I don't think it's working
-        // testing other creatures (j) against the current creature (i)
-        // for(let j = 0; j < i; j++){
-         
-        // }
-
-        creature.facing = {x: newView.x, y: newView.y};
-        creature.hasMoved = true;
-      }
-    }
-    newCreatures.push(creature);
-  });
-  
-  return newCreatures;
 }
 
 //this creates an array of length 8 representing 8 directions of travel
