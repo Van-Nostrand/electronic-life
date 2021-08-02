@@ -50,6 +50,7 @@ export default function ElectronicLife(){
   }, []);
 
   let testCreature = new Creature();
+
   return(
     <div id="electronic-life-div">
       <div id="button-panel">
