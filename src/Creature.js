@@ -12,7 +12,6 @@ export function CreatureTemplate(creatureType, x, y, hasMoved = false, facing = 
   };
 }
 
-// Don't think I'll be using this...
 export class Creature {
 // export class Creature{
   constructor(properties = {}) {
