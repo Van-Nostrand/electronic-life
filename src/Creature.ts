@@ -26,14 +26,15 @@ export class Creature {
   speed: number;
   
   constructor(properties: Properties) {
-    this.creatureType = properties.creatureType || "b"; 
-    this.x = properties.x || -1; 
-    this.y = properties.y || -1; 
-    this.facing = properties.facing || {x: -1, y: -1}; 
-    this.foodChain = properties.foodChain || 0; 
-    this.speed = properties.speed || 1;
+    this.creatureType   = properties.creatureType || "b"; 
+    this.x              = properties.x || -1; 
+    this.y              = properties.y || -1; 
+    this.facing         = properties.facing || {x: -1, y: -1}; 
+    this.foodChain      = properties.foodChain || 0; 
+    this.speed          = properties.speed || 1;
   }
 
+  // are any of these methods necessary?
   getLocation() {
     return { x: this.x, y: this.y };
   }

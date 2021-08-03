@@ -1,6 +1,4 @@
 
-// todo - rewrite so this scales, accepts a radius as an argument and returns a field of view based on that size
-  // will need to check that the radius does not exceed the world map
 // todo - rename to getSurroundingTiles ??
 export const viewAllSurroundingTiles = (critter, worldMap, radius = 1) => {
   
@@ -17,6 +15,7 @@ export const viewAllSurroundingTiles = (critter, worldMap, radius = 1) => {
       if (i === 0 && j === 0) {
         surroundings[y][x] = critter.creatureType;
       }
+      // if the coordinate exceeds the world map
       else if (!worldMap[critter.y + i] || !worldMap[critter.y + i][critter.x + j]) {
         surroundings[y][x] = "X";
       }
@@ -31,9 +30,93 @@ export const viewAllSurroundingTiles = (critter, worldMap, radius = 1) => {
 
 // this will search the area around the critter for the nearest wall
 export const findNearestWall = (critter, worldMap) => {
-  let direction;
-  let worldWidthY = worldMap.length;
-  let worldWidthX = worldMap[0].length;
+  let direction, surroundings;
+  let wallFound = false;
+  let radius = 1;
+
+  do {
+    // get the critters surroundings
+    surroundings = viewAllSurroundingTiles(critter, worldMap, radius);
+    // check each tile for a wall 
+    surroundings.forEach(row => row.forEach(tile => {
+      if (tile === "#") {
+        wallFound = true;
+      }
+    }));
+    // if no wall was found, increase search radius
+    if (!wallFound) radius += 1;
+
+  } while (!wallFound);
+
+  // surroundings contains the nearest wall
+  /*
+    the critter will find the wall by looking forwards to the end of surroundings and then checking side to side tiles
+    critter.facing = {x: 0, y: -1}
+    if radius was 3, we would need to check surroundings[0][3]
+    how do I get there?
+    critter is facing 0,-1, and need to check coordinate 2,0
+    if radius is 3 then it looks like this
+    
+    #######
+    #-----#
+    #-----#
+    #--c--#
+    #-----#
+    #-----#
+    #######
+
+    radius is 2 then it looks like
+    #####
+    #---#
+    #-c-#
+    #---#
+    #####
+
+    and facing 0,-1 we would need to check 2,0
+    if facing 0,1 we would need to check 2,4
+
+    so a formula would look like
+    y = radius + (facing.y * radius) ?
+    x = radius + (facing.x * radius) ?
+
+    say facing 1,1, we would need to check 4,4
+    y = 2 + (1 * 2) = 4
+    x = 2 + (1 * 2) = 4
+
+    say facing -1,1, we would need to check 0,4
+    y = 2 + (1 * 2) = 4
+    x = 2 + (-1 * 2) = 0
+
+    say facing -1,0, checking 0,2
+    y = 2 + (0 * 2) = 2,
+    x = 2 + (-1 * 2) = 0
+  */
+  let testX = radius + (critter.facing.x * radius);
+  let testY = radius + (critter.facing.y * radius);
+  let testCell = surroundings[radius + (critter.facing.y * radius)][radius + (critter.facing.x * radius)];
+  if (testCell === "#") {
+    //wall found
+  }
+  else {
+    // test cells beside it
+    /*
+      if facing is 0,-1, we're looking at 2,0 and need to test 1,0 and 3,0
+    */
+    let directionFound = false;
+    let spread = 1;
+    // test counter clockwise
+    let counterCW = {y: testY, x: testX - spread};
+    let clockW = {y: testY, x: testX + spread};
+    if (counterCW.x < 0 || clockW.x > surroundings.length - 1) {
+      // rotate perspective
+    }
+    else {
+      let cCWTest = surroundings[counterCW.y][counterCW.x];
+      let cWTest = surroundings[clockW.y][clockW.x];
+    }
+  }
+
+  
 
   return direction;
 }

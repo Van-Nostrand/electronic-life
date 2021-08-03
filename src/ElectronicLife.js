@@ -13,16 +13,18 @@ const initdata = (function() {
   let worldMap = DEFAULT_PLAN.map((row, y) => {
     return row.split("").map((tile, x) => {
       if (tile === "b") {
+        let properties = {creatureType: tile, x, y};
         creatureArray.push(
           // CreatureTemplate(tile, x, y, false)
-          new Creature({creatureType: tile, x, y})
+          new Creature(properties)
         );
         return " ";
       }
       else if (tile === "w") {
+        let properties = {creatureType: tile, x, y};
         creatureArray.push(
           // CreatureTemplate(tile, x, y, false)
-          new Creature({creatureType: tile, x, y})
+          new Creature(properties)
         )
       }
       
@@ -51,7 +53,6 @@ export default function ElectronicLife(){
     return () => clearInterval(gameTicks);
   }, []);
 
-  let testCreature = new Creature();
 
   return(
     <div id="electronic-life-div">
