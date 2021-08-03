@@ -30,7 +30,6 @@ export const updateCreatures = (creatureArray, worldArray) => {
       else {
         creature.x = creature.x + creature.facing.x;
         creature.y = creature.y + creature.facing.y;
-        creature.hasMoved = true;
         hasChosenDirection = true;
       }
     }

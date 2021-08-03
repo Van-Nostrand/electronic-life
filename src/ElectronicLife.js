@@ -14,13 +14,15 @@ const initdata = (function() {
     return row.split("").map((tile, x) => {
       if (tile === "b") {
         creatureArray.push(
-          CreatureTemplate(tile, x, y, false)
+          // CreatureTemplate(tile, x, y, false)
+          new Creature({creatureType: tile, x, y})
         );
         return " ";
       }
       else if (tile === "w") {
         creatureArray.push(
-          CreatureTemplate(tile, x, y, false)
+          // CreatureTemplate(tile, x, y, false)
+          new Creature({creatureType: tile, x, y})
         )
       }
       
