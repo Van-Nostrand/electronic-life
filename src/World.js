@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import "./World.css";
 import { BouncingCritter, WallFollower } from "./components";
-import { viewAllSurroundingTiles, findNearestWall } from './functions/helperFunctions';
+import { viewAllSurroundingTiles, findNearestWall } from './constants/helperFunctions';
 
 
 export default function World({ worldMap, creatures }) {

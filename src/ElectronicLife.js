@@ -4,9 +4,9 @@ import "./ElectronicLife.css";
 import {
   DEFAULT_PLAN,
   updateGrid,
-} from "./CONSTANTS";
+} from "./constants/CONSTANTS";
 import { CreatureTemplate, Creature } from "./Creature";
-import { updateCreatures } from "./functions/updateCreatures";
+import { updateCreatures } from "./constants/updateCreatures";
 
 const initdata = (function() {
   let creatureArray = [];
