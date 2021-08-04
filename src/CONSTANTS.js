@@ -124,7 +124,6 @@ export function updateGrid(newCreatures, newGrid) {
     newGrid[creature.x][creature.y] = " ";
     creature.x = creature.x + creature.facing.x;
     creature.y = creature.y + creature.facing.y;
-    creature.hasMoved = false;
   });
 
   return newGrid;
