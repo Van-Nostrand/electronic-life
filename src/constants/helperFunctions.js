@@ -30,7 +30,8 @@ export const viewAllSurroundingTiles = (critter, worldMap, radius = 1) => {
 
 // this will search the area around the critter for the nearest wall
 export const findNearestWall = (critter, worldMap) => {
-  let direction, surroundings;
+  let direction, surroundings, wallCoordinates;
+  let wallCoordArray = [];
   let wallFound = false;
   let radius = 1;
 
@@ -38,9 +39,11 @@ export const findNearestWall = (critter, worldMap) => {
     // get the critters surroundings
     surroundings = viewAllSurroundingTiles(critter, worldMap, radius);
     // check each tile for a wall 
-    surroundings.forEach(row => row.forEach(tile => {
+    // todo - write a function that checks all of the "border" indices of a 2d array
+    surroundings.forEach((row, y) => row.forEach((tile, x) => {
       if (tile === "#") {
         wallFound = true;
+        wallCoordArray.push(`${x},${y}`);
       }
     }));
     // if no wall was found, increase search radius
@@ -93,7 +96,7 @@ export const findNearestWall = (critter, worldMap) => {
   */
   let testX = radius + (critter.facing.x * radius);
   let testY = radius + (critter.facing.y * radius);
-  let testCell = surroundings[radius + (critter.facing.y * radius)][radius + (critter.facing.x * radius)];
+  let testCell = surroundings[testY][testX];
   if (testCell === "#") {
     //wall found
   }
@@ -115,10 +118,110 @@ export const findNearestWall = (critter, worldMap) => {
       let cWTest = surroundings[clockW.y][clockW.x];
     }
   }
-
-  
-
   return direction;
+}
+
+export const checkBorderOf2dArray = (twoDeeArr, valueToFind, startingPoint = {x: 0, y: -1}, moreThanOneValue = false) => {
+
+  // in theory, I should never be passing in an array with an even number of indices
+  if ((twoDeeArr.length - 1) % 2 > 0) {
+    return null;
+  }
+  /*
+    say I'm given a 2d array of size 5*5
+
+    oo###
+    oooo#
+    oooo#
+    #ooo#
+    #####
+
+  */
+  // need to get coordinate 2,0 from startingPoint 0,-1
+  let radius = (twoDeeArr.length - 1) / 2; // the 2d array will always be an odd number length so this works... 
+  
+  let startX = startingPoint.x === 0 ? radius : startingPoint.x > 0 ? radius * 2 : 0;
+  let startY = startingPoint.y === 0 ? radius : startingPoint.y > 0 ? radius * 2 : 0;
+  let iter = 1;
+  let maxChecks = (twoDeeArr.length - 1) * 4;
+  let counterCW = {x: startX, y: startY};
+  let clockW = {x: startX, y: startY}; 
+  let directionFound = false;
+  do {
+    // do the single initial check
+    if (iter === 1) {
+      // if the first check is a wall, then that's the closest wall
+      if (twoDeeArr[startY][startX] === valueToFind) {
+        return ({x: startX, y: startY});
+      }
+      else {
+        counterCW = getCounterClockwiseCoordinate(counterCW.x, counterCW.y, twoDeeArr.length);
+        clockW = getClockwiseCoordinate(clockW.x, clockW.y, twoDeeArr.length);
+      }
+    }
+    // else, we're iterating through ccw and cw checks
+    else {
+
+    }
+    iter += 1;
+  } while (!directionFound && iter <= maxChecks)
+  
+}
+
+const getCounterClockwiseCoordinate = (x, y, arrayLength) => {
+  // first step is to determine which coordinate value is going to change
+  // if the coordinate is the top left or bottom right corner
+  if (y === x) {
+    if (y === 0) return ({x: 0, y: y + 1});
+    else if (y === arrayLength - 1) return ({x: arrayLength - 1, y: y - 1});
+  }
+  
+  // now I can just check individual numbers
+  // if y is 0 then its top row
+  if (y === 0) {
+    return ({x: x - 1, y: 0});
+  }
+  // bottom row
+  else if (y === arrayLength - 1) {
+    return ({x: x + 1, y: arrayLength - 1});
+  }
+  // left column
+  else if (x === 0) {
+    if (y === arrayLength - 1) return ({x: x + 1, y: arrayLength -1});
+    else return ({x: 0, y: y + 1});
+  }
+  // right column
+  else if (x === arrayLength - 1) {
+    return ({x: arrayLength - 1, y: y - 1});
+  }
+}
+
+// todo - this is just the ccw function copied over, rewrite it for clockwise.
+const getClockwiseCoordinate = (x, y, arrayLength) => {
+  // if the coordinate is the top left or bottom right corner
+  if (y === x) {
+    if (y === 0) return ({x: x + 1, y: y});
+    else if (y === arrayLength - 1) return ({x: x - 1, y: y});
+  }
+  
+  // now I can just check individual numbers
+  // if y is 0 then its top row
+  if (y === 0) {
+    return ({x: x + 1, y: y});
+  }
+  // bottom row
+  else if (y === arrayLength - 1) {
+    if (x === 0) return ({x: x, y: y - 1});
+    else return ({x: x - 1, y: y});
+  }
+  // left column
+  else if (x === 0) {
+    return ({x: x, y: y - 1});
+  }
+  // right column
+  else if (x === arrayLength - 1) {
+    return ({x: x, y: y + 1});
+  }
 }
 
 export const shouldCreatureTurn = (critter, area) => {
