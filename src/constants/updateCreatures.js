@@ -1,4 +1,4 @@
-import { viewAllSurroundingTiles } from './helperFunctions';
+import { getSurroundingTiles } from './helperFunctions';
 //update the creatures array
 export const updateCreatures = (creatureArray, worldArray) => {
   

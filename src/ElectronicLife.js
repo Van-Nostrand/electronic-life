@@ -7,6 +7,7 @@ import {
 } from "./constants/CONSTANTS";
 import { CreatureTemplate, Creature } from "./Creature";
 import { updateCreatures } from "./constants/updateCreatures";
+import { findNearestWall, deriveDirectionFromCoordinates } from './constants/helperFunctions';
 
 const initdata = (function() {
   let creatureArray = [];
@@ -44,10 +45,13 @@ export default function ElectronicLife(){
   useEffect(() => {
     // setup the game here... 
     const takeTurn = () => {
-      
       let newCreatures = updateCreatures(creatures, world);
       setCreatures(newCreatures);
     }
+    let [ nearestWall, radius ] = findNearestWall(creatures[0], world);
+    let newDirection = deriveDirectionFromCoordinates(nearestWall, radius);
+    // console.log('src/ElectronicLife.js: nearestWall is ', nearestWall);
+    // console.log('src/ElectronicLife.js: newDirection is ', newDirection);
 
     const gameTicks = setInterval(() => takeTurn(), 1000);
     return () => clearInterval(gameTicks);

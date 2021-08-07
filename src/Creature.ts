@@ -29,7 +29,7 @@ export class Creature {
     this.creatureType   = properties.creatureType || "b"; 
     this.x              = properties.x || -1; 
     this.y              = properties.y || -1; 
-    this.facing         = properties.facing || {x: -1, y: -1}; 
+    this.facing         = properties.facing || {x: 0, y: -1}; 
     this.foodChain      = properties.foodChain || 0; 
     this.speed          = properties.speed || 1;
   }

@@ -1,6 +1,5 @@
 
-// todo - rename to getSurroundingTiles ??
-export const viewAllSurroundingTiles = (critter, worldMap, radius = 1) => {
+export const getSurroundingTiles = (critter, worldMap, radius = 1) => {
   
   // determine the x and y range
   let getRange = [radius * -1, radius];
@@ -28,124 +27,45 @@ export const viewAllSurroundingTiles = (critter, worldMap, radius = 1) => {
   return surroundings;
 }
 
+
 // this will search the area around the critter for the nearest wall
 export const findNearestWall = (critter, worldMap) => {
-  let direction, surroundings, wallCoordinates;
-  let wallCoordArray = [];
+  let surroundings;
   let wallFound = false;
   let radius = 1;
+  let borderTestResults;
 
   do {
     // get the critters surroundings
-    surroundings = viewAllSurroundingTiles(critter, worldMap, radius);
+    surroundings = getSurroundingTiles(critter, worldMap, radius);
     // check each tile for a wall 
-    // todo - write a function that checks all of the "border" indices of a 2d array
-    surroundings.forEach((row, y) => row.forEach((tile, x) => {
-      if (tile === "#") {
-        wallFound = true;
-        wallCoordArray.push(`${x},${y}`);
-      }
-    }));
+    borderTestResults = checkBorderOf2dArray(surroundings, "#", critter.facing);
+    if (borderTestResults !== null) {
+      wallFound = true;
+      if (radius === 1) critter.huggingWall = true;
+    }
     // if no wall was found, increase search radius
     if (!wallFound) radius += 1;
 
   } while (!wallFound);
 
-  // surroundings contains the nearest wall
-  /*
-    the critter will find the wall by looking forwards to the end of surroundings and then checking side to side tiles
-    critter.facing = {x: 0, y: -1}
-    if radius was 3, we would need to check surroundings[0][3]
-    how do I get there?
-    critter is facing 0,-1, and need to check coordinate 2,0
-    if radius is 3 then it looks like this
-    
-    #######
-    #-----#
-    #-----#
-    #--c--#
-    #-----#
-    #-----#
-    #######
-
-    radius is 2 then it looks like
-    #####
-    #---#
-    #-c-#
-    #---#
-    #####
-
-    and facing 0,-1 we would need to check 2,0
-    if facing 0,1 we would need to check 2,4
-
-    so a formula would look like
-    y = radius + (facing.y * radius) ?
-    x = radius + (facing.x * radius) ?
-
-    say facing 1,1, we would need to check 4,4
-    y = 2 + (1 * 2) = 4
-    x = 2 + (1 * 2) = 4
-
-    say facing -1,1, we would need to check 0,4
-    y = 2 + (1 * 2) = 4
-    x = 2 + (-1 * 2) = 0
-
-    say facing -1,0, checking 0,2
-    y = 2 + (0 * 2) = 2,
-    x = 2 + (-1 * 2) = 0
-  */
-  let testX = radius + (critter.facing.x * radius);
-  let testY = radius + (critter.facing.y * radius);
-  let testCell = surroundings[testY][testX];
-  if (testCell === "#") {
-    //wall found
-  }
-  else {
-    // test cells beside it
-    /*
-      if facing is 0,-1, we're looking at 2,0 and need to test 1,0 and 3,0
-    */
-    let directionFound = false;
-    let spread = 1;
-    // test counter clockwise
-    let counterCW = {y: testY, x: testX - spread};
-    let clockW = {y: testY, x: testX + spread};
-    if (counterCW.x < 0 || clockW.x > surroundings.length - 1) {
-      // rotate perspective
-    }
-    else {
-      let cCWTest = surroundings[counterCW.y][counterCW.x];
-      let cWTest = surroundings[clockW.y][clockW.x];
-    }
-  }
-  return direction;
+  return borderTestResults;
 }
 
-export const checkBorderOf2dArray = (twoDeeArr, valueToFind, startingPoint = {x: 0, y: -1}, moreThanOneValue = false) => {
+export const checkBorderOf2dArray = (twoDeeArr, valueToFind, facingFromOrigin = {x: 0, y: -1}) => {
 
   // in theory, I should never be passing in an array with an even number of indices
   if ((twoDeeArr.length - 1) % 2 > 0) {
     return null;
   }
-  /*
-    say I'm given a 2d array of size 5*5
 
-    oo###
-    oooo#
-    oooo#
-    #ooo#
-    #####
-
-  */
-  // need to get coordinate 2,0 from startingPoint 0,-1
   let radius = (twoDeeArr.length - 1) / 2; // the 2d array will always be an odd number length so this works... 
-  
-  let startX = startingPoint.x === 0 ? radius : startingPoint.x > 0 ? radius * 2 : 0;
-  let startY = startingPoint.y === 0 ? radius : startingPoint.y > 0 ? radius * 2 : 0;
+  let startX = facingFromOrigin.x === 0 ? radius : facingFromOrigin.x > 0 ? radius * 2 : 0;
+  let startY = facingFromOrigin.y === 0 ? radius : facingFromOrigin.y > 0 ? radius * 2 : 0;
   let iter = 1;
-  let maxChecks = (twoDeeArr.length - 1) * 4;
-  let counterCW = {x: startX, y: startY};
-  let clockW = {x: startX, y: startY}; 
+  let maxChecks = (twoDeeArr.length - 1) * 4; 
+  let counterClockwiseCoordinates = {x: startX, y: startY};
+  let clockwiseCoordinates = {x: startX, y: startY}; 
   let directionFound = false;
   do {
     // do the single initial check
@@ -154,74 +74,74 @@ export const checkBorderOf2dArray = (twoDeeArr, valueToFind, startingPoint = {x:
       if (twoDeeArr[startY][startX] === valueToFind) {
         return ({x: startX, y: startY});
       }
-      else {
-        counterCW = getCounterClockwiseCoordinate(counterCW.x, counterCW.y, twoDeeArr.length);
-        clockW = getClockwiseCoordinate(clockW.x, clockW.y, twoDeeArr.length);
-      }
     }
     // else, we're iterating through ccw and cw checks
     else {
-
+      counterClockwiseCoordinates = getCounterClockwiseCoordinate(counterClockwiseCoordinates.x, counterClockwiseCoordinates.y, twoDeeArr.length);
+      clockwiseCoordinates = getClockwiseCoordinate(clockwiseCoordinates.x, clockwiseCoordinates.y, twoDeeArr.length);
+      let counterClockwiseTile = twoDeeArr[counterClockwiseCoordinates.y][counterClockwiseCoordinates.x];
+      let clockwiseTile = twoDeeArr[clockwiseCoordinates.y][clockwiseCoordinates.x];
+      // if both coordinates are valueToFind
+      if (counterClockwiseTile === valueToFind && clockwiseTile === valueToFind) {
+        // false will be ccw, true will be cw
+        return [ Math.random() < 0.5 ? counterClockwiseCoordinates : clockwiseCoordinates, radius ];
+      }
+      // else if only one matches
+      else if (counterClockwiseTile === valueToFind || clockwiseTile === valueToFind) {
+        return [ counterClockwiseTile === valueToFind ? counterClockwiseCoordinates : clockwiseCoordinates, radius ];
+      }
     }
     iter += 1;
-  } while (!directionFound && iter <= maxChecks)
-  
+  } while (!directionFound && iter <= maxChecks);
+
+  return null;
 }
+
 
 const getCounterClockwiseCoordinate = (x, y, arrayLength) => {
-  // first step is to determine which coordinate value is going to change
-  // if the coordinate is the top left or bottom right corner
-  if (y === x) {
-    if (y === 0) return ({x: 0, y: y + 1});
-    else if (y === arrayLength - 1) return ({x: arrayLength - 1, y: y - 1});
-  }
-  
-  // now I can just check individual numbers
-  // if y is 0 then its top row
-  if (y === 0) {
-    return ({x: x - 1, y: 0});
-  }
-  // bottom row
-  else if (y === arrayLength - 1) {
-    return ({x: x + 1, y: arrayLength - 1});
-  }
-  // left column
-  else if (x === 0) {
-    if (y === arrayLength - 1) return ({x: x + 1, y: arrayLength -1});
-    else return ({x: 0, y: y + 1});
-  }
-  // right column
-  else if (x === arrayLength - 1) {
-    return ({x: arrayLength - 1, y: y - 1});
+
+  switch(true) {
+    case y === 0 && x > 0: // top row except top left corner
+      return ({x: x - 1, y: y});
+    case x === 0 && y < arrayLength - 1: // left column except bottom left corner
+      return ({x: x, y: y + 1 });
+    case y === arrayLength - 1 && x < arrayLength - 1: // bottom row except bottom right corner
+      return ({x: x + 1, y: y});
+    case x === arrayLength - 1 && y > 0: // right column except top right corner
+      return ({x: x, y: y - 1});
+    default: return new Error("what the hell happened??");
   }
 }
 
-// todo - this is just the ccw function copied over, rewrite it for clockwise.
+
 const getClockwiseCoordinate = (x, y, arrayLength) => {
-  // if the coordinate is the top left or bottom right corner
-  if (y === x) {
-    if (y === 0) return ({x: x + 1, y: y});
-    else if (y === arrayLength - 1) return ({x: x - 1, y: y});
+
+  switch(true){
+    case y === 0 && x < arrayLength - 1: // top row except top right corner
+      return ({x: x + 1, y: y});
+    case x === arrayLength - 1 && y < arrayLength - 1: // right column except bottom right corner
+      return ({x: x, y: y + 1});
+    case y === arrayLength - 1 && x > 0: // bottom row except bottom left corner
+      return ({x: x - 1, y: y});
+    case y > 0 && x === 0: // left column except top left corner
+      return ({x: x, y: y - 1 });
+    default: return new Error("what the hell happened??");
   }
-  
-  // now I can just check individual numbers
-  // if y is 0 then its top row
-  if (y === 0) {
-    return ({x: x + 1, y: y});
-  }
-  // bottom row
-  else if (y === arrayLength - 1) {
-    if (x === 0) return ({x: x, y: y - 1});
-    else return ({x: x - 1, y: y});
-  }
-  // left column
-  else if (x === 0) {
-    return ({x: x, y: y - 1});
-  }
-  // right column
-  else if (x === arrayLength - 1) {
-    return ({x: x, y: y + 1});
-  }
+}
+
+export const deriveDirectionFromCoordinates = (coordinates, radius) => {
+  /*
+    say coordinates is {x: 4, y: 1} and radius is 2
+    I would want to return {x: 1, y: -1}
+  */
+  let direction = {x: 0, y: 0};
+  if (coordinates.x > radius) direction.x = 1;
+  else if (coordinates.x < radius) direction.x = -1;
+  // if (coordinates.x === radius) direction.x = 0;
+  if (coordinates.y > radius) direction.y = 1;
+  else if (coordinates.y < radius) direction.y = -1;
+  // if (coordinates.y === radius) direction.y = 0;
+  return direction;
 }
 
 export const shouldCreatureTurn = (critter, area) => {
