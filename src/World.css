@@ -3,31 +3,18 @@
   --default-number-of-tiles: 28;
 }
 
-*,
-*::before,
-*::after{
-  padding: 0;
-  margin: 0;
-  box-sizing: inherit;
-}
 
-html{
-  font-size: 62.5%;
-}
-
-.world-div {
-  /* width: 420px; */
+/* .world-div {
   border: 1px solid black;
   display: flex;
   flex-flow: column nowrap;
-  /* flex-wrap: wrap; */
 }
 
 .world-row-div {
   display: flex;
   flex-flow: row;
-}
-
+} */
+/* 
 .wall-div, .plain-tile, .bouncing-critter {
   width: var(--default-tile-size);
   height: var(--default-tile-size);
@@ -35,23 +22,21 @@ html{
 
 .wall-div {
   background: rgb(0,0,0);
-}
-.plain-tile{
+} */
+/* .plain-tile{
   border: 1px solid white;
   box-sizing: border-box;
   background: rgba(149, 149, 149, 1);
-}
-.bouncing-critter{
+} */
+/* .bouncing-critter{
   background: rgba(222, 150, 26, 1);
 }
 .wall-follower-div{
   background: rgba(35, 177, 66, 1);
 }
 
-.creature{
+.critter {
   position: absolute;
-}
+} */
 
-.creature-container{
-  position: absolute;
-}
+

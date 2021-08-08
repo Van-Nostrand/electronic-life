@@ -1,0 +1,15 @@
+@use "../abstracts/vars";
+
+.critter {
+  width: vars.$default-tile-size;
+  height: vars.$default-tile-size;
+  position: absolute;
+}
+
+.bouncing-critter {
+  background-color: vars.$bouncing-critter-color;
+}
+
+.wall-follower {
+  background-color: vars.$wall-follower-color;
+}

@@ -14,7 +14,7 @@ export default function CritterElement<CritterElementProps>({tileSize, x, y, cla
 
 CritterElement.defaultProps = {
   tileSize: 2.5,
-  classString: 'critter bouncing-critter'
+  classString: 'critter'
 }
 
 CritterElement.propTypes = {

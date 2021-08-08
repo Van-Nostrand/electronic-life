@@ -8,7 +8,7 @@ export default function BouncingCritter({tileSize, x, y}) {
   }
   
   return (
-    <div style={critterStyle} className="creature bouncing-critter"></div>
+    <div style={critterStyle} className="critter bouncing-critter"></div>
   )
 }
 

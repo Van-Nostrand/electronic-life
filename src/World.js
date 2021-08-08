@@ -9,21 +9,29 @@ export default function World({ worldMap, creatures }) {
 
   const getTile = (tileType, row, column = 0) => {
     switch(true){
-      case tileType === "#": return <div className="wall-div" key={`wall-${row}-${column}`}></div>;
+      case tileType === "#": return <div className="wall" key={`wall-${row}-${column}`}></div>;
       case tileType === " ": return <div className="plain-tile" key={`tile-${row}-${column}`} ></div>;
       default: console.log("error getting tiles");
     }
   }
-  const getCreature = (creature, number) => {
-    return <CritterElement key={`bc-${number}`} classString={creature.classString} x={creature.x} y={creature.y} />;
+
+  const getCritter = (critter, number) => {
+    return (
+      <CritterElement 
+        key={`critter-${number}`} 
+        classString={critter.classString} 
+        x={critter.x} 
+        y={critter.y} 
+      />
+    )
   }
 
   const buildWorld = () => {
     return worldMap.map((row, i) => {
       return (
         <div 
-          className="world-row-div" 
-          key={`world-div-row-${i}`} 
+          className="world-row" 
+          key={`world-row-${i}`} 
         >
           {row.map((tile, j) => {
             return getTile(tile, j, i);
@@ -37,30 +45,24 @@ export default function World({ worldMap, creatures }) {
     return creatures.map((creature, i) => {
       return (
         <div className="creature" key={`creature-${i}`}>
-          { getCreature(creature, i) }
+          { getCritter(creature, i) }
         </div>
       )
     })
   }
  
   let worldArray = buildWorld();
-  let creatureArray = buildCreatures();
-  // debugger;
-
-  ///////////////////////////////////////////// 
-  /// Testing
-  // let surroundings = getSurroundingTiles(creatures[0], worldMap, 4);
-  // print2dArray(surroundings)
-  
+  let creatureArray = buildCreatures();  
 
   return(
-    <div className="world-div" >
+    <div className="world" >
       {worldArray ? worldArray : null}
       {creatureArray ? creatureArray : null}
     </div>
   )
 };
 
+// just for testing
 const print2dArray = (arr) => {
   arr.forEach(row => console.log(row.join()))
 }

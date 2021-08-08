@@ -7,7 +7,7 @@ export default function WallFollower({x, y, tileSize}) {
     transform: `translate(${x * tileSize}rem,${y * tileSize}rem)`
   }
   return(
-    <div style={critterStyle} className="creature wall-follower"></div>
+    <div style={critterStyle} className="critter wall-follower"></div>
   )
 }
 
