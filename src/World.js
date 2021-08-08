@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import "./World.css";
-import { BouncingCritter, WallFollower } from "./components";
+import { BouncingCritter, WallFollower, CritterElement } from "./components";
 import { getSurroundingTiles, findNearestWall } from './constants/helperFunctions';
 
 
@@ -15,15 +15,7 @@ export default function World({ worldMap, creatures }) {
     }
   }
   const getCreature = (creature, number) => {
-    switch(true){
-      case creature.creatureType === "b": 
-        return <BouncingCritter x={creature.x} y={creature.y} key={`bc-${number}`} />;
-        break;
-      case creature.creatureType === "w": 
-        return <WallFollower x={creature.x} y={creature.y} key={`wf-${number}`} />;
-        break;
-      default: console.log("error getting creatures");
-    }
+    return <CritterElement key={`bc-${number}`} classString={creature.classString} x={creature.x} y={creature.y} />;
   }
 
   const buildWorld = () => {

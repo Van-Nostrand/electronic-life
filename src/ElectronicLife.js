@@ -50,8 +50,7 @@ export default function ElectronicLife(){
     }
     let [ nearestWall, radius ] = findNearestWall(creatures[0], world);
     let newDirection = deriveDirectionFromCoordinates(nearestWall, radius);
-    // console.log('src/ElectronicLife.js: nearestWall is ', nearestWall);
-    // console.log('src/ElectronicLife.js: newDirection is ', newDirection);
+
 
     const gameTicks = setInterval(() => takeTurn(), 1000);
     return () => clearInterval(gameTicks);

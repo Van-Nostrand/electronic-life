@@ -6,8 +6,9 @@ module.exports ={
   entry: __dirname + "/src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
-    publicPath: ""
+    filename: "[name].bundle.js",
+    publicPath: "/",
+    assetModuleFilename: "images/[hash]-[name][ext]"
   },
   module: {
     rules: [
@@ -19,6 +20,10 @@ module.exports ={
         }
       },
       {
+        test: /\.(jpe?g|svg|png|gif)$/,
+        type: "asset/resource"
+      },
+      {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/
@@ -26,6 +31,20 @@ module.exports ={
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, "css-loader"]
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        exclude: /node_modules/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require('sass'),
+            }
+          }
+        ]
       }
     ]
   },

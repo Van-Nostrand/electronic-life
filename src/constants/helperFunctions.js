@@ -52,6 +52,9 @@ export const findNearestWall = (critter, worldMap) => {
   return borderTestResults;
 }
 
+
+// will check all tiles in the "border" of a 2d array for a particular value
+// only works on arrays with odd numbered lengths: there must be a "center cell"
 export const checkBorderOf2dArray = (twoDeeArr, valueToFind, facingFromOrigin = {x: 0, y: -1}) => {
 
   // in theory, I should never be passing in an array with an even number of indices
@@ -97,9 +100,8 @@ export const checkBorderOf2dArray = (twoDeeArr, valueToFind, facingFromOrigin = 
   return null;
 }
 
-
+// figures out the next cell in the border of a 2d array, moving counter clockwise
 const getCounterClockwiseCoordinate = (x, y, arrayLength) => {
-
   switch(true) {
     case y === 0 && x > 0: // top row except top left corner
       return ({x: x - 1, y: y});
@@ -109,13 +111,12 @@ const getCounterClockwiseCoordinate = (x, y, arrayLength) => {
       return ({x: x + 1, y: y});
     case x === arrayLength - 1 && y > 0: // right column except top right corner
       return ({x: x, y: y - 1});
-    default: return new Error("what the hell happened??");
+    default: return new Error("error getting clockwise coordinate from values ", x, ",", y, " with arrayLength equal to ", arrayLength);
   }
 }
 
 
 const getClockwiseCoordinate = (x, y, arrayLength) => {
-
   switch(true){
     case y === 0 && x < arrayLength - 1: // top row except top right corner
       return ({x: x + 1, y: y});
@@ -125,7 +126,7 @@ const getClockwiseCoordinate = (x, y, arrayLength) => {
       return ({x: x - 1, y: y});
     case y > 0 && x === 0: // left column except top left corner
       return ({x: x, y: y - 1 });
-    default: return new Error("what the hell happened??");
+    default: return new Error("error getting clockwise coordinate from values ", x, ",", y, " with arrayLength equal to ", arrayLength);
   }
 }
 
