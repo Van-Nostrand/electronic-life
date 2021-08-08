@@ -1,6 +1,6 @@
 import React from 'react';
 
-// seems unimplemented?
+// no longer necessary
 export default function WallFollower({x, y, tileSize}) {
 
   const critterStyle = {

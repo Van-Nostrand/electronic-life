@@ -22,4 +22,6 @@
   border: 1px solid white;
   box-sizing: border-box;
   background: vars.$plain-tile-background-color;
+  width: vars.$default-tile-size;
+  height: vars.$default-tile-size;
 }

@@ -5,28 +5,26 @@ import {
   DEFAULT_PLAN,
   updateGrid,
 } from "./constants/CONSTANTS";
-import { CreatureTemplate, Creature } from "./Creature";
+// import { CreatureTemplate, Creature } from "./Creature";
 import { updateCreatures } from "./constants/updateCreatures";
 import { findNearestWall, deriveDirectionFromCoordinates } from './constants/helperFunctions';
+import { BouncingCritter, WallFollower } from './critters';
 
 const initdata = (function() {
   let creatureArray = [];
   let worldMap = DEFAULT_PLAN.map((row, y) => {
     return row.split("").map((tile, x) => {
       if (tile === "b") {
-        let properties = {creatureType: tile, x, y};
         creatureArray.push(
-          // CreatureTemplate(tile, x, y, false)
-          new Creature(properties)
+          new BouncingCritter(x, y, {x: 0, y: -1})
         );
         return " ";
       }
       else if (tile === "w") {
-        let properties = {creatureType: tile, x, y};
         creatureArray.push(
-          // CreatureTemplate(tile, x, y, false)
-          new Creature(properties)
+          new WallFollower(x, y, {x: 0, y: -1})
         )
+        return " ";
       }
       
       else {
@@ -40,31 +38,27 @@ const initdata = (function() {
 export default function ElectronicLife(){
 
   const [ world, setWorld ] = useState(initdata[0]);
-  const [ creatures, setCreatures ] = useState(initdata[1]);
+  const [ critters, setCreatures ] = useState(initdata[1]);
 
+  // game setup
   useEffect(() => {
-    // setup the game here... 
     const takeTurn = () => {
-      let newCreatures = updateCreatures(creatures, world);
+      let newCreatures = updateCreatures(critters, world);
       setCreatures(newCreatures);
     }
-    let [ nearestWall, radius ] = findNearestWall(creatures[0], world);
-    let newDirection = deriveDirectionFromCoordinates(nearestWall, radius);
-
 
     const gameTicks = setInterval(() => takeTurn(), 1000);
     return () => clearInterval(gameTicks);
   }, []);
 
-
   return(
-    <div id="electronic-life-div">
-      <div id="button-panel">
+    <div className="main-container">
+      {/* <div id="button-panel">
         <div className="div-button" id="dbutton1"></div>
         <div className="div-button" id="dbutton2"></div>
         <div className="div-button" id="dbutton3"></div>
-      </div>
-      <World worldMap={world} creatures={creatures} />
+      </div> */}
+      <World worldMap={world} critters={critters} />
 
     </div>
   );

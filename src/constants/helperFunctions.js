@@ -97,6 +97,7 @@ export const checkBorderOf2dArray = (twoDeeArr, valueToFind, facingFromOrigin = 
     iter += 1;
   } while (!directionFound && iter <= maxChecks);
 
+  if (iter > maxChecks) return new Error("something is seriously wrong in checkBorderOf2dArray");
   return null;
 }
 
@@ -138,10 +139,8 @@ export const deriveDirectionFromCoordinates = (coordinates, radius) => {
   let direction = {x: 0, y: 0};
   if (coordinates.x > radius) direction.x = 1;
   else if (coordinates.x < radius) direction.x = -1;
-  // if (coordinates.x === radius) direction.x = 0;
   if (coordinates.y > radius) direction.y = 1;
   else if (coordinates.y < radius) direction.y = -1;
-  // if (coordinates.y === radius) direction.y = 0;
   return direction;
 }
 

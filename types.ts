@@ -47,3 +47,9 @@ export type CritterElementProps = {
   tileSize: number;
   classString: string;
 }
+
+export type WorldProps = {
+  worldMap: Array<any>;
+  critters: Array<CritterType>;
+
+}

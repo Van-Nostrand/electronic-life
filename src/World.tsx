@@ -1,11 +1,10 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import "./World.css";
-import { BouncingCritter, WallFollower, CritterElement } from "./components";
+import { CritterElement } from "./components";
 import { getSurroundingTiles, findNearestWall } from './constants/helperFunctions';
+import { WorldProps } from '../types';
 
 
-export default function World({ worldMap, creatures }) {
+export default function World<WorldProps>({ worldMap, critters }) {
 
   const getTile = (tileType, row, column = 0) => {
     switch(true){
@@ -15,13 +14,13 @@ export default function World({ worldMap, creatures }) {
     }
   }
 
-  const getCritter = (critter, number) => {
+  const getCritter = (c, number) => {
     return (
       <CritterElement 
         key={`critter-${number}`} 
-        classString={critter.classString} 
-        x={critter.x} 
-        y={critter.y} 
+        classString={c.classString} 
+        x={c.x} 
+        y={c.y} 
       />
     )
   }
@@ -41,23 +40,17 @@ export default function World({ worldMap, creatures }) {
     });
   }
 
-  const buildCreatures = () => {
-    return creatures.map((creature, i) => {
-      return (
-        <div className="creature" key={`creature-${i}`}>
-          { getCritter(creature, i) }
-        </div>
-      )
-    })
+  const buildCritters = () => {
+    return critters.map((critter, i) => getCritter(critter, i));
   }
  
-  let worldArray = buildWorld();
-  let creatureArray = buildCreatures();  
+  const worldArray = buildWorld();
+  const critterArray = buildCritters();  
 
   return(
     <div className="world" >
       {worldArray ? worldArray : null}
-      {creatureArray ? creatureArray : null}
+      {critterArray ? critterArray : null}
     </div>
   )
 };
@@ -69,10 +62,5 @@ const print2dArray = (arr) => {
 
 World.defaultProps = {
   worldMap: [],
-  creatures: []
-}
-
-World.propTypes = {
-  worldMap: PropTypes.array,
-  creatures: PropTypes.array
+  critters: []
 }

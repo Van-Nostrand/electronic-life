@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+
+// no longer necessary
 export default function BouncingCritter({tileSize, x, y}) {
 
   const critterStyle = {
