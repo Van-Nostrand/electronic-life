@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+
+// no longer necessary
 export default function BouncingCritter({tileSize, x, y}) {
 
   const critterStyle = {
@@ -8,7 +10,7 @@ export default function BouncingCritter({tileSize, x, y}) {
   }
   
   return (
-    <div style={critterStyle} className="creature bouncing-critter"></div>
+    <div style={critterStyle} className="critter bouncing-critter"></div>
   )
 }
 

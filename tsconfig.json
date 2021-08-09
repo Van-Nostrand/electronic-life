@@ -1,6 +1,11 @@
 {
-  "compilerOptions": {},
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
-
+  "compilerOptions": {
+    "target": "ES6",
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+  },
+  "strict": true,
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"],
 }
