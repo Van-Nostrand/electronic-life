@@ -1,6 +1,6 @@
 export interface CreatureProps {
   properties: {
-    creatureType: string;
+    critterType: string;
     x: number;
     y: number;
     facing: {
@@ -13,7 +13,7 @@ export interface CreatureProps {
 }
 
 export interface Properties {
-  creatureType: string;
+  critterType: string;
   x: number;
   y: number;
   facing: {
@@ -25,7 +25,7 @@ export interface Properties {
   
 }
 
-export type CritterType = {
+export interface CritterInterface {
   x: number;
   y: number;
   facing: {
@@ -34,14 +34,14 @@ export type CritterType = {
   }
   foodChain: number;
   speed: number;
-  creatureType: string;
+  critterType: string;
 }
 
-export interface BouncingCritter {
-  creatureType: string;
+export interface WallFollowerInterface extends CritterInterface {
+  hasFoundWall: boolean; // wrong
 }
 
-export type CritterElementProps = {
+export type CritterElementInterface = {
   x: number;
   y: number;
   tileSize: number;
@@ -50,6 +50,17 @@ export type CritterElementProps = {
 
 export type WorldProps = {
   worldMap: Array<any>;
-  critters: Array<CritterType>;
+  critters: Array<CritterInterface>;
 
+}
+
+export interface CoordinatesInterface {
+  x: number;
+  y: number;
+}
+
+// use radius and coordinates to describe how far from a point another point is, and in which direction
+export interface RelativeCoordinatesInterface {
+  coordinates: CoordinatesInterface;
+  radius: number;
 }

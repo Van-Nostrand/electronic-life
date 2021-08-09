@@ -33,7 +33,7 @@ export const DEFAULT_PLAN = [
   "#          #",
   "#          #",
   "#      #  ##",
-  "#    b     #",
+  "#    w     #",
   "#      ##  #",
   "#    #     #",
   "#          #",
@@ -49,6 +49,8 @@ export const DEFAULT_PLAN = [
 //   "#   #",
 //   "#####"
 // ];
+
+export const ALL_CRITTER_TYPES = ["b","w","p"];
 
 export const DIRECTION_NAMES = "n ne e se s sw w nw".split(" ");
 
@@ -126,7 +128,7 @@ export function creatureViews(creatureArray, gridArray) {
 //update the grid and creatures arrays
 export function updateGrid(newCreatures, newGrid) {
   newCreatures.forEach((creature, i) => {
-    newGrid[creature.x + creature.facing.x][creature.y + creature.facing.y] = creature.creatureType;
+    newGrid[creature.x + creature.facing.x][creature.y + creature.facing.y] = creaturecritterType;
     newGrid[creature.x][creature.y] = " ";
     creature.x = creature.x + creature.facing.x;
     creature.y = creature.y + creature.facing.y;
