@@ -38,7 +38,10 @@ export interface CritterInterface {
 }
 
 export interface WallFollowerInterface extends CritterInterface {
-  hasFoundWall: boolean; // wrong
+  hasFoundWall: boolean; 
+  wallCoordinate: {coordinates: {x: number; y: number;}, radius: number;};
+  movesClockwise: boolean;
+
 }
 
 export type CritterElementInterface = {

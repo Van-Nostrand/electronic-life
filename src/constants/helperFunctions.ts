@@ -68,14 +68,14 @@ export const scanSurroundingsForItem = (worldMap: Array<Array<string>>, critterP
   debugger;
   // radius is exclusive: it does not include the center tile. so radius = 1 means it's a 3x3 grid 
   let radius: number = 1;
-  let iter: number = 1;
+  let iter: number;
   let directionFound: boolean = false;
   let counterClockwiseCoordinates, clockwiseCoordinates: CoordinatesInterface;
 
   do {
     let startX = facingFromOrigin.x === 0 ? critterPosition.x : facingFromOrigin.x === 1 ? critterPosition.x + radius : critterPosition.x - radius;
     let startY = facingFromOrigin.y === 0 ? critterPosition.y : facingFromOrigin.y === 1 ? critterPosition.y + radius : critterPosition.y - radius;
-
+    iter = 1;
 
     
     do {
@@ -118,7 +118,7 @@ export const scanSurroundingsForItem = (worldMap: Array<Array<string>>, critterP
       }
 
       iter += 1;
-    } while (iter < radius * 6);
+    } while (iter < radius * 6); // todo - FIX THIS <-----
     // if radius is 2, then iter is less than radius * 6 which is 12
     // but if radius is 2 then we need 9 checks
     // if radius is 3 then iter is less than 18
@@ -134,6 +134,38 @@ export const scanSurroundingsForItem = (worldMap: Array<Array<string>>, critterP
     radius += 1;
     
   } while (!directionFound);
+}
+
+
+// the wall follower has chosen a wall and needs to figure out where the next cell adjacent to the wall is
+export const findNextSpaceToMoveAlongWall = (worldMap: Array<Array<string>>, wallFollower: WallFollowerInterface) => {
+    let { x, y, facing, wallCoordinate, movesClockwise } = wallFollower;
+    let hasChosenDirection = false;
+    let newDirection;
+    
+    do {
+
+      let coordinateDirection = deriveDirectionFromCoordinates(wallCoordinate.coordinates, {x, y});
+      newDirection = movesClockwise ? 
+        moveClockwiseAroundCoordinate(coordinateDirection)
+        :
+        moveCounterClockwiseAroundCoordinate(coordinateDirection);
+
+      if (/[#]/.test(worldMap[newDirection.y + y][newDirection.x + x])) {
+        // reassign wall coordinate
+        wallCoordinate.coordinates = { x: newDirection.x + x, y: newDirection.y + y };
+      }
+      else if (/[bw]/.test(worldMap[newDirection.y + y][newDirection.x + x])) {
+        // wait a turn
+      }
+      else if (worldMap[newDirection.y + y][newDirection.x + x] === " ") {
+        hasChosenDirection = true;
+      }
+
+    } while (!hasChosenDirection);
+
+    return [ newDirection, wallCoordinate ];
+    
 }
 
 
@@ -291,15 +323,21 @@ export const moveCounterClockwiseAroundCoordinate = (facing: CoordinatesInterfac
 
 // returns coordinates describing the direction of a point relative to the position of the calling object
 export const deriveDirectionFromCoordinates = (
-  coordinates: CoordinatesInterface, 
-  radius: number
+  targetCoordinates: CoordinatesInterface, 
+  currentCoordinates: CoordinatesInterface,
 ): {x: number, y: number} => {
-  // say coordinates = 4,0 and radius = 2
-  let direction: {x: number; y: number;} = {x: 0, y: 0};
-  if (coordinates.x > radius) direction.x = 1;
-  else if (coordinates.x < radius) direction.x = -1;
-  if (coordinates.y > radius) direction.y = 1;
-  else if (coordinates.y < radius) direction.y = -1;
+  // targetCoordinates = 5,3
+  // radius = 2
+  // currentCoordinates = 3,3
+  let direction: {x: number; y: number;} = {
+    x: targetCoordinates.x > currentCoordinates.x ? 1 : targetCoordinates.x < currentCoordinates.x ? -1 : 0, 
+    y: targetCoordinates.y > currentCoordinates.y ? 1 : targetCoordinates.y < currentCoordinates.y ? -1 : 0
+  };
+
+  // if (targetCoordinates.x > currentCoordinates.x) direction.x = 1;
+  // else if (targetCoordinates.x < radius) direction.x = -1;
+  // if (targetCoordinates.y > radius) direction.y = 1;
+  // else if (targetCoordinates.y < radius) direction.y = -1;
   // direction = 1,-1
   return direction;
 }

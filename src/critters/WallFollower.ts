@@ -6,7 +6,8 @@ import {
   getCounterClockwiseCoordinate,
   getClockwiseCoordinate,
   moveClockwiseAroundCoordinate,
-  moveCounterClockwiseAroundCoordinate
+  moveCounterClockwiseAroundCoordinate,
+  findNextSpaceToMoveAlongWall
 } from '../constants/helperFunctions'; // temporary
 
 import { ALL_CRITTER_TYPES } from '../constants/CONSTANTS';
@@ -47,7 +48,7 @@ export default class WallFollower extends Critter {
       if (!this.hasFoundWall) {
         // temporarily using imported function
         let wallCoordinate: RelativeCoordinatesInterface = findNearestWall(this, worldMap);
-        newFacing = deriveDirectionFromCoordinates(wallCoordinate.coordinates, wallCoordinate.radius);
+        newFacing = deriveDirectionFromCoordinates(wallCoordinate.coordinates, {x: this.x, y: this.y});
         console.log('src/critters/WallFollower.ts: newFacing is ', newFacing);
         this.wallCoordinate = wallCoordinate;
         this.hasFoundWall = true;
@@ -55,17 +56,21 @@ export default class WallFollower extends Critter {
       // not at the wall yet
       else if (this.hasFoundWall && this.wallCoordinate.radius > 1) {
         let wallCoordinate: RelativeCoordinatesInterface = findNearestWall(this, worldMap);
-        newFacing = deriveDirectionFromCoordinates(wallCoordinate.coordinates, wallCoordinate.radius);
+        
+        newFacing = deriveDirectionFromCoordinates(wallCoordinate.coordinates, {x: this.x, y: this.y}); 
         this.wallCoordinate = wallCoordinate;
         hasChosenDirection = true;
       }
       // the critter is next to the wall when radius is 1
       else if (this.hasFoundWall && this.wallCoordinate.radius === 1) {
+        let [ newFacing, newWallCoordinate ] = findNextSpaceToMoveAlongWall(worldMap, this);
+        this.wallCoordinate = newWallCoordinate;
+
         // determine the next cell that the critter will face
-        newFacing = this.movesClockwise ? 
-          moveClockwiseAroundCoordinate(newFacing) 
-          : 
-          moveCounterClockwiseAroundCoordinate(newFacing);
+        // newFacing = this.movesClockwise ? 
+        //   moveClockwiseAroundCoordinate(newFacing) 
+        //   : 
+        //   moveCounterClockwiseAroundCoordinate(newFacing);
 
         // get the value of the cell at that coordinate
         let testCell = worldMap[this.y + newFacing.y][this.x + newFacing.x];
@@ -78,7 +83,7 @@ export default class WallFollower extends Critter {
         else if (testCell === "#") {
           // reassigning wallCoordinate to newly found wall
           this.wallCoordinate = {coordinates: {x: this.x + newFacing.x, y: this.y + newFacing.y}, radius: 1};
-          newFacing = deriveDirectionFromCoordinates(this.wallCoordinate.coordinates, this.wallCoordinate.radius);
+          newFacing = deriveDirectionFromCoordinates(this.wallCoordinate.coordinates, {x: this.x, y: this.y});
         }
         else if (ALL_CRITTER_TYPES.includes(testCell)) {
           // the cell contains another critter and WallFollower is not a predator so it can't move there.
