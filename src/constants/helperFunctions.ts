@@ -2,7 +2,7 @@ import { ICritter, ICoordinates, IWallFollower, IRelativeCoordinates } from '@/t
 import { WallFollower, BouncingCritter, Critter } from '@/critters'
 
 
-export const getSurroundingTiles = (critter: Critter, worldMap: Array<Array<string>>, radius: number = 1) => {
+export const getSurroundingTiles = (critter: ICritter, worldMap: Array<Array<string>>, radius: number = 1) => {
 
   // determine the x and y range
   const getRange: Array<number> = [radius * -1, radius]

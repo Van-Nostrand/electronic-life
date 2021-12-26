@@ -25,7 +25,7 @@ export default function World ({ worldMap = [], critters = [] }: IWorldProps) {
     )
   }
 
-  const buildWorld = () => {
+  const renderWorld = () => {
     return worldMap.map((row, i) => {
       return (
         <div
@@ -40,17 +40,19 @@ export default function World ({ worldMap = [], critters = [] }: IWorldProps) {
     })
   }
 
-  const buildCritters = () => {
+  const renderCritters = () => {
     return critters.map((critter, i) => getCritter(critter, i))
   }
 
-  const worldArray = buildWorld()
-  const critterArray = buildCritters()
+  // const worldArray = buildWorld()
+  // const critterArray = buildCritters()
 
   return (
     <div className="world" >
-      {worldArray ? worldArray : null}
-      {critterArray ? critterArray : null}
+      {/* {worldArray ? worldArray : null} */}
+      { renderWorld() }
+      { renderCritters() }
+      {/* {critterArray ? critterArray : null} */}
     </div>
   )
 }
