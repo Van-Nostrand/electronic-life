@@ -11,6 +11,7 @@ module.exports = {
     'plugin:react/recommended'
   ],
   // parser: '@babel/eslint-parser',
+  'parser': '@typescript-eslint/parser',
   'parserOptions': {
     'sourceType': 'module',
     'ecmaFeatures': {
@@ -19,7 +20,8 @@ module.exports = {
     'ecmaVersion': 13
   },
   'plugins': [
-    'react'
+    'react',
+    '@typescript-eslint'
   ],
   'rules': {
     'indent': [

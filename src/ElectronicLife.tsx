@@ -1,58 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import World from "./World";
+import React, { useState, useEffect } from 'react'
+import World from './World'
 // import "./ElectronicLife.css";
 import {
   DEFAULT_PLAN,
   updateGrid,
-} from "./constants/CONSTANTS";
-import { updateCritters } from "./constants/updateCritters";
-import { findNearestWall, deriveDirectionFromCoordinates } from './constants/helperFunctions';
-import { BouncingCritter, WallFollower, Critter } from './critters';
+} from './constants/CONSTANTS'
+import { updateCritters } from '@/constants/updateCritters'
+import { findNearestWall, deriveDirectionFromCoordinates } from '@/constants/helperFunctions'
+import { BouncingCritter, WallFollower, Critter } from '@/critters'
 
-const initdata = (function() {
-  let critterArray = [];
-  let worldMap = DEFAULT_PLAN.map((row, y) => {
-    return row.split("").map((tile, x) => {
-      if (tile === "b") {
+const initdata = (function () {
+  const critterArray: Array<any> = []
+  const worldMap = DEFAULT_PLAN.map((row, y) => {
+    return row.split('').map((tile, x) => {
+      if (tile === 'b') {
         critterArray.push(
-          new BouncingCritter(x, y, {x: 0, y: -1})
-        );
-        return " ";
-      }
-      else if (tile === "w") {
-        critterArray.push(
-          new WallFollower(x, y, {x: 0, y: -1})
+          new BouncingCritter(x, y, { x: 0, y: -1 })
         )
-        return " ";
+        return ' '
       }
-      
+      else if (tile === 'w') {
+        critterArray.push(
+          new WallFollower(x, y, { x: 0, y: -1 })
+        )
+        return ' '
+      }
+
       else {
-        return tile;
+        return tile
       }
     })
-  });
-  return [worldMap, critterArray];
-})();
+  })
+  return [worldMap, critterArray]
+})()
 
 
-export default function ElectronicLife(){
+export default function ElectronicLife () {
 
-  const [ world, setWorld ] = useState(initdata[0]);
-  const [ critters, setCritters ] = useState(initdata[1]);
+  const [ world, setWorld ] = useState(initdata[0])
+  const [ critters, setCritters ] = useState(initdata[1])
 
   // game setup
   useEffect(() => {
     const takeTurn = () => {
-      let newCritters: Array<Critter> = critters.map(critter => critter.takeTurn(world));
+      const newCritters: Array<Critter> = critters.map(critter => critter.takeTurn(world))
       // let newCritters: Array<{}> = updateCritters(critters, world);
-      setCritters(newCritters);
+      setCritters(newCritters)
     }
 
-    const gameTicks = setInterval(() => takeTurn(), 1000);
-    return () => clearInterval(gameTicks);
-  }, []);
+    const gameTicks = setInterval(() => takeTurn(), 1000)
+    return () => clearInterval(gameTicks)
+  }, [])
 
-  return(
+  return (
     <div className="main-container">
       {/* <div id="button-panel">
         <div className="div-button" id="dbutton1"></div>
@@ -62,5 +62,5 @@ export default function ElectronicLife(){
       <World worldMap={world} critters={critters} />
 
     </div>
-  );
+  )
 }

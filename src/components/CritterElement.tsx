@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { CritterElementInterface } from '../../types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { ICritterElement } from '../types'
 
-export default function CritterElement<CritterElementInterface>({tileSize, x, y, classString}){
+export default function CritterElement<ICritterElement> ({ tileSize, x, y, classString }) {
 
   const critterStyle = {
     transform: `translate(${x * tileSize}rem,${y * tileSize}rem)`

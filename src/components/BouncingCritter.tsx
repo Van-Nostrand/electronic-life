@@ -1,14 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
 
 // no longer necessary
-export default function BouncingCritter({tileSize, x, y}) {
+export default function BouncingCritter ({ tileSize, x, y }) {
 
   const critterStyle = {
     transform: `translate(${x * tileSize}rem,${y * tileSize}rem)`
   }
-  
+
   return (
     <div style={critterStyle} className="critter bouncing-critter"></div>
   )
