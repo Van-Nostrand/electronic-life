@@ -2,11 +2,17 @@ export interface ICritterProps {
   classString: string;
   critterType: string;
   foodChain: number;
-  position: ICoordinates;
-  x: number;
-  y: number;
+  position?: ICoordinates;
+  x?: number;
+  y?: number;
   facing: IRelativeCoordinates;
   speed: number;
+}
+
+export interface ICritter extends ICritterProps {
+  setPosition (newPos: ICoordinates): void;
+  setFacing (newFacing: ICoordinates): void;
+  takeTurn (): void;
 }
 
 export interface Properties {
@@ -22,17 +28,7 @@ export interface Properties {
 
 }
 
-export interface ICritter {
-  x: number;
-  y: number;
-  facing: {
-    x: number;
-    y: number;
-  }
-  foodChain: number;
-  speed: number;
-  critterType: string;
-}
+
 
 export interface IWallFollower extends ICritter {
   hasFoundWall: boolean;
@@ -49,8 +45,8 @@ export type ICritterElement = {
 }
 
 export type IWorldProps = {
-  worldMap: Array<any>;
-  critters: Array<ICritter>;
+  worldMap: Array<Array<string>>;
+  critters: Array<ICritterProps>;
 
 }
 

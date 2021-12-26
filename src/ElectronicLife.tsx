@@ -8,9 +8,10 @@ import {
 import { updateCritters } from '@/constants/updateCritters'
 import { findNearestWall, deriveDirectionFromCoordinates } from '@/constants/helperFunctions'
 import { BouncingCritter, WallFollower, Critter } from '@/critters'
+import { ICritter } from '@/types'
 
 const initdata = (function () {
-  const critterArray: Array<any> = []
+  const critterArray: Array<ICritter> = []
   const worldMap = DEFAULT_PLAN.map((row, y) => {
     return row.split('').map((tile, x) => {
       if (tile === 'b') {
@@ -43,7 +44,7 @@ export default function ElectronicLife () {
   // game setup
   useEffect(() => {
     const takeTurn = () => {
-      const newCritters: Array<Critter> = critters.map(critter => critter.takeTurn(world))
+      const newCritters = critters.map(critter => critter.takeTurn(world))
       // let newCritters: Array<{}> = updateCritters(critters, world);
       setCritters(newCritters)
     }

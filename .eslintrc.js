@@ -83,7 +83,11 @@ module.exports = {
       }
     ],
     'react/prop-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off'
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error'
+    ],
+    'no-unused-vars': 'off'
   },
   'settings': {
     'react': {

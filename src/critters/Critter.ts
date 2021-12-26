@@ -1,26 +1,18 @@
-import { ICritterProps } from '@/types'
+import { ICritterProps, ICritter } from '@/types'
 
-// export default class Critter implements ICritterProps {
-export default function Critter (props: ICritterProps) {
+export default function Critter (props: ICritterProps): ICritter {
 
   return  ({
-    // x: props.x
-    // y: props.y
-    // facing     : props.facing
-    // foodChain  : props.foodChain
-    // speed      : props.speed
-    // critterType: props.critterType
-    // classString: 'critter'
     ...props,
-    setPosition (newPos: {x: number; y: number;}): void {
+    setPosition (newPos) {
       this.x = newPos.x
       this.y = newPos.y
     },
 
-    setFacing (newFacing: {x: number; y: number;}): void {
+    setFacing (newFacing) {
       this.facing = newFacing
     },
 
-    takeTurn (): void {}
+    takeTurn () {}
   })
 }

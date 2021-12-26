@@ -1,20 +1,20 @@
 import React from 'react'
 import { CritterElement } from '@/components'
-import { getSurroundingTiles, findNearestWall } from '@/constants/helperFunctions'
-import { IWorldProps } from '@/types'
+// import { getSurroundingTiles, findNearestWall } from '@/constants/helperFunctions'
+import { IWorldProps, ICritterProps } from '@/types'
 
 
-export default function World<IWorldProps> ({ worldMap, critters }) {
+export default function World ({ worldMap = [], critters = [] }: IWorldProps) {
 
-  const getTile = (tileType, row, column = 0) => {
+  const getTile = (tileType: string, row: number, column = 0) => {
     switch (true) {
-      case tileType === '#': return <div className="wall" key={`wall-${row}-${column}`}></div>
-      case tileType === ' ': return <div className="plain-tile" key={`tile-${row}-${column}`} ></div>
+      case tileType === '#': return <div className="wall" key={`wall-${row}-${column}`} />
+      case tileType === ' ': return <div className="plain-tile" key={`tile-${row}-${column}`} />
       default: console.log('error getting tiles')
     }
   }
 
-  const getCritter = (c, number) => {
+  const getCritter = (c: ICritterProps, number: number) => {
     return (
       <CritterElement
         key={`critter-${number}`}
@@ -56,11 +56,11 @@ export default function World<IWorldProps> ({ worldMap, critters }) {
 }
 
 // just for testing
-const print2dArray = (arr) => {
-  arr.forEach(row => console.log(row.join()))
-}
+// const print2dArray = (arr) => {
+//   arr.forEach(row => console.log(row.join()))
+// }
 
-World.defaultProps = {
-  worldMap: [],
-  critters: []
-}
+// World.defaultProps = {
+//   worldMap: [],
+//   critters: []
+// }
