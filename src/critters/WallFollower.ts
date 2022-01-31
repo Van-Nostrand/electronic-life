@@ -1,7 +1,7 @@
 import Critter from './Critter';
-import { RelativeCoordinatesInterface, CoordinatesInterface } from '../../types';
-import { 
-  findNearestWall, 
+import { RelativeCoordinatesInterface, CoordinatesInterface } from '../types';
+import {
+  findNearestWall,
   deriveDirectionFromCoordinates,
   getCounterClockwiseCoordinate,
   getClockwiseCoordinate,
@@ -35,11 +35,11 @@ export default class WallFollower extends Critter {
 
   // wall followers turn is a bit more complicated than bouncing critter
   // if they aren't hugging a wall, they search their immediate surroundings for the nearest wall relative to their perspective (facing);
-  // then, if they're not beside that wall, they align their perspective to move towards it. 
+  // then, if they're not beside that wall, they align their perspective to move towards it.
   // if they're beside the wall, then the wall is found (hasFoundWall) and its coordinates are stored (wallCoordinate)
-  // I haven't written functions detailing how they will move along the walls yet... 
+  // I haven't written functions detailing how they will move along the walls yet...
   takeTurn(worldMap?: Array<Array<string>>): this | void {
-   
+
     let hasChosenDirection = false;
     let newFacing = {...this.facing};
 
@@ -56,8 +56,8 @@ export default class WallFollower extends Critter {
       // not at the wall yet
       else if (this.hasFoundWall && this.wallCoordinate.radius > 1) {
         let wallCoordinate: RelativeCoordinatesInterface = findNearestWall(this, worldMap);
-        
-        newFacing = deriveDirectionFromCoordinates(wallCoordinate.coordinates, {x: this.x, y: this.y}); 
+
+        newFacing = deriveDirectionFromCoordinates(wallCoordinate.coordinates, {x: this.x, y: this.y});
         this.wallCoordinate = wallCoordinate;
         hasChosenDirection = true;
       }
@@ -67,9 +67,9 @@ export default class WallFollower extends Critter {
         this.wallCoordinate = newWallCoordinate;
 
         // determine the next cell that the critter will face
-        // newFacing = this.movesClockwise ? 
-        //   moveClockwiseAroundCoordinate(newFacing) 
-        //   : 
+        // newFacing = this.movesClockwise ?
+        //   moveClockwiseAroundCoordinate(newFacing)
+        //   :
         //   moveCounterClockwiseAroundCoordinate(newFacing);
 
         // get the value of the cell at that coordinate
@@ -132,7 +132,7 @@ export default class WallFollower extends Critter {
   "############"
 */
 
-/* 
+/*
           critter.facing = 0,-1
           relativePosition = 4,0
           radius = 2
@@ -141,7 +141,7 @@ export default class WallFollower extends Critter {
           getClockwiseCoordinate takes x, y, arrayLength
           but I need to pass in coordinates as if the wall is the center of a 2d array and the critter is in the border
           critter is at 5,4
-          how do I get 0,2 from that? 
+          how do I get 0,2 from that?
           facing is 1,-1 thats the wall (@ 6,3)
           getClockwiseCoordinate(0,2,3)
           getClockwiseCoordinate()

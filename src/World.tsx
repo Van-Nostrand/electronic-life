@@ -1,7 +1,7 @@
 import React from "react";
 import { CritterElement } from "./components";
 import { getSurroundingTiles, findNearestWall } from './constants/helperFunctions';
-import { WorldProps } from '../types';
+import { WorldProps } from './types';
 
 
 export default function World<WorldProps>({ worldMap, critters }) {
@@ -16,11 +16,11 @@ export default function World<WorldProps>({ worldMap, critters }) {
 
   const getCritter = (c, number) => {
     return (
-      <CritterElement 
-        key={`critter-${number}`} 
-        classString={c.classString} 
-        x={c.x} 
-        y={c.y} 
+      <CritterElement
+        key={`critter-${number}`}
+        classString={c.classString}
+        x={c.x}
+        y={c.y}
       />
     )
   }
@@ -28,9 +28,9 @@ export default function World<WorldProps>({ worldMap, critters }) {
   const buildWorld = () => {
     return worldMap.map((row, i) => {
       return (
-        <div 
-          className="world-row" 
-          key={`world-row-${i}`} 
+        <div
+          className="world-row"
+          key={`world-row-${i}`}
         >
           {row.map((tile, j) => {
             return getTile(tile, j, i);
@@ -43,9 +43,9 @@ export default function World<WorldProps>({ worldMap, critters }) {
   const buildCritters = () => {
     return critters.map((critter, i) => getCritter(critter, i));
   }
- 
+
   const worldArray = buildWorld();
-  const critterArray = buildCritters();  
+  const critterArray = buildCritters();
 
   return(
     <div className="world" >

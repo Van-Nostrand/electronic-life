@@ -1,19 +1,19 @@
-import { CritterInterface, CoordinatesInterface, WallFollowerInterface, RelativeCoordinatesInterface } from '../../types';
-import { WallFollower, BouncingCritter, Critter } from '../critters';
+import { ICritter, CoordinatesInterface, WallFollowerInterface, RelativeCoordinatesInterface } from '@/types'
+import { WallFollower, BouncingCritter, Critter } from '@/critters'
 
 
 export const getSurroundingTiles = (critter: Critter, worldMap: Array<Array<string>>, radius: number = 1) => {
-  
+
   // determine the x and y range
   let getRange: Array<number> = [radius * -1, radius];
 
   // copy those coordinates to a new map
   let arrayLength: number = (getRange[1] - getRange[0]) + 1; // plus one to account for index
   let surroundings: Array<Array<string>> = new Array(arrayLength).fill(undefined).map(() => new Array(arrayLength).fill(""));
-  
-  for (let i = getRange[0], y = 0; i <= getRange[1]; i++, y++) { 
+
+  for (let i = getRange[0], y = 0; i <= getRange[1]; i++, y++) {
     for (let j = getRange[0], x = 0; j <= getRange[1]; j++, x++) {
-      // if the coordinate is the middle, where the critter is... 
+      // if the coordinate is the middle, where the critter is...
       if (i === 0 && j === 0) {
         surroundings[y][x] = critter.critterType;
       }
@@ -42,10 +42,10 @@ export const findNearestWall = (critter: WallFollower, worldMap: Array<Array<str
   // do {
     // get the critters surroundings
     // surroundings = getSurroundingTiles(critter, worldMap, radius);
-    // check each tile for a wall 
+    // check each tile for a wall
     // borderTestResults = checkBorderOf2dArray(surroundings, "#", critter.facing);
 
-    
+
 
     // if (borderTestResults !== null && borderTestResults.radius > 0) {
     //   wallFound = true;
@@ -62,11 +62,11 @@ export const findNearestWall = (critter: WallFollower, worldMap: Array<Array<str
 
 
 // this will replace checkBorderOf2dArray and getSurroundingTiles
-// currently does not account for checking a tile that is out of bounds, but if the world is correctly built with walls then that shouldn't ever happen... 
+// currently does not account for checking a tile that is out of bounds, but if the world is correctly built with walls then that shouldn't ever happen...
 export const scanSurroundingsForItem = (worldMap: Array<Array<string>>, critterPosition: {x: number; y: number;}, valueToFind: string, facingFromOrigin = {x: 0, y: -1}): RelativeCoordinatesInterface => {
 
   debugger;
-  // radius is exclusive: it does not include the center tile. so radius = 1 means it's a 3x3 grid 
+  // radius is exclusive: it does not include the center tile. so radius = 1 means it's a 3x3 grid
   let radius: number = 1;
   let iter: number;
   let directionFound: boolean = false;
@@ -77,26 +77,26 @@ export const scanSurroundingsForItem = (worldMap: Array<Array<string>>, critterP
     let startY = facingFromOrigin.y === 0 ? critterPosition.y : facingFromOrigin.y === 1 ? critterPosition.y + radius : critterPosition.y - radius;
     iter = 1;
 
-    
+
     do {
       if (iter === 1) {
         if (worldMap[startY][startX] === valueToFind) {
           return ({coordinates: {x: startX, y: startY}, radius: radius});
         }
         counterClockwiseCoordinates = {x: startX, y: startY};
-        clockwiseCoordinates = {x: startX, y: startY}; 
+        clockwiseCoordinates = {x: startX, y: startY};
       }
       else {
         counterClockwiseCoordinates = getRelativeCCwCoordinate(
-          counterClockwiseCoordinates.x, 
-          counterClockwiseCoordinates.y, 
-          {x: critterPosition.x + radius, y: critterPosition.y + radius}, 
+          counterClockwiseCoordinates.x,
+          counterClockwiseCoordinates.y,
+          {x: critterPosition.x + radius, y: critterPosition.y + radius},
           {x: critterPosition.x - radius, y: critterPosition.y - radius}
         );
         clockwiseCoordinates = getRelativeCwCoordinate(
-          clockwiseCoordinates.x, 
-          clockwiseCoordinates.y, 
-          {x: critterPosition.x + radius, y: critterPosition.y + radius}, 
+          clockwiseCoordinates.x,
+          clockwiseCoordinates.y,
+          {x: critterPosition.x + radius, y: critterPosition.y + radius},
           {x: critterPosition.x - radius, y: critterPosition.y - radius}
         );
         let counterClockwiseTile = worldMap[counterClockwiseCoordinates.y][counterClockwiseCoordinates.x];
@@ -106,8 +106,8 @@ export const scanSurroundingsForItem = (worldMap: Array<Array<string>>, critterP
           // I haven't figured out how to choose between cw and ccw so I'll just flip a coin for now
           // false will be ccw, true will be cw
           return ({
-            coordinates: Math.random() < 0.5 ? counterClockwiseCoordinates : clockwiseCoordinates, 
-            radius 
+            coordinates: Math.random() < 0.5 ? counterClockwiseCoordinates : clockwiseCoordinates,
+            radius
           });
           // return [ Math.random() < 0.5 ? counterClockwiseCoordinates : clockwiseCoordinates, radius ];
         }
@@ -122,7 +122,7 @@ export const scanSurroundingsForItem = (worldMap: Array<Array<string>>, critterP
     // if radius is 2, then iter is less than radius * 6 which is 12
     // but if radius is 2 then we need 9 checks
     // if radius is 3 then iter is less than 18
-    // but if radius is 3 then we need   
+    // but if radius is 3 then we need
     //    #######
     //    #-----#
     //    #-----#
@@ -132,7 +132,7 @@ export const scanSurroundingsForItem = (worldMap: Array<Array<string>>, critterP
     //    #######
 
     radius += 1;
-    
+
   } while (!directionFound);
 }
 
@@ -142,11 +142,11 @@ export const findNextSpaceToMoveAlongWall = (worldMap: Array<Array<string>>, wal
     let { x, y, facing, wallCoordinate, movesClockwise } = wallFollower;
     let hasChosenDirection = false;
     let newDirection;
-    
+
     do {
 
       let coordinateDirection = deriveDirectionFromCoordinates(wallCoordinate.coordinates, {x, y});
-      newDirection = movesClockwise ? 
+      newDirection = movesClockwise ?
         moveClockwiseAroundCoordinate(coordinateDirection)
         :
         moveCounterClockwiseAroundCoordinate(coordinateDirection);
@@ -165,7 +165,7 @@ export const findNextSpaceToMoveAlongWall = (worldMap: Array<Array<string>>, wal
     } while (!hasChosenDirection);
 
     return [ newDirection, wallCoordinate ];
-    
+
 }
 
 
@@ -180,13 +180,13 @@ export const checkBorderOf2dArray = (twoDeeArr: Array<Array<string>>, valueToFin
     return null;
   }
 
-  let radius: number = (twoDeeArr.length - 1) / 2; // the 2d array will always be an odd number length so this works... 
+  let radius: number = (twoDeeArr.length - 1) / 2; // the 2d array will always be an odd number length so this works...
   let startX: number = facingFromOrigin.x === 0 ? radius : facingFromOrigin.x > 0 ? radius * 2 : 0;
   let startY: number = facingFromOrigin.y === 0 ? radius : facingFromOrigin.y > 0 ? radius * 2 : 0;
   let iter: number = 1;
-  let maxChecks: number = (twoDeeArr.length - 1) * 4;  
+  let maxChecks: number = (twoDeeArr.length - 1) * 4;
   let counterClockwiseCoordinates: CoordinatesInterface | Error = {x: startX, y: startY};
-  let clockwiseCoordinates: CoordinatesInterface | Error = {x: startX, y: startY}; 
+  let clockwiseCoordinates: CoordinatesInterface | Error = {x: startX, y: startY};
   let directionFound: boolean = false;
   do {
     // do the single initial check
@@ -215,8 +215,8 @@ export const checkBorderOf2dArray = (twoDeeArr: Array<Array<string>>, valueToFin
       if (counterClockwiseTile === valueToFind && clockwiseTile === valueToFind) {
         // false will be ccw, true will be cw
         return ({
-          coordinates: Math.random() < 0.5 ? counterClockwiseCoordinates : clockwiseCoordinates, 
-          radius 
+          coordinates: Math.random() < 0.5 ? counterClockwiseCoordinates : clockwiseCoordinates,
+          radius
         });
         // return [ Math.random() < 0.5 ? counterClockwiseCoordinates : clockwiseCoordinates, radius ];
       }
@@ -230,7 +230,7 @@ export const checkBorderOf2dArray = (twoDeeArr: Array<Array<string>>, valueToFin
 
   if (iter > maxChecks) console.log("something is seriously wrong in checkBorderOf2dArray");
   return ({ coordinates: {x:0,y:0}, radius: -2 }); // indicates that something failed
-} 
+}
 
 export const getRelativeCCwCoordinate = (x: number, y: number, upperBounds: {x: number; y: number;}, lowerBounds: {x: number; y: number;}): CoordinatesInterface => {
   switch(true) {
@@ -300,7 +300,7 @@ export const moveClockwiseAroundCoordinate = (facing: CoordinatesInterface): Coo
       return ({ x: 0, y: 1 }); // move down
     case facing.y === 1 && facing.x > -1:
       return ({ x: 1, y: 0 }); // move right
-    case facing.x === 1 && facing.y < 1: 
+    case facing.x === 1 && facing.y < 1:
       return ({ x: 0, y: -1 }); // move up
     default: return ({x: -2, y: -2});
   }
@@ -315,7 +315,7 @@ export const moveCounterClockwiseAroundCoordinate = (facing: CoordinatesInterfac
       return ({ x: 0, y: 1 }); // move down
     case facing.y === -1 && facing.x > -1:
       return ({ x: 1, y: 0 }); // move right
-    case facing.x === -1 && facing.y < 1: 
+    case facing.x === -1 && facing.y < 1:
       return ({ x: 0, y: -1 }); // move up
     default: return ({x: -2, y: -2});
   }
@@ -323,14 +323,14 @@ export const moveCounterClockwiseAroundCoordinate = (facing: CoordinatesInterfac
 
 // returns coordinates describing the direction of a point relative to the position of the calling object
 export const deriveDirectionFromCoordinates = (
-  targetCoordinates: CoordinatesInterface, 
+  targetCoordinates: CoordinatesInterface,
   currentCoordinates: CoordinatesInterface,
 ): {x: number, y: number} => {
   // targetCoordinates = 5,3
   // radius = 2
   // currentCoordinates = 3,3
   let direction: {x: number; y: number;} = {
-    x: targetCoordinates.x > currentCoordinates.x ? 1 : targetCoordinates.x < currentCoordinates.x ? -1 : 0, 
+    x: targetCoordinates.x > currentCoordinates.x ? 1 : targetCoordinates.x < currentCoordinates.x ? -1 : 0,
     y: targetCoordinates.y > currentCoordinates.y ? 1 : targetCoordinates.y < currentCoordinates.y ? -1 : 0
   };
 

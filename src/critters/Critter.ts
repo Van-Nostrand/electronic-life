@@ -1,4 +1,4 @@
-import { CoordinatesInterface } from '../../types';
+import { CoordinatesInterface } from '../types';
 
 export default class Critter {
   x: number;
@@ -10,12 +10,12 @@ export default class Critter {
   classString: string;
 
   constructor(x, y, facing, foodChain, speed, critterType) {
-    this.x              = x; 
-    this.y              = y; 
-    this.facing         = facing; 
-    this.foodChain      = foodChain; 
+    this.x              = x;
+    this.y              = y;
+    this.facing         = facing;
+    this.foodChain      = foodChain;
     this.speed          = speed;
-    this.critterType    = critterType; 
+    this.critterType    = critterType;
     this.classString    = 'critter';
   }
 

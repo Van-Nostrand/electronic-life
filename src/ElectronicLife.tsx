@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import World from "./World";
-// import "./ElectronicLife.css";
+import React, { useState, useEffect } from 'react'
+import World from "@/World"
 import {
   DEFAULT_PLAN,
   updateGrid,
-} from "./constants/CONSTANTS";
-import { updateCritters } from "./constants/updateCritters";
-import { findNearestWall, deriveDirectionFromCoordinates } from './constants/helperFunctions';
-import { BouncingCritter, WallFollower, Critter } from './critters';
+} from "@/constants/CONSTANTS";
+import { updateCritters } from "@/constants/updateCritters"
+import { findNearestWall, deriveDirectionFromCoordinates } from '@/constants/helperFunctions'
+import { BouncingCritter, WallFollower, Critter } from '@/critters'
 
 const initdata = (function() {
-  let critterArray = [];
-  let worldMap = DEFAULT_PLAN.map((row, y) => {
+  const critterArray = [];
+  const worldMap = DEFAULT_PLAN.map((row, y) => {
     return row.split("").map((tile, x) => {
       if (tile === "b") {
         critterArray.push(
@@ -25,7 +24,7 @@ const initdata = (function() {
         )
         return " ";
       }
-      
+
       else {
         return tile;
       }

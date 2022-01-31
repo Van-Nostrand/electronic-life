@@ -22,10 +22,10 @@ export interface Properties {
   };
   foodChain: number;
   speed: number;
-  
+
 }
 
-export interface CritterInterface {
+export interface ICritter {
   x: number;
   y: number;
   facing: {
@@ -37,8 +37,8 @@ export interface CritterInterface {
   critterType: string;
 }
 
-export interface WallFollowerInterface extends CritterInterface {
-  hasFoundWall: boolean; 
+export interface WallFollowerInterface extends ICritter {
+  hasFoundWall: boolean;
   wallCoordinate: {coordinates: {x: number; y: number;}, radius: number;};
   movesClockwise: boolean;
 
@@ -53,7 +53,7 @@ export type CritterElementInterface = {
 
 export type WorldProps = {
   worldMap: Array<any>;
-  critters: Array<CritterInterface>;
+  critters: Array<ICritter>;
 
 }
 

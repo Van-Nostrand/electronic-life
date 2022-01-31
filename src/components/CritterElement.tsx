@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CritterElementInterface } from '../../types';
+import { CritterElementInterface } from '../types';
 
 export default function CritterElement<CritterElementInterface>({tileSize, x, y, classString}){
 
