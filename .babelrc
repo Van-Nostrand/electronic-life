@@ -10,7 +10,7 @@
       "module-resolver",
       {
         "root": "./src",
-        "extensions": [".js", ".scss", ".css", ".json", ".svg"],
+        "extensions": [".js", ".ts", ".tsx", ".scss", ".css", ".json", ".svg"],
         "alias": {
           "@": "./src"
         }

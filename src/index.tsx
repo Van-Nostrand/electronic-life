@@ -1,6 +1,6 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import ElectronicLife from './ElectronicLife';
-import "./scss/main.scss";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import ElectronicLife from '@/ElectronicLife'
+import '@/scss/main.scss'
 
-ReactDOM.render(<ElectronicLife />, document.getElementById("root"));
+ReactDOM.render(<ElectronicLife />, document.getElementById('root'))

@@ -1,33 +1,18 @@
-import { CoordinatesInterface } from '../types';
+import { ICritterProps, ICritter } from '@/types'
 
-export default class Critter {
-  x: number;
-  y: number;
-  facing: CoordinatesInterface;
-  foodChain: number;
-  speed: number;
-  critterType: string;
-  classString: string;
+export default function Critter (props: ICritterProps): ICritter {
 
-  constructor(x, y, facing, foodChain, speed, critterType) {
-    this.x              = x;
-    this.y              = y;
-    this.facing         = facing;
-    this.foodChain      = foodChain;
-    this.speed          = speed;
-    this.critterType    = critterType;
-    this.classString    = 'critter';
-  }
+  return  ({
+    ...props,
+    setPosition (newPos) {
+      this.x = newPos.x
+      this.y = newPos.y
+    },
 
-  setPosition(newPos: {x: number; y: number;}): void {
-    this.x = newPos.x;
-    this.y = newPos.y;
-  };
+    setFacing (newFacing) {
+      this.facing = newFacing
+    },
 
-  setFacing(newFacing: {x: number; y: number;}): void {
-    this.facing = newFacing;
-  }
-
-  takeTurn(): void {};
-
+    takeTurn () {}
+  })
 }
