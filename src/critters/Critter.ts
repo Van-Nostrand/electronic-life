@@ -1,6 +1,9 @@
-import { ICoordinates, ICritterProps } from '../types'
-
-export default class Critter {
+import {
+  ICoordinates,
+  ICritterProps
+} from '@/types'
+import { ICritterClass } from './types'
+export default class Critter implements ICritterClass {
   x: number
   y: number
   facing: ICoordinates
@@ -25,9 +28,7 @@ export default class Critter {
   setFacing (newFacing: {x: number; y: number;}): void {
     this.facing = newFacing
   }
-
-  takeTurn (): void {
-    return
+  takeTurn (): this | Error {
+    return this
   }
-
 }

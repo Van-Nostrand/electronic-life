@@ -44,7 +44,7 @@ export default class WallFollower extends Critter {
   // then, if they're not beside that wall, they align their perspective to move towards it.
   // if they're beside the wall, then the wall is found (hasFoundWall) and its coordinates are stored (wallCoordinate)
   // I haven't written functions detailing how they will move along the walls yet...
-  takeTurn (worldMap?: Array<Array<string>>): this | void {
+  takeTurn (worldMap?: Array<Array<string>>): this | Error {
 
     let hasChosenDirection = false
     let newDirection = { ...this.facing }

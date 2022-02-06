@@ -16,12 +16,12 @@ export interface ICritter {
     x: number;
     y: number;
   },
-  takeTurn: Function
+  takeTurn: () => this | Error
 }
 
-export interface IBouncingCritter extends ICritter {}
+// export interface IBouncingCritter extends ICritter {}
 
-export interface IBouncingCritterProps extends ICritterProps {}
+// export interface IBouncingCritterProps extends ICritterProps {}
 
 export interface IWallFollower extends ICritter {
   hasFoundWall: boolean;
@@ -40,10 +40,11 @@ export interface ICritterElement extends FC {
   props: ICritterElementProps
 }
 
-export type IWorldProps = {
-  worldMap: Array<Array<string>>;
-  critters: Array<ICritter>;
+export type TWorldMap = Array<Array<string>>
 
+export type IWorldProps = {
+  worldMap: TWorldMap
+  critters: Array<ICritter>
 }
 
 export interface ICoordinates {
@@ -57,28 +58,3 @@ export interface IRelativeCoordinates {
   radius: number;
 }
 
-// export interface CreatureProps {
-//   properties: {
-//     critterType: string;
-//     x: number;
-//     y: number;
-//     facing: {
-//       x: number;
-//       y: number;
-//     };
-//     foodChain: number;
-//     speed: number;
-//   }
-// }
-
-// export interface Properties {
-//   critterType: string;
-//   x: number;
-//   y: number;
-//   facing: {
-//     x: number;
-//     y: number;
-//   };
-//   foodChain: number;
-//   speed: number;
-// }

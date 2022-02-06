@@ -1,9 +1,9 @@
 import Critter from './Critter'
-import { IBouncingCritterProps } from '@/types'
+import { ICritterProps } from '@/types'
 
 export default class BouncingCritter extends Critter {
 
-  constructor (props: IBouncingCritterProps) {
+  constructor (props: ICritterProps) {
     super({ x: props.x, y: props.y, facing: props.facing })
     this.critterType = 'b'
     this.foodChain = 0
