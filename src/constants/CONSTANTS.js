@@ -137,12 +137,12 @@ export function creatureViews (creatureArray, gridArray) {
 }
 
 //update the grid and creatures arrays
-export function updateGrid (newCreatures, newGrid) {
-  newCreatures.forEach((creature, i) => {
-    newGrid[creature.x + creature.facing.x][creature.y + creature.facing.y] = creaturecritterType
-    newGrid[creature.x][creature.y] = ' '
-    creature.x = creature.x + creature.facing.x
-    creature.y = creature.y + creature.facing.y
+export function updateGrid (newCritters, newGrid) {
+  newCritters.forEach((critter) => {
+    newGrid[critter.x + critter.facing.x][critter.y + critter.facing.y] = critter.critterType
+    newGrid[critter.x][critter.y] = ' '
+    critter.x = critter.x + critter.facing.x
+    critter.y = critter.y + critter.facing.y
   })
 
   return newGrid

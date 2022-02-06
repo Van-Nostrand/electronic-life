@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 
 // no longer necessary
-export default function WallFollower({x, y, tileSize}) {
+export default function WallFollower ({ x, y, tileSize }) {
 
   const critterStyle = {
     transform: `translate(${x * tileSize}rem,${y * tileSize}rem)`
   }
-  return(
+  return (
     <div style={critterStyle} className="critter wall-follower"></div>
   )
 }
