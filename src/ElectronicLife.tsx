@@ -8,7 +8,7 @@ import {
 import { updateCritters } from '@/constants/updateCritters'
 import { findNearestWall, deriveDirectionFromCoordinates } from '@/constants/helperFunctions'
 import { BouncingCritter, WallFollower, Critter } from '@/critters'
-import { ICritter } from '@/types'
+import { ICritter } from '@/critters/types'
 
 const initdata = (function () {
   const critterArray: Array<ICritter> = []
@@ -16,13 +16,13 @@ const initdata = (function () {
     return row.split('').map((tile, x) => {
       if (tile === 'b') {
         critterArray.push(
-          new BouncingCritter(x, y, { x: 0, y: -1 })
+          BouncingCritter({x, y, facing: { x: 0, y: -1 }})
         )
         return ' '
       }
       else if (tile === 'w') {
         critterArray.push(
-          new WallFollower(x, y, { x: 0, y: -1 })
+          WallFollower({x, y, facing: { x: 0, y: -1 }})
         )
         return ' '
       }
@@ -44,7 +44,7 @@ export default function ElectronicLife () {
   // game setup
   useEffect(() => {
     const takeTurn = () => {
-      let newCritters: Array<Critter> = critters.map(critter => critter.takeTurn(world));
+      let newCritters: Array<ICritter> = critters.map(critter => critter.takeTurn(world));
       // let newCritters: Array<{}> = updateCritters(critters, world);
       setCritters(newCritters);
     }

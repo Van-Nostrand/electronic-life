@@ -1,6 +1,7 @@
 import { Critter } from '../critters'
+import { ICritter } from '@/critters/types'
 //update the critters array
-export const updateCritters = (critterArray: Array<Critter>, worldArray) => {
+export const updateCritters = (critterArray: Array<ICritter>, worldArray: Array<Array<String>>) => {
 
   const CARDINAL_DIRECTIONS = [
     { x: 0, y: -1 }, //n

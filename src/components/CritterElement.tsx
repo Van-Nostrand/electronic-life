@@ -1,8 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { ICritterElement } from '../types'
+import { ICritterElementProps } from '@/types'
 
-export default function CritterElement<ICritterElement> ({ tileSize, x, y, classString }) {
+export default function CritterElement ({ tileSize = 2.5, x, y, classString }: ICritterElementProps): JSX.Element {
 
   const critterStyle = {
     transform: `translate(${x * tileSize}rem,${y * tileSize}rem)`
@@ -10,16 +9,4 @@ export default function CritterElement<ICritterElement> ({ tileSize, x, y, class
   return (
     <div style={critterStyle} className={classString}></div>
   )
-}
-
-CritterElement.defaultProps = {
-  tileSize: 2.5,
-  classString: 'critter'
-}
-
-CritterElement.propTypes = {
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  classString: PropTypes.string,
-  tileSize: PropTypes.number
 }

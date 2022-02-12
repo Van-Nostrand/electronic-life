@@ -1,5 +1,16 @@
-import { ICritter, ICoordinates, IWallFollower, IRelativeCoordinates } from '@/types'
-import { WallFollower, BouncingCritter, Critter } from '@/critters'
+import {
+  ICoordinates,
+  IRelativeCoordinates
+} from '@/types'
+import {
+  IWallFollower,
+  ICritter
+} from '@/critters/types'
+import {
+  WallFollower,
+  BouncingCritter,
+  Critter
+} from '@/critters'
 
 
 export const getSurroundingTiles = (critter: ICritter, worldMap: Array<Array<string>>, radius: number = 1) => {
@@ -32,7 +43,7 @@ export const getSurroundingTiles = (critter: ICritter, worldMap: Array<Array<str
 
 
 // this will search the area around the critter for the nearest wall
-export const findNearestWall = (critter: WallFollower, worldMap: Array<Array<string>>): IRelativeCoordinates => {
+export const findNearestWall = (critter: IWallFollower, worldMap: Array<Array<string>>): IRelativeCoordinates => {
   let surroundings: Array<Array<string>>
   const wallFound = false
   const radius = 1
@@ -63,7 +74,12 @@ export const findNearestWall = (critter: WallFollower, worldMap: Array<Array<str
 
 // this will replace checkBorderOf2dArray and getSurroundingTiles
 // currently does not account for checking a tile that is out of bounds, but if the world is correctly built with walls then that shouldn't ever happen...
-export const scanSurroundingsForItem = (worldMap: Array<Array<string>>, critterPosition: {x: number; y: number;}, valueToFind: string, facingFromOrigin = { x: 0, y: -1 }): IRelativeCoordinates => {
+export const scanSurroundingsForItem = (
+  worldMap: Array<Array<string>>,
+  critterPosition: {x: number; y: number;},
+  valueToFind: string,
+  facingFromOrigin: ICoordinates = { x: 0, y: -1 }
+): IRelativeCoordinates => {
 
   debugger
   // radius is exclusive: it does not include the center tile. so radius = 1 means it's a 3x3 grid
@@ -73,10 +89,18 @@ export const scanSurroundingsForItem = (worldMap: Array<Array<string>>, critterP
   let counterClockwiseCoordinates, clockwiseCoordinates: ICoordinates
 
   do {
-    const startX = facingFromOrigin.x === 0 ? critterPosition.x : facingFromOrigin.x === 1 ? critterPosition.x + radius : critterPosition.x - radius
-    const startY = facingFromOrigin.y === 0 ? critterPosition.y : facingFromOrigin.y === 1 ? critterPosition.y + radius : critterPosition.y - radius
-    iter = 1
+    const startX = facingFromOrigin.x === 0
+      ? critterPosition.x
+      : facingFromOrigin.x === 1
+        ? critterPosition.x + radius
+        : critterPosition.x - radius
+    const startY = facingFromOrigin.y === 0
+      ? critterPosition.y
+      : facingFromOrigin.y === 1
+        ? critterPosition.y + radius
+        : critterPosition.y - radius
 
+    iter = 1
 
     do {
       if (iter === 1) {
@@ -138,7 +162,7 @@ export const scanSurroundingsForItem = (worldMap: Array<Array<string>>, critterP
 
 
 // the wall follower has chosen a wall and needs to figure out where the next cell adjacent to the wall is
-export const findNextSpaceToMoveAlongWall = (worldMap: Array<Array<string>>, wallFollower: IWallFollower) => {
+export const findNextSpaceToMoveAlongWall = (worldMap: Array<Array<string>>, wallFollower: IWallFollower): [ ICoordinates, IRelativeCoordinates ] => {
   const { x, y, facing, wallCoordinate, movesClockwise } = wallFollower
   let hasChosenDirection = false
   let newDirection
@@ -378,7 +402,7 @@ export const CARDINAL_STRING_FROM_COORDINATE = {
   '-1,-1': 'nw'
 }
 
-export const getCardinalString = (x, y) => {
+export const getCardinalString = (x: number, y: number) => {
   if (x === 0) {
     if (y === 1) return 's'
     else return 'n'

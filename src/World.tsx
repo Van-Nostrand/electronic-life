@@ -1,7 +1,8 @@
 import React from 'react'
 import { CritterElement } from '@/components'
-// import { getSurroundingTiles, findNearestWall } from '@/constants/helperFunctions'
-import { IWorldProps, ICritterProps } from '@/types'
+
+import { IWorldProps } from '@/types'
+import { ICritterProps } from '@/critters/types'
 
 
 export default function World ({ worldMap = [], critters = [] }: IWorldProps) {

@@ -1,9 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
 
 // no longer necessary
-export default function BouncingCritter ({ tileSize, x, y }) {
+export default function BouncingCritter ({ tileSize, x, y }: {tileSize: number, x: number, y: number }) {
 
   const critterStyle = {
     transform: `translate(${x * tileSize}rem,${y * tileSize}rem)`
@@ -18,8 +16,3 @@ BouncingCritter.defaultProps = {
   tileSize: 2.5
 }
 
-BouncingCritter.propTypes = {
-  tileSize: PropTypes.number,
-  x: PropTypes.number,
-  y: PropTypes.number
-}

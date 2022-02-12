@@ -1,7 +1,7 @@
 import React from 'react'
 
 // no longer necessary
-export default function WallFollower ({ x, y, tileSize }) {
+export default function WallFollower ({ x, y, tileSize }: {x:number, y:number, tileSize:number}) {
 
   const critterStyle = {
     transform: `translate(${x * tileSize}rem,${y * tileSize}rem)`

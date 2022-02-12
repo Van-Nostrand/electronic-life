@@ -1,19 +1,17 @@
 import Critter from './Critter'
-import { ICritterProps, ICritter } from '@/types'
+import { ICritterProps, ICritter } from '@/critters/types'
 
-export default function BouncingCritter (props: ICritterProps) {
-// export default class BouncingCritter extends Critter {
-
-  // constructor (x: number, y: number, facing: {x: number; y: number;}) {
-  //   super(x, y, facing, 0, 1, 'b')
-  // }
+export default function BouncingCritter ({
+  classString = 'critter bouncing-critter',
+  critterType = 'b',
+  foodChain = 1,
+  facing = { x: 0, y: -1 },
+  speed = 1,
+  x, y, position
+}: ICritterProps) {
 
   return ({
-    ...Critter({
-      ...props,
-      classString: 'critter bouncing-critter',
-      critterType: 'b'
-    }),
+    ...Critter({classString, critterType, foodChain, facing, speed, x, y, position}),
     // bouncing critters are pretty simple
     // if they are facing an empty cell, then they move there
     // if they are not, then they will select a new random direction and see if that cell is clear
