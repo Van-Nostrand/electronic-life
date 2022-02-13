@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import World from './World'
-// import "./ElectronicLife.css";
+// // import "./ElectronicLife.css";
 import {
   DEFAULT_PLAN,
-  // updateGrid,
+//   // updateGrid,
 } from '@/constants/CONSTANTS'
-// import { updateCritters } from '@/constants/updateCritters'
-// import { findNearestWall, deriveDirectionFromCoordinates } from '@/constants/helperFunctions'
+// // import { updateCritters } from '@/constants/updateCritters'
+// // import { findNearestWall, deriveDirectionFromCoordinates } from '@/constants/helperFunctions'
 import { BouncingCritter, WallFollower } from '@/critters'
 import { ICritter } from '@/critters/types'
 
@@ -82,6 +82,7 @@ export default function ElectronicLife () {
         <div className="div-button" id="dbutton2"></div>
         <div className="div-button" id="dbutton3"></div>
       </div> */}
+      {/* <div className="critter bouncing-critter critter-facing-nw"></div> */}
       <World
         worldMap={world}
         critters={critters}

@@ -2,6 +2,7 @@ import React from 'react'
 import { CritterElement } from '@/components'
 import { IWorldProps } from '@/types'
 import { ICritterProps } from '@/critters/types'
+import { getCardinalString } from '@/constants/CONSTANTS'
 
 /**
  * World
@@ -20,10 +21,11 @@ export default function World ({ worldMap = [], critters = [] }: IWorldProps) {
   }
 
   const getCritter = (c: ICritterProps, number: number) => {
+    const newClassString: string = c.classString + ' ' + 'critter-facing-' + getCardinalString(c.facing.x, c.facing.y)
     return (
       <CritterElement
         key={`critter-${number}`}
-        classString={c.classString}
+        classString={newClassString}
         x={c.x}
         y={c.y}
       />
