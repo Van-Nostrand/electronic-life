@@ -1,5 +1,6 @@
 import { ICritter } from '@/critters/types'
 import { TWorldMap } from '@/types'
+
 export const DEFAULT_PLAN = [
   '############################',
   '#      #b   #             ##',

@@ -1,24 +1,18 @@
 import Critter from './Critter'
 import {
   IRelativeCoordinates,
-  // ICoordinates
 } from '@/types'
 import {
   ICritterProps,
-  // ICritter,
   IWallFollower
 } from '@/critters/types'
 import {
   findNearestWall,
   deriveDirectionFromCoordinates,
-  // getCounterClockwiseCoordinate,
-  // getClockwiseCoordinate,
-  // moveClockwiseAroundCoordinate,
-  // moveCounterClockwiseAroundCoordinate,
   findNextSpaceToMoveAlongWall
-} from '../constants/helperFunctions' // temporary
+} from '@/constants/helperFunctions' // temporary
 
-import { ALL_CRITTER_TYPES } from '../constants/CONSTANTS'
+import { ALL_CRITTER_TYPES } from '@/constants/CONSTANTS'
 
 export default function WallFollower ({
   classString = 'critter wall-follower',

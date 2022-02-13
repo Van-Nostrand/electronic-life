@@ -41,13 +41,26 @@ export const getSurroundingTiles = (critter: ICritter, worldMap: Array<Array<str
   return surroundings
 }
 
+export const faceNewRandomDirection = (oldDirection: ICoordinates): ICoordinates => {
+  let newDirectionIsGood = false
+  const newDirection: ICoordinates = { x: 0, y: 0 }
+  do {
+    newDirection.x = Math.floor(Math.random()*3) - 1
+    newDirection.y = Math.floor(Math.random()*3) - 1
+    // if the new direction does not equal the old direction and the critter isn't just staring at their feet
+    if (newDirection.x !== oldDirection.x && newDirection.y !== oldDirection.y && !(newDirection.x === 0 && newDirection.y === 0)) newDirectionIsGood = true
+  } while (!newDirectionIsGood)
+
+  return newDirection
+}
+
 
 // this will search the area around the critter for the nearest wall
 export const findNearestWall = (critter: IWallFollower, worldMap: Array<Array<string>>): IRelativeCoordinates => {
-  let surroundings: Array<Array<string>>
-  const wallFound = false
-  const radius = 1
-  let borderTestResults
+  // let surroundings: Array<Array<string>>
+  // const wallFound = false
+  // const radius = 1
+  // let borderTestResults
   const target = scanSurroundingsForItem(worldMap, { x: critter.x, y: critter.y }, '#', critter.facing)
   console.log('src/constants/helperFunctions.ts: target is ', target)
   // do {

@@ -1,16 +1,20 @@
 import React from 'react'
 import { CritterElement } from '@/components'
-
 import { IWorldProps } from '@/types'
 import { ICritterProps } from '@/critters/types'
 
-
+/**
+ * World
+ * This handles rendering. It's a dumb box
+ */
 export default function World ({ worldMap = [], critters = [] }: IWorldProps) {
 
   const getTile = (tileType: string, row: number, column = 0) => {
     switch (true) {
-      case tileType === '#': return <div className="wall" key={`wall-${row}-${column}`} />
-      case tileType === ' ': return <div className="plain-tile" key={`tile-${row}-${column}`} />
+      case tileType === '#':
+        return <div className="wall" key={`wall-${row}-${column}`} />
+      case tileType === ' ':
+        return <div className="plain-tile" key={`tile-${row}-${column}`} />
       default: console.log('error getting tiles')
     }
   }
@@ -45,15 +49,10 @@ export default function World ({ worldMap = [], critters = [] }: IWorldProps) {
     return critters.map((critter, i) => getCritter(critter, i))
   }
 
-  // const worldArray = buildWorld()
-  // const critterArray = buildCritters()
-
   return (
     <div className="world" >
-      {/* {worldArray ? worldArray : null} */}
       { renderWorld() }
       { renderCritters() }
-      {/* {critterArray ? critterArray : null} */}
     </div>
   )
 }
@@ -61,9 +60,4 @@ export default function World ({ worldMap = [], critters = [] }: IWorldProps) {
 // just for testing
 // const print2dArray = (arr) => {
 //   arr.forEach(row => console.log(row.join()))
-// }
-
-// World.defaultProps = {
-//   worldMap: [],
-//   critters: []
 // }

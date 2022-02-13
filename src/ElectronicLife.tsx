@@ -10,7 +10,13 @@ import {
 import { BouncingCritter, WallFollower } from '@/critters'
 import { ICritter } from '@/critters/types'
 
+/**
+ * this creates two arrays, and then reads a starting plan (2d array of chars) and fills the arrays based on that
+ * critterArray is linear and is filled with critter objects with properties based on what is read out of the starting plan
+ * worldMap is a 2d array of tiles that represent the world - spaces and #s
+ */
 const initdata = (function () {
+  console.log('INIT DATA IS RUNNING')
   const critterArray: Array<ICritter> = []
   const worldMap = DEFAULT_PLAN.map((row: any, y: number) => {
     return row.split('').map((tile: any, x: number) => {
@@ -35,7 +41,10 @@ const initdata = (function () {
   return [worldMap, critterArray]
 })()
 
-
+/**
+ * ElectronicLife
+ * this runs the main loop and tells each critter to take a turn
+ */
 export default function ElectronicLife () {
 
   const world = initdata[0]
@@ -73,7 +82,10 @@ export default function ElectronicLife () {
         <div className="div-button" id="dbutton2"></div>
         <div className="div-button" id="dbutton3"></div>
       </div> */}
-      <World worldMap={world} critters={critters} />
+      <World
+        worldMap={world}
+        critters={critters}
+      />
 
     </div>
   )
