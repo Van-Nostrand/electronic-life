@@ -11,7 +11,7 @@ export default function BouncingCritter ({
 }: ICritterProps) {
 
   return ({
-    ...Critter({classString, critterType, foodChain, facing, speed, x, y, position}),
+    ...Critter({ classString, critterType, foodChain, facing, speed, x, y, position }),
     // bouncing critters are pretty simple
     // if they are facing an empty cell, then they move there
     // if they are not, then they will select a new random direction and see if that cell is clear

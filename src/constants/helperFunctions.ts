@@ -6,11 +6,11 @@ import {
   IWallFollower,
   ICritter
 } from '@/critters/types'
-import {
-  WallFollower,
-  BouncingCritter,
-  Critter
-} from '@/critters'
+// import {
+//   WallFollower,
+//   BouncingCritter,
+//   Critter
+// } from '@/critters'
 
 
 export const getSurroundingTiles = (critter: ICritter, worldMap: Array<Array<string>>, radius: number = 1) => {

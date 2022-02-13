@@ -1,3 +1,5 @@
+import { ICritter } from '@/critters/types'
+import { TWorldMap } from '@/types'
 export const DEFAULT_PLAN = [
   '############################',
   '#      #b   #             ##',
@@ -98,7 +100,7 @@ export const CARDINAL_STRING_FROM_COORDINATE = {
   '-1,-1': 'nw'
 }
 
-export const getCardinalString = (x, y) => {
+export const getCardinalString = (x: number, y: number) => {
   if (x === 0) {
     if (y === 1) return 's'
     else return 'n'
@@ -116,33 +118,35 @@ export const getCardinalString = (x, y) => {
 }
 
 //this creates an array of length 8 representing 8 directions of travel
-//each index is either true or false, representing if a creature can move there
-export function creatureViews (creatureArray, gridArray) {
-  creatureArray.forEach((creature, i) => {
-    const surroundingArea = new Array(8).fill()
+//each index is either true or false, representing if a critter can move there
+export function critterViews (critterArray: Array<ICritter>, gridArray: TWorldMap) {
+  critterArray.forEach((critter, i) => {
+    const surroundingArea = new Array(8).fill(null)
 
     surroundingArea.map((cell, n) => {
-      const cellLocation = [creature.x + DIRECTIONS[n].x, creature.y + DIRECTIONS[n].y]
-      const j = creatureArray.length - 1
+      const cellLocation = [critter.x + DIRECTIONS[n].x, critter.y + DIRECTIONS[n].y]
+      const j = critterArray.length - 1
       for (let c = i + 1; c < j; c++) {
-        // if not occupied by creature - IGNORE FOR NOW
-        // if((creatureArray[c].x === cellLocation[0])&&(creatureArray[c].y === cellLocation[1])) return false;
+        // if not occupied by critter - IGNORE FOR NOW
+        // if((critterArray[c].x === cellLocation[0])&&(critterArray[c].y === cellLocation[1])) return false;
         // if not a wall
         if (gridArray[cellLocation[0]][cellLocation[1]] === '#' ) return false
       }
       return true
     })
-    creatureArray[i].view = surroundingArea
+    critterArray[i].view = surroundingArea
   })
 }
 
-//update the grid and creatures arrays
-export function updateGrid (newCreatures, newGrid) {
-  newCreatures.forEach((creature, i) => {
-    newGrid[creature.x + creature.facing.x][creature.y + creature.facing.y] = creaturecritterType
-    newGrid[creature.x][creature.y] = ' '
-    creature.x = creature.x + creature.facing.x
-    creature.y = creature.y + creature.facing.y
+//update the grid and critters arrays
+// is the grid supposed to be a map of critters?
+// !!!this mutates but does not return newCritters!!!
+export function updateGrid (newCritters: Array<ICritter>, newGrid: Array<Array<string>>) {
+  newCritters.forEach((critter) => {
+    newGrid[critter.x + critter.facing.x][critter.y + critter.facing.y] = critter.critterType
+    newGrid[critter.x][critter.y] = ' '
+    critter.x = critter.x + critter.facing.x
+    critter.y = critter.y + critter.facing.y
   })
 
   return newGrid

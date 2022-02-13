@@ -1,14 +1,15 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const path = require("path");
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
+const path = require('path')
 
 module.exports ={
-  entry: __dirname + "/src/index.tsx",
+  entry: __dirname + '/src/index.tsx',
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "[name].bundle.js",
-    publicPath: "/",
-    assetModuleFilename: "images/[hash]-[name][ext]"
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].bundle.js',
+    publicPath: '/',
+    assetModuleFilename: 'images/[hash]-[name][ext]'
   },
   module: {
     rules: [
@@ -16,12 +17,12 @@ module.exports ={
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader'
         }
       },
       {
         test: /\.(jpe?g|svg|png|gif)$/,
-        type: "asset/resource"
+        type: 'asset/resource'
       },
       {
         test: /\.tsx?$/,
@@ -30,7 +31,7 @@ module.exports ={
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       },
       {
         test: /\.s[ac]ss$/i,
@@ -49,16 +50,17 @@ module.exports ={
     ]
   },
   resolve: {
-    extensions: ['.tsx','.ts','.js']
+    extensions: ['.tsx', '.ts', '.js'],
+    plugins: [new TsconfigPathsPlugin()]
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: path.resolve(__dirname, "public/index.html"),
-      inject: "body"
+      template: path.resolve(__dirname, 'public/index.html'),
+      inject: 'body'
     }),
     new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
+      filename: '[name].css',
+      chunkFilename: '[id].css'
     })
   ]
-};
+}

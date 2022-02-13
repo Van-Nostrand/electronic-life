@@ -1,5 +1,6 @@
 import {
   ICoordinates,
+  TWorldMap
 } from '@/types'
 import {
   ICritterProps,
@@ -10,6 +11,7 @@ export default function Critter (props: ICritterProps): ICritter {
 
   return ({
     ...props,
+    view: null,
     setPosition (newPos): void {
       this.x = newPos.x
       this.y = newPos.y
@@ -19,6 +21,6 @@ export default function Critter (props: ICritterProps): ICritter {
       this.facing = newFacing
     },
 
-    takeTurn () {}
+    takeTurn (world?: TWorldMap): ICritter | Error { world; return this }
   })
 }

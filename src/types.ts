@@ -1,25 +1,9 @@
 import { ICritterProps } from '@/critters/types'
-export interface Properties {
-  critterType: string;
-  x: number;
-  y: number;
-  facing: {
-    x: number;
-    y: number;
-  };
-  foodChain: number;
-  speed: number;
-}
 
-export type ICritterElementProps = {
-  x: number;
-  y: number;
-  tileSize: number;
-  classString: string;
-}
+export type TWorldMap = Array<Array<string>>
 
 export type IWorldProps = {
-  worldMap: Array<Array<string>>;
+  worldMap: TWorldMap;
   critters: Array<ICritterProps>;
 }
 

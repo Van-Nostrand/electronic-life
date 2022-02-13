@@ -1,20 +1,20 @@
 import Critter from './Critter'
 import {
   IRelativeCoordinates,
-  ICoordinates
+  // ICoordinates
 } from '@/types'
 import {
   ICritterProps,
-  ICritter,
+  // ICritter,
   IWallFollower
 } from '@/critters/types'
 import {
   findNearestWall,
   deriveDirectionFromCoordinates,
-  getCounterClockwiseCoordinate,
-  getClockwiseCoordinate,
-  moveClockwiseAroundCoordinate,
-  moveCounterClockwiseAroundCoordinate,
+  // getCounterClockwiseCoordinate,
+  // getClockwiseCoordinate,
+  // moveClockwiseAroundCoordinate,
+  // moveCounterClockwiseAroundCoordinate,
   findNextSpaceToMoveAlongWall
 } from '../constants/helperFunctions' // temporary
 
@@ -30,7 +30,7 @@ export default function WallFollower ({
 }: ICritterProps): IWallFollower {
 
   return ({
-    ...Critter({classString, critterType, foodChain, facing, speed, x, y, position}),
+    ...Critter({ classString, critterType, foodChain, facing, speed, x, y, position }),
     hasFoundWall: false,
     wallCoordinate: null,
     movesClockwise: Math.floor(Math.random()*2) === 0,
@@ -42,7 +42,7 @@ export default function WallFollower ({
      * if they're beside the wall, then the wall is found (hasFoundWall) and its coordinates are stored (wallCoordinate)
      * I haven't written functions detailing how they will move along the walls yet...
      */
-    takeTurn: function (worldMap?: Array<Array<string>>): ICritter | Error {
+    takeTurn: function (worldMap?: Array<Array<string>>): IWallFollower | Error {
 
       let hasChosenDirection = false
       let newFacing = { ...this.facing }
@@ -67,7 +67,9 @@ export default function WallFollower ({
         }
         // the critter is next to the wall when radius is 1
         else if (this.hasFoundWall && this.wallCoordinate.radius === 1) {
-          let [ newFacing, newWallCoordinate ] = findNextSpaceToMoveAlongWall(worldMap, this)
+          const newSpaceResult = findNextSpaceToMoveAlongWall(worldMap, this)
+          let newFacing = newSpaceResult[0]
+          const newWallCoordinate = newSpaceResult[1]
           this.wallCoordinate = newWallCoordinate
 
           // determine the next cell that the critter will face

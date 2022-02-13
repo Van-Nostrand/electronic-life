@@ -1,6 +1,6 @@
 import {
-  IRelativeCoordinates,
-  ICoordinates
+  ICoordinates,
+  TWorldMap
 } from '@/types'
 
 export interface ICritterProps {
@@ -15,9 +15,10 @@ export interface ICritterProps {
 }
 
 export interface ICritter extends ICritterProps {
+  view: Array<boolean> | null
   setPosition (newPos: ICoordinates): void;
   setFacing (newFacing: ICoordinates): void;
-  takeTurn (): void;
+  takeTurn (world: undefined | TWorldMap ): this | Error;
 }
 
 export interface IWallFollower extends ICritter {

@@ -1,4 +1,4 @@
-import { Critter } from '../critters'
+// import { Critter } from '../critters'
 import { ICritter } from '@/critters/types'
 //update the critters array
 export const updateCritters = (critterArray: Array<ICritter>, worldArray: Array<Array<String>>) => {
@@ -15,7 +15,7 @@ export const updateCritters = (critterArray: Array<ICritter>, worldArray: Array<
   ]
 
   //state has already been copied. it is already a new array. So I can now modify it.
-  critterArray = critterArray.map((critter, i) => {
+  critterArray = critterArray.map(critter => {
 
     let hasChosenDirection = false
     //while the critter has not moved yet
