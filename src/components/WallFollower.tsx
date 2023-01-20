@@ -1,16 +1,12 @@
-import React from 'react';
+import React from 'react'
+import { ICritterProps } from '@/types'
 
-// seems unimplemented?
-export default function WallFollower({x, y, tileSize}) {
+export default function WallFollower ({ x, y, tileSize = 2.5 }: ICritterProps) {
 
   const critterStyle = {
     transform: `translate(${x * tileSize}rem,${y * tileSize}rem)`
   }
-  return(
+  return (
     <div style={critterStyle} className="creature wall-follower"></div>
   )
-}
-
-WallFollower.defaultProps = {
-  tileSize: 2.5
 }

@@ -1,74 +1,111 @@
-import { CreatureProps, Properties } from '../types';
+import { ICreatureProps, ICreature } from '@/types'
 
-// x and y are indices, so account for 0!!
-export function CreatureTemplate(creatureType, x, y, hasMoved = false, facing = {x: 0, y:-1}, foodChain = 0, speed = 1, view = []) {
-  return {
-    creatureType,
-    x,
-    y,
-    hasMoved,
-    facing,
-    foodChain,
-    speed,
-    view
-  };
-}
+// export function Creature (this: ICreature, properties: ICreatureProps) {
+//   this.creatureType   = properties.creatureType || 'b'
+//   this.x              = properties.x || -1
+//   this.y              = properties.y || -1
+//   this.facing         = properties.facing || { x: -1, y: -1 }
+//   this.foodChain      = properties.foodChain || 0
+//   this.speed          = properties.speed || 1
+//   this.view = undefined
 
-export class Creature {
-  creatureType: string;
-  x: number;
-  y: number;
-  facing: {
+//   // are any of these methods necessary?
+//   this.getLocation = function () {
+//     return { x: this.x, y: this.y }
+//   }
+
+//   this.setLocation = function (x: number, y: number) {
+//     this.x = x
+//     this.y = y
+//   }
+
+//   this.getFacing = function () {
+//     return this.facing
+//   }
+
+//   this.setFacing = function (x: number, y: number) {
+//     this.facing = { x, y }
+//   }
+
+//   this.getFoodChain = function () {
+//     return this.foodChain
+//   }
+
+//   this.getType = function () {
+//     return this.creatureType
+//   }
+
+//   this.getSpeed = function () {
+//     return this.speed
+//   }
+
+//   this.getClassString = function () {
+//     let str
+//     switch (true) {
+//       case this.creatureType === 'b':
+//         str = 'creature bouncing-critter'
+//     }
+//     return str
+//   }
+// }
+export class Creature implements ICreature {
+  creatureType: string
+  x: number
+  y: number
+  facing?: {
     x: number;
     y: number;
-  };
-  foodChain: number;
-  speed: number;
-  
-  constructor(properties: Properties) {
-    this.creatureType   = properties.creatureType || "b"; 
-    this.x              = properties.x || -1; 
-    this.y              = properties.y || -1; 
-    this.facing         = properties.facing || {x: -1, y: -1}; 
-    this.foodChain      = properties.foodChain || 0; 
-    this.speed          = properties.speed || 1;
+  }
+  foodChain?: number
+  speed?: number
+  view?: any
+
+  constructor (properties: ICreatureProps) {
+    this.creatureType = properties.creatureType || 'b'
+    this.x = properties.x || -1
+    this.y = properties.y || -1
+    this.facing = properties.facing || { x: -1, y: -1 }
+    this.foodChain = properties.foodChain || 0
+    this.speed = properties.speed || 1
   }
 
   // are any of these methods necessary?
-  getLocation() {
-    return { x: this.x, y: this.y };
+  getLocation () {
+    return { x: this.x, y: this.y }
   }
 
-  setLocation(x, y) {
-    this.x = x;
-    this.y = y;
+  setLocation (x: number, y: number) {
+    this.x = x
+    this.y = y
   }
 
-  getFacing() {
-    return this.facing;
+  getFacing () {
+    return this.facing
   }
 
-  setFacing(x, y) {
-    this.facing = {x, y};
+  setFacing (x: number, y: number) {
+    this.facing = { x, y }
   }
 
-  getFoodChain() {
-    return this.foodChain;
+  getFoodChain () {
+    return this.foodChain
   }
 
-  getType() {
-    return this.creatureType;
+  getType () {
+    return this.creatureType
   }
 
-  getSpeed() {
-    return this.speed;
+  getSpeed () {
+    return this.speed
   }
 
-  getClassString() {
-    let str;
-    switch(true) {
-      case this.creatureType === "b":
-        str = "creature bouncing-critter"
+  getClassString () {
+    let str
+    // todo - add more class strings
+    switch (true) {
+      case this.creatureType === 'b':
+        str = 'creature bouncing-critter'
     }
+    return str
   }
 }
