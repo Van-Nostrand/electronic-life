@@ -1,4 +1,4 @@
-import { ICritter } from '@/critters/types'
-export interface IState {
-  critterArray: Array<ICritter>;
-}
+// import { ICritter } from '@/critters/types'
+// export interface IState {
+//   critterArray: Array<ICritter>;
+// }

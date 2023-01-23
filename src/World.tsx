@@ -1,43 +1,34 @@
 import React from 'react'
-import { CritterElement } from '@/components'
-import { IWorldProps } from '@/types'
-import { ICritterProps } from '@/critters/types'
-import { getCardinalString } from '@/constants/CONSTANTS'
+import './World.css'
+import { BouncingCritter, WallFollower } from './components'
+import { viewAllSurroundingTiles } from './functions/helperFunctions'
+import { IWorldProps, ICritter } from '@/types'
 
-/**
- * World
- * This handles rendering. It's a dumb box
- */
-export default function World ({ worldMap = [], critters = [] }: IWorldProps) {
+export default function World({ worldMap, creatures }: IWorldProps) {
 
   const getTile = (tileType: string, row: number, column = 0) => {
     switch (true) {
-      case tileType === '#':
-        return <div className="wall" key={`wall-${row}-${column}`} />
-      case tileType === ' ':
-        return <div className="plain-tile" key={`tile-${row}-${column}`} />
+      case tileType === '#': return <div className="wall-div" key={`wall-${row}-${column}`}></div>
+      case tileType === ' ': return <div className="plain-tile" key={`tile-${row}-${column}`} ></div>
       default: console.log('error getting tiles')
     }
   }
-
-  const getCritter = (c: ICritterProps, number: number) => {
-    const newClassString: string = c.classString + ' ' + 'critter-facing-' + getCardinalString(c.facing.x, c.facing.y)
-    return (
-      <CritterElement
-        key={`critter-${number}`}
-        classString={newClassString}
-        x={c.x}
-        y={c.y}
-      />
-    )
+  const getCreature = (creature: ICritter, number: number) => {
+    switch (true) {
+      case creature.creatureType === 'b':
+        return <BouncingCritter x={creature.x} y={creature.y} key={`bc-${number}`} />
+      case creature.creatureType === 'w':
+        return <WallFollower x={creature.x} y={creature.y} key={`wf-${number}`} />
+      default: console.log('error getting creatures')
+    }
   }
 
-  const renderWorld = () => {
+  const buildWorld = () => {
     return worldMap.map((row, i) => {
       return (
         <div
-          className="world-row"
-          key={`world-row-${i}`}
+          className="world-row-div"
+          key={`world-div-row-${i}`}
         >
           {row.map((tile, j) => {
             return getTile(tile, j, i)
@@ -47,19 +38,39 @@ export default function World ({ worldMap = [], critters = [] }: IWorldProps) {
     })
   }
 
-  const renderCritters = () => {
-    return critters.map((critter, i) => getCritter(critter, i))
+  const buildCreatures = () => {
+    return creatures.map((creature: ICritter, i: number) => {
+      return (
+        <div className="creature" key={`creature-${i}`}>
+          {getCreature(creature, i)}
+        </div>
+      )
+    })
   }
 
+  const worldArray = buildWorld()
+  const creatureArray = buildCreatures()
+  // debugger;
+
+  /////////////////////////////////////////////
+  /// Testing
+  const surroundings = viewAllSurroundingTiles(creatures[0], worldMap, 4)
+  // print2dArray(surroundings)
+
+
   return (
-    <div className="world" >
-      { renderWorld() }
-      { renderCritters() }
+    <div className="world-div" >
+      {worldArray ? worldArray : null}
+      {creatureArray ? creatureArray : null}
     </div>
   )
 }
 
-// just for testing
-// const print2dArray = (arr) => {
-//   arr.forEach(row => console.log(row.join()))
-// }
+const print2dArray = (arr: Array<Array<any>>) => {
+  arr.forEach(row => console.log(row.join()))
+}
+
+World.defaultProps = {
+  worldMap: [],
+  creatures: []
+}
