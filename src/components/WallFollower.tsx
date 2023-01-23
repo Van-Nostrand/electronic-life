@@ -1,16 +1,12 @@
 import React from 'react'
+import { ICritterProps } from '@/types'
 
-// no longer necessary
-export default function WallFollower ({ x, y, tileSize }: {x:number, y:number, tileSize:number}) {
+export default function WallFollower ({ x, y, tileSize = 2.5 }: ICritterProps) {
 
   const critterStyle = {
     transform: `translate(${x * tileSize}rem,${y * tileSize}rem)`
   }
   return (
-    <div style={critterStyle} className="critter wall-follower"></div>
+    <div style={critterStyle} className="creature wall-follower"></div>
   )
-}
-
-WallFollower.defaultProps = {
-  tileSize: 2.5
 }

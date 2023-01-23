@@ -1,5 +1,5 @@
-import { IState } from './types'
+// import { IState } from './types'
 
-export const initialState: IState = {
-  critterArray: []
-}
+// export const initialState: IState = {
+//   critterArray: []
+// }

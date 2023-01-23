@@ -1,6 +1,6 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import ElectronicLife from '@/ElectronicLife'
-import '@/scss/main.scss'
+import { createRoot } from 'react-dom/client'
+import ElectronicLife from './ElectronicLife'
 
-ReactDOM.render(<ElectronicLife />, document.getElementById('root'))
+const root = createRoot(document.getElementById('root'))
+root.render(<ElectronicLife />)

@@ -8,10 +8,10 @@ module.exports = {
   },
   'extends': [
     'eslint:recommended',
-    'plugin:react/recommended'
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended'
   ],
-  // parser: '@babel/eslint-parser',
-  'parser': '@typescript-eslint/parser',
+  parser: '@typescript-eslint/parser',
   'parserOptions': {
     'sourceType': 'module',
     'ecmaFeatures': {
@@ -21,6 +21,7 @@ module.exports = {
   },
   'plugins': [
     'react',
+    'react-hooks',
     '@typescript-eslint'
   ],
   'rules': {
@@ -49,7 +50,6 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     // async await
     'generator-star-spacing': 0,
-    // 'space-after-keywords': 1,
     'comma-spacing': [
       'error',
       {
@@ -83,11 +83,9 @@ module.exports = {
       }
     ],
     'react/prop-types': 'off',
+    'react/display-name': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-unused-vars': [
-      'error'
-    ],
-    'no-unused-vars': 'off'
+    '@typescript-eslint/no-var-requires': 'off'
   },
   'settings': {
     'react': {
