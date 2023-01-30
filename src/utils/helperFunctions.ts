@@ -3,14 +3,14 @@ import { ICritter, TCoordinates, IRelativeCoordinates, IWallFollower } from '@/t
 // UTILS HELPER FUNCTIONS
 ///////////////
 
-export const getSurroundingTiles = (critter: ICritter, worldMap: string[][], radius = 1) => {
+export const getSurroundingTiles = (critter: ICritter, worldMap: string[][], radius = 1): string[][] => {
 
   // determine the x and y range
   const getRange: Array<number> = [radius * -1, radius]
 
   // copy those coordinates to a new map
   const arrayLength: number = (getRange[1] - getRange[0]) + 1 // plus one to account for index
-  const surroundings: Array<Array<string>> = new Array(arrayLength).fill(undefined).map(() => new Array(arrayLength).fill(''))
+  const surroundings: string[][] = new Array(arrayLength).fill(undefined).map(() => new Array(arrayLength).fill(''))
 
   for (let i = getRange[0], y = 0; i <= getRange[1]; i++, y++) {
     for (let j = getRange[0], x = 0; j <= getRange[1]; j++, x++) {
