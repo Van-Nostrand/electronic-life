@@ -14,7 +14,7 @@ export interface IWorldProps {
 }
 
 export interface ICritterProps {
-  creatureType?: string
+  type?: string
   x: number
   y: number
   tileSize?: number
@@ -27,13 +27,25 @@ export interface ICritterProps {
   view?: any
 }
 
+export type TCoordVoidFunc = (x: number, y: number) => void
+
 export interface ICritter extends ICritterProps {
-  getLocation: () => { x:number, y:number }
-  setLocation: (x:number, y:number) => void
-  getFacing: () => { x:number, y:number }
-  setFacing: (x:number, y:number) => void
-  getFoodChain: () => number
-  getType: () => string
-  getSpeed: () => number
-  getClassString: () => string
+  takeTurn: (() => this | Error) | ((world: string[][]) => this | Error)
+  // getLocation: () => { x:number, y:number }
+  // setLocation: TCoordVoidFunc
+  // getFacing: () => { x:number, y:number }
+  // setFacing: TCoordVoidFunc
+  // getFoodChain: () => number
+  // getType: () => string
+  // getSpeed: () => number
+  // getClassString: () => string
+}
+
+export interface IWallFollower extends ICritter {
+  hasFoundWall: boolean
+  wallCoordinate: {
+    coordinates: TCoordinates,
+    radius: number
+  }
+  movesClockwise: boolean
 }

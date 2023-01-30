@@ -1,9 +1,10 @@
-// import React from 'react'
-// import { IState } from './types'
+import React from 'react'
+import { IContext } from './initialState'
 
-// export const actions = ( worldState: IState, dispatch: React.Dispatch<any> ) => {
-//   return ({
-//     worldState,
-//     dispatch
-//   })
-// }
+export const actions = (state: IContext, dispatch: React.Dispatch<any>) => ({
+  state,
+  dispatch,
+  updateTileSize: (tileSize: number) => {
+    dispatch({ type: 'update-tilesize', payload: tileSize })
+  }
+})

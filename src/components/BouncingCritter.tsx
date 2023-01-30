@@ -1,13 +1,18 @@
 import React from 'react'
 import { ICritterProps } from '@/types'
 
-export default function BouncingCritter ({ tileSize = 2.5, x, y }: ICritterProps) {
+export default function BouncingCritter ({ tileSize, x, y }: ICritterProps) {
 
   const critterStyle = {
-    transform: `translate(${x * tileSize}rem,${y * tileSize}rem)`
+    transform: `translate(${x * tileSize}px,${y * tileSize}px)`,
+    width: `${tileSize}px`,
+    height: `${tileSize}px`
   }
 
   return (
-    <div style={critterStyle} className="creature bouncing-critter"></div>
+    <div
+      style={critterStyle}
+      className="creature bouncing-critter"
+    />
   )
 }

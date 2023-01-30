@@ -1,29 +1,22 @@
-import React, { useState, useEffect } from 'react'
-import World from './World'
+import React, { useState, useEffect, useContext } from 'react'
+import World from '@/containers/World'
 import './ElectronicLife.css'
-import { DEFAULT_PLAN } from './CONSTANTS'
-import { Creature } from './Creature'
-import { updateCreatures } from './functions/updateCreatures'
-// import { ICritter } from '@/types'
+import { DEFAULT_PLAN } from '@/utils/constants'
+import Critter from '@/classes/Critter'
+import { updateCritters } from '@/utils/updateCritters'
+import { useWindowToGetTileSize } from '@/hooks'
+import { WorldContext } from '@/context'
 
 const initdata = (() => {
   return DEFAULT_PLAN.reduce((acc, row, y) => {
     const [worldMap, critters] = acc
     worldMap.push(row.split('').map((tile, x) => {
       if (tile === 'b') {
-        const properties = { creatureType: tile, x, y }
-        // const nuCreature = new (Creature as any)(properties)
-        critters.push(
-          // CreatureTemplate(tile, x, y, false)
-          new Creature(properties)
-        )
+        const properties = { critterType: tile, x, y }
+        critters.push(new Critter(properties))
         return ' '
       } else if (tile === 'w') {
-        const properties = { creatureType: tile, x, y }
-        critters.push(
-          // CreatureTemplate(tile, x, y, false)
-          new Creature(properties)
-        )
+        // will eventually be WallFollowers
         return ' '
       } else {
         return tile
@@ -31,47 +24,30 @@ const initdata = (() => {
     }))
     return [worldMap, critters]
   }, [[], []])
-  // const creatureArray: ICritter[] = []
-  // const worldMap: string[][] = DEFAULT_PLAN.map((row, y) => {
-  //   return row.split('').map((tile, x) => {
-  //     if (tile === 'b') {
-  //       const properties = { creatureType: tile, x, y }
-  //       // const nuCreature = new (Creature as any)(properties)
-  //       creatureArray.push(
-  //         // CreatureTemplate(tile, x, y, false)
-  //         new Creature(properties)
-  //       )
-  //       return ' '
-  //     }
-  //     else if (tile === 'w') {
-  //       const properties = { creatureType: tile, x, y }
-  //       creatureArray.push(
-  //         // CreatureTemplate(tile, x, y, false)
-  //         new Creature(properties)
-  //       )
-  //     }
-
-  //     else {
-  //       return tile
-  //     }
-  //   })
-  // })
-  // return [worldMap, creatureArray]
 })()
+
+console.log('INIT DATA IS', initdata)
 
 export default function ElectronicLife () {
 
   const [creatures, setCreatures] = useState(initdata[1])
+  const [newTileSize] = useWindowToGetTileSize()
+
+  const { updateTileSize } = useContext(WorldContext)
 
   useEffect(() => {
-    // setup the game here...
+    updateTileSize(newTileSize)
+  }, [newTileSize])
+
+  useEffect(() => {
+    // game loop
     const takeTurn = () => {
 
-      const newCreatures = updateCreatures(creatures, initdata[0])
+      const newCreatures = updateCritters(creatures, initdata[0])
       setCreatures(newCreatures)
     }
 
-    const gameTicks = setInterval(() => takeTurn(), 1000)
+    const gameTicks = setInterval(takeTurn, 1000)
     return () => clearInterval(gameTicks)
   }, [])
 
