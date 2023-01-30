@@ -80,13 +80,12 @@ export const findNearestWall = (critter: IWallFollower, worldMap: string[][]): I
 // // this will replace checkBorderOf2dArray and getSurroundingTiles
 // // currently does not account for checking a tile that is out of bounds, but if the world is correctly built with walls then that shouldn't ever happen...
 export const scanSurroundingsForItem = (
-  worldMap: Array<Array<string>>,
+  worldMap: string[][],
   critterPosition: {x: number; y: number;},
   valueToFind: string,
   facingFromOrigin: TCoordinates = { x: 0, y: -1 }
 ): IRelativeCoordinates => {
 
-  debugger
   // radius is exclusive: it does not include the center tile. so radius = 1 means it's a 3x3 grid
   let radius = 1
   let iter: number
@@ -200,18 +199,20 @@ export const findNextSpaceToMoveAlongWall = (worldMap: Array<Array<string>>, wal
 
 // // will check all tiles in the "border" of a 2d array for a particular value
 // // only works on arrays with odd numbered lengths: there must be a "center cell"
-export const checkBorderOf2dArray = (twoDeeArr: Array<Array<string>>, valueToFind: string, facingFromOrigin = { x: 0, y: -1 }): IRelativeCoordinates => {
-
-  debugger
+export const checkBorderOf2dArray = (
+  twoDeeArr: Array<Array<string>>,
+  valueToFind: string,
+  facingFromOrigin = { x: 0, y: -1 }
+): IRelativeCoordinates => {
 
   // in theory, I should never be passing in an array with an even number of indices
   if ((twoDeeArr.length - 1) % 2 > 0) {
     return null
   }
 
-  const radius: number = (twoDeeArr.length - 1) / 2 // the 2d array will always be an odd number length so this works...
-  const startX: number = facingFromOrigin.x === 0 ? radius : facingFromOrigin.x > 0 ? radius * 2 : 0
-  const startY: number = facingFromOrigin.y === 0 ? radius : facingFromOrigin.y > 0 ? radius * 2 : 0
+  const radius = (twoDeeArr.length - 1) / 2 // the 2d array will always be an odd number length so this works...
+  const startX = facingFromOrigin.x === 0 ? radius : facingFromOrigin.x > 0 ? radius * 2 : 0
+  const startY = facingFromOrigin.y === 0 ? radius : facingFromOrigin.y > 0 ? radius * 2 : 0
   let iter = 1
   const maxChecks = (twoDeeArr.length - 1) * 4
   let counterClockwiseCoordinates: TCoordinates | Error = { x: startX, y: startY }
@@ -257,7 +258,9 @@ export const checkBorderOf2dArray = (twoDeeArr: Array<Array<string>>, valueToFin
     iter += 1
   } while (!directionFound && iter <= maxChecks)
 
-  if (iter > maxChecks) console.log('something is seriously wrong in checkBorderOf2dArray')
+  if (iter > maxChecks) {
+    console.log('something is seriously wrong in checkBorderOf2dArray')
+  }
   return ({ coordinates: { x:0, y:0 }, radius: -2 }) // indicates that something failed
 }
 
@@ -371,7 +374,7 @@ export const deriveDirectionFromCoordinates = (
   return direction
 }
 
-export const getCardinalString = (x: number, y: number) => {
+export const getCardinalString = ({ x, y }: TCoordinates) => {
   if (x === 0) {
     if (y === 1) return 's'
     else return 'n'

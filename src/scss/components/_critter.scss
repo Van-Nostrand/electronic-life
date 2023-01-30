@@ -1,71 +1,18 @@
 @use "../abstracts/vars";
 @use "sass:math";
-$half-tile: math.div(vars.$default-tile-size, 2);
-$third-tile: math.div(vars.$default-tile-size, 3);
-$line-width: 0.3rem;
-.critter {
-  width: vars.$default-tile-size;
-  height: vars.$default-tile-size;
-  position: absolute;
-}
-// .critter::before {
-//   content: '';
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   border-left: 2px solid black;
-//   border-top: 2px solid black;
-//   height: 50%;
-//   width: 50%;
-//   // background: red;
-//   // border-top: $half-tile solid red;
-//   // border-right: $half-tile solid transparent;
-//   // border-left: $half-tile solid transparent;
-//   // border-bottom: $half-tile solid transparent;
-//   transform-origin: top left;
-//   transform: translate($half-tile, 0) rotate(45deg);
-//   // transform: rotate(180deg);
-// }
-.critter::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    // border-left: 2px solid black;
-    // border-top: 2px solid black;
-    height: $half-tile;
-    width: $line-width;
-    background: red;
-    // border-top: $half-tile solid red;
-    // border-right: $half-tile solid transparent;
-    // border-left: $half-tile solid transparent;
-    // border-bottom: $half-tile solid transparent;
-    transform-origin: bottom right;
-    transform: translate($half-tile, 0) rotate(45deg);
-    // transform: rotate(180deg);
-  }
-.critter::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: $line-width;
-  height: $half-tile;
-  background-color: green;
-  transform-origin: bottom left;
 
-  // // z-index: 10;
-  transform: translate(-$third-tile, 0) rotate(315deg);
-  // border-right: 2px solid green;
-  // height: 50%;
-  // // background: red;
-  // // border-top: $half-tile solid red;
-  // // border-right: $half-tile solid transparent;
-  // // border-left: $half-tile solid transparent;
-  // // border-bottom: $half-tile solid transparent;
-  // transform-origin: center center;
-  // transform: rotate(180deg);
+.critter {
+  position: absolute;
+  border-radius: 50%;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+  }
 }
+
 
 .bouncing-critter {
   background-color: vars.$bouncing-critter-color;
@@ -76,46 +23,28 @@ $line-width: 0.3rem;
 }
 
 .critter-facing {
-  &-ne::before {
-    transform: translate($half-tile + $line-width, -$third-tile) rotate(270deg);
+  &-nw img {
+    transform: rotate(135deg);
   }
-  &-ne::after {
-    transform: translate(-$line-width, $line-width * 2) rotate(0);
+  &-n img {
+    transform: rotate(180deg);
   }
-  &-e::before {
-    transform: translate($half-tile + $line-width, -$line-width) rotate(315deg);
+  &-ne img {
+    transform: rotate(225deg);
   }
-  &-e::after {
-    transform: translate(-$half-tile, $half-tile - $line-width) rotate(45deg);
+  &-e img {
+    transform: rotate(270deg);
   }
-  &-se::before {
-    transform: translate($half-tile + $line-width, -($line-width * 2)) rotate(180deg);
+  &-se img {
+    transform: rotate(315deg);
   }
-  &-se::after {
-    transform: translate(-$line-width, $half-tile - $line-width) rotate(270deg);
+  &-s img {
+    transform: rotate(0);
   }
-  &-s::before {
-    transform: translate($half-tile, $half-tile - $line-width) rotate(45deg);
+  &-sw img {
+    transform: rotate(45deg);
   }
-  &-s::after {
-    transform: translate(-$half-tile, $half-tile - $line-width) rotate(315deg);
-  }
-  &-sw::before {
-    transform: translate(0, $half-tile - $line-width) rotate(90deg);
-  }
-  &-sw::after {
-    transform: translate(-$half-tile - ($line-width * 2), -($line-width * 2)) rotate(180deg);
-  }
-  &-w::before {
-    transform: translate($half-tile - $line-width, $half-tile - $line-width) rotate(315deg);
-  }
-  &-w::after {
-    transform: translate(-$half-tile + $line-width, -$half-tile + $line-width) rotate(225deg);
-  }
-  &-nw::before {
-    transform: translate($line-width, $line-width * 2) rotate(0);
-  }
-  &-nw::after {
-    transform: translate(-$line-width, -($line-width * 2)) rotate(270deg);
+  &-w img {
+    transform: rotate(90deg);
   }
 }

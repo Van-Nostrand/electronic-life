@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 
 const MAX_TILE_SIZE = 48
-const TILE_SIZE_RATIO = 0.024
-const MOBILE_TILE_SIZE_RATIO = 0.032
+const TILE_SIZE_RATIO = 0.028
 
 export default function useWindowToGetTileSize (): [ts: number, mw: boolean] {
 
@@ -12,9 +11,18 @@ export default function useWindowToGetTileSize (): [ts: number, mw: boolean] {
 
   useEffect(() => {
     const handleResize = () => {
+      const heightIsTaller = window.innerHeight > window.innerWidth
+
       setMobileWindow(window.innerWidth < 600)
       _mobileWindow.current = window.innerWidth < 600
-      setTileSize(Math.min(Math.round(window.innerWidth * (_mobileWindow.current ? MOBILE_TILE_SIZE_RATIO : TILE_SIZE_RATIO)), MAX_TILE_SIZE))
+
+      const valueToUse = heightIsTaller
+        ? window.innerWidth
+        : window.innerHeight
+
+      const size = valueToUse * TILE_SIZE_RATIO
+
+      setTileSize(Math.min(Math.round(size), MAX_TILE_SIZE))
     }
 
     window.addEventListener('resize', handleResize)

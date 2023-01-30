@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 import World from '@/containers/World'
-import './ElectronicLife.css'
 import { DEFAULT_PLAN } from '@/utils/constants'
 import Critter from '@/classes/Critter'
 import { updateCritters } from '@/utils/updateCritters'
 import { useWindowToGetTileSize } from '@/hooks'
 import { WorldContext } from '@/context'
+
+import '@/scss/containers/electronic-life.scss'
 
 const initdata = (() => {
   return DEFAULT_PLAN.reduce((acc, row, y) => {
@@ -26,11 +27,9 @@ const initdata = (() => {
   }, [[], []])
 })()
 
-console.log('INIT DATA IS', initdata)
-
 export default function ElectronicLife () {
 
-  const [creatures, setCreatures] = useState(initdata[1])
+  const [critters, setCritters] = useState(initdata[1])
   const [newTileSize] = useWindowToGetTileSize()
 
   const { updateTileSize } = useContext(WorldContext)
@@ -43,8 +42,7 @@ export default function ElectronicLife () {
     // game loop
     const takeTurn = () => {
 
-      const newCreatures = updateCritters(creatures, initdata[0])
-      setCreatures(newCreatures)
+      setCritters(updateCritters(critters, initdata[0]))
     }
 
     const gameTicks = setInterval(takeTurn, 1000)
@@ -53,14 +51,21 @@ export default function ElectronicLife () {
 
 
   return (
-    <div id="electronic-life-div">
-      <div id="button-panel">
-        <div className="div-button" id="dbutton1"></div>
-        <div className="div-button" id="dbutton2"></div>
-        <div className="div-button" id="dbutton3"></div>
-      </div>
-      <World worldMap={initdata[0]} creatures={creatures} />
+    <div className="electronic-life">
 
+      <World worldMap={initdata[0]} critters={critters} />
+
+      <footer>
+        <a className="iconlink" href="mailto:dmdoull43@gmail.com" target="_blank" rel="noreferrer">
+          <img src={require('@/assets/email.png')} alt="email" />
+        </a>
+        <a className="iconlink" href="https://github.com/Van-Nostrand/electronic-life" target="_blank" rel="noreferrer">
+          <img src={require('@/assets/github.svg')} alt="https://github.com/Van-Nostrand/electronic-life" />
+        </a>
+        <a className="iconlink" href="https://www.linkedin.com/in/mike-doull-34b9211a6/" target="_blank" rel="noreferrer">
+          <img src={require('@/assets/linkedin2.svg')} alt="https://www.linkedin.com/in/mike-doull-34b9211a6/" />
+        </a>
+      </footer>
     </div>
   )
 }
