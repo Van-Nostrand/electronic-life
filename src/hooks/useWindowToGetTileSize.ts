@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 
-const MAX_TILE_SIZE = 64
-const TILE_SIZE_RATIO = 0.065
-const MOBILE_TILE_SIZE_RATIO = 0.11
+const MAX_TILE_SIZE = 48
+const TILE_SIZE_RATIO = 0.024
+const MOBILE_TILE_SIZE_RATIO = 0.032
 
 export default function useWindowToGetTileSize (): [ts: number, mw: boolean] {
 

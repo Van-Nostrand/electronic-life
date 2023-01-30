@@ -14,6 +14,8 @@
 
 // import { ALL_CRITTER_TYPES } from '@/constants/CONSTANTS'
 
+// export
+
 // export default function WallFollower ({
 //   classString = 'critter wall-follower',
 //   critterType = 'w',

@@ -88,15 +88,14 @@ export default function World ({ worldMap = [], creatures = [] }: IWorldProps) {
   const worldArray = buildWorld()
   const creatureArray = buildCreatures()
 
-
-  /////////////////////////////////////////////
-  /// Testing
-  // const surroundings = viewAllSurroundingTiles(creatures[0], worldMap, 4)
-  // print2dArray(surroundings)
-
-
   return (
-    <div className="world">
+    <div
+      className="world"
+      style={{
+        width: `${worldMap[0].length * tileSize}px`,
+        height: `${worldMap.length * tileSize}px`
+      }}
+    >
       {worldArray ? worldArray : null}
       {creatureArray ? creatureArray : null}
     </div>
