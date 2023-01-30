@@ -1,11 +1,16 @@
-// import { IState } from './types'
+import { IContext } from './initialState'
 
-// export default function reducer (worldState: IState, action: { type: string }) {
-//   switch (action.type) {
-//     case 'main':
-//       return {
-//         ...worldState
-//       }
-//     default: return worldState
-//   }
-// }
+interface IAction {
+  payload?: any
+  type: string
+}
+
+export default function reducer (state: IContext, action: IAction) {
+  switch (action.type) {
+    case 'update-tilesize':
+      return {
+        ...state, tileSize: action.payload
+      }
+    default: return state
+  }
+}

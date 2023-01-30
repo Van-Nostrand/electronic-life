@@ -1,5 +1,7 @@
-// import { IState } from './types'
+export interface IContext {
+  tileSize: number
+}
 
-// export const initialState: IState = {
-//   critterArray: []
-// }
+export const initialState: IContext = {
+  tileSize: undefined
+}
