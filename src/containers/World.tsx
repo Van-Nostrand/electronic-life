@@ -4,7 +4,7 @@ import { WorldContext } from '@/context'
 import { IWorldProps, ICritter } from '@/types'
 import '@/scss/containers/world.scss'
 
-export default function World ({ worldMap = [], creatures = [] }: IWorldProps) {
+export default function World ({ worldMap = [], critters = [] }: IWorldProps) {
   const { state: { tileSize } } = useContext(WorldContext)
   const sizeString = `${tileSize}px`
   const cellSize = { width: `${tileSize}px`, height: `${tileSize}px` }
@@ -31,27 +31,29 @@ export default function World ({ worldMap = [], creatures = [] }: IWorldProps) {
     }
   }
 
-  const getCreature = (creature: ICritter, number: number) => {
+  const getCritter = (critter: ICritter, number: number) => {
     switch (true) {
-      case creature.type === 'b':
+      case critter.type === 'b':
         return (
           <BouncingCritter
-            x={creature.x}
-            y={creature.y}
+            critter={critter}
+            x={critter.x}
+            y={critter.y}
             tileSize={tileSize}
             key={`bc-${number}`}
           />
         )
-      case creature.type === 'w':
+      case critter.type === 'w':
         return (
           <WallFollower
-            x={creature.x}
-            y={creature.y}
+            critter={critter}
+            x={critter.x}
+            y={critter.y}
             tileSize={tileSize}
             key={`wf-${number}`}
           />
         )
-      default: console.log('error getting creatures')
+      default: console.log('error getting critters')
     }
   }
 
@@ -71,22 +73,22 @@ export default function World ({ worldMap = [], creatures = [] }: IWorldProps) {
     })
   }
 
-  const buildCreatures = () => {
-    return creatures.map((creature: ICritter, i: number) => {
-      return (
-        <div
-          className="creature"
-          style={cellSize}
-          key={`creature-${i}`}
-        >
-          {getCreature(creature, i)}
-        </div>
-      )
+  const buildCritters = () => {
+    return critters.map((critter: ICritter, i: number) => {
+      return getCritter(critter, i)
+
+      // <div
+      //   className="critter"
+      //   style={cellSize}
+      //   key={`critter-${i}`}
+      // >
+      //   {getCritter(critter, i)}
+      // </div>
     })
   }
 
   const worldArray = buildWorld()
-  const creatureArray = buildCreatures()
+  const creatureArray = buildCritters()
 
   return (
     <div

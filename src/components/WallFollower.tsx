@@ -1,12 +1,25 @@
-import React from 'react'
-import { ICritterProps } from '@/types'
+import React, { useState, useEffect } from 'react'
+import { getCardinalString } from '@/utils/helperFunctions'
+import { ICritterElementProps } from '@/types'
 
-export default function WallFollower ({ x, y, tileSize = 2.5 }: ICritterProps) {
+export default function WallFollower ({ x, y, tileSize, critter }: ICritterElementProps) {
+
+  const [direction, setDirection] = useState(getCardinalString(critter.facing))
+
+  useEffect(() => {
+    setDirection(getCardinalString(critter.facing))
+  }, [critter.facing])
 
   const critterStyle = {
-    transform: `translate(${x * tileSize}rem,${y * tileSize}rem)`
+    transform: `translate(${x * tileSize}px,${y * tileSize}px)`,
+    width: `${tileSize}px`,
+    height: `${tileSize}px`
   }
+
+  const classString = `critter wall-follower critter-facing-${direction}`
+
+
   return (
-    <div style={critterStyle} className="creature wall-follower"></div>
+    <div style={critterStyle} className={classString}></div>
   )
 }

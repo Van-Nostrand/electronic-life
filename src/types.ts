@@ -10,7 +10,7 @@ export interface IRelativeCoordinates {
 
 export interface IWorldProps {
   worldMap: string[][]
-  creatures: any
+  critters: ICritter[]
 }
 
 export interface ICritterProps {
@@ -25,6 +25,13 @@ export interface ICritterProps {
   foodChain?: number
   speed?: number
   view?: any
+}
+
+export interface ICritterElementProps {
+  tileSize: number
+  x: number
+  y: number
+  critter: ICritter
 }
 
 export type TCoordVoidFunc = (x: number, y: number) => void
