@@ -5,6 +5,7 @@ const config: Config.InitialOptions = {
   testEnvironment: 'node',
   verbose: true,
   transform: {
+    '^.+//.jsx?$': 'babel-jest',
     '^.+//.tsx?$': 'ts-jest'
   }
 }
