@@ -19,7 +19,7 @@ export default class Critter implements ICritter {
     this.speed = props.speed || 1
   }
 
-  takeTurn (): this | Error {
-    return this
+  takeTurn (): Error | void {
+    // base critters do nothing?
   }
 }

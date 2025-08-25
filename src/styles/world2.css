@@ -1,5 +1,3 @@
-@use '@/scss/abstracts/vars';
-
 .world {
   width: 420px;
   border: 1px solid black;
@@ -10,29 +8,31 @@
   &__row {
     display: flex;
     flex-flow: row;
-    height: vars.$default-tile-size;
+    height: var(--tile-size);
   }
 }
 
 
 .wall-div, .plain-tile, .bouncing-critter {
-  width: vars.$default-tile-size;
-  height: vars.$default-tile-size;
+  width: var(--tile-size);
+  height: var(--tile-size);
 }
 
 .wall-div {
-  background: rgb(0,0,0);
+  background: #000;
 }
 .plain-tile{
-  border: 1px solid white;
+  border: 1px solid #fff;
   box-sizing: border-box;
-  background: rgba(149, 149, 149, 1);
+  background: var(--plain-tile-color);
 }
+
 .bouncing-critter{
-  background: rgba(222, 150, 26, 1);
+  background: var(--bc-color);
 }
+
 .wall-follower-div{
-  background: rgba(35, 177, 66, 1);
+  background: var(--wall-follower-color);
 }
 
 .critter{

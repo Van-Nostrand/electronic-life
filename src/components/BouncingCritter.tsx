@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getCardinalString } from '@/utils/helperFunctions'
 import { ICritterElementProps } from '@/types'
-import '@/scss/components/_critter.scss'
+import '@/styles/critter.css'
 
 export default function BouncingCritter ({ tileSize, x, y, critter }: ICritterElementProps) {
 

@@ -1,6 +1,3 @@
-@use "../abstracts/vars";
-@use "sass:math";
-
 .critter {
   position: absolute;
   border-radius: 50%;
@@ -15,11 +12,11 @@
 
 
 .bouncing-critter {
-  background-color: vars.$bouncing-critter-color;
+  background-color: var(--bc-color);
 }
 
 .wall-follower {
-  background-color: vars.$wall-follower-color;
+  background-color: var(--wall-follower-color);
 }
 
 .critter-facing {

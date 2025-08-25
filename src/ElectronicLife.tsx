@@ -6,15 +6,21 @@ import { updateCritters } from '@/utils/updateCritters'
 import { useWindowToGetTileSize } from '@/hooks'
 import { WorldContext } from '@/context'
 
-import '@/scss/containers/electronic-life.scss'
+import '@/styles/electronic-life.css'
+import Footer from './components/Footer'
+
+type TInitData = {
+  worldMap: string[][]
+  critters: Critter[]
+}
 
 const initdata = (() => {
-  return DEFAULT_PLAN.reduce((acc, row, y) => {
-    const [worldMap, critters] = acc
-    worldMap.push(row.split('').map((tile, x) => {
+  return DEFAULT_PLAN.reduce<TInitData>((acc, row, y) => {
+    const splitString = row.split('').map((tile, x) => {
       if (tile === 'b') {
+        // b === regular critter?
         const properties = { critterType: tile, x, y }
-        critters.push(new Critter(properties))
+        acc.critters.push(new Critter(properties))
         return ' '
       } else if (tile === 'w') {
         // will eventually be WallFollowers
@@ -22,14 +28,14 @@ const initdata = (() => {
       } else {
         return tile
       }
-    }))
-    return [worldMap, critters]
-  }, [[], []])
+    })
+    acc.worldMap.push(splitString)
+    return acc
+  }, { worldMap: [], critters: [] })
 })()
 
 export default function ElectronicLife () {
-
-  const [critters, setCritters] = useState(initdata[1])
+  const [critters, setCritters] = useState(initdata.critters)
   const [newTileSize] = useWindowToGetTileSize()
 
   const { updateTileSize } = useContext(WorldContext)
@@ -39,10 +45,8 @@ export default function ElectronicLife () {
   }, [newTileSize])
 
   useEffect(() => {
-    // game loop
     const takeTurn = () => {
-
-      setCritters(updateCritters(critters, initdata[0]))
+      setCritters(updateCritters(critters, initdata.worldMap))
     }
 
     const gameTicks = setInterval(takeTurn, 1000)
@@ -52,20 +56,8 @@ export default function ElectronicLife () {
 
   return (
     <div className="electronic-life">
-
-      <World worldMap={initdata[0]} critters={critters} />
-
-      <footer>
-        <a className="iconlink" href="mailto:dmdoull43@gmail.com" target="_blank" rel="noreferrer">
-          <img src={require('@/assets/email.png')} alt="email" />
-        </a>
-        <a className="iconlink" href="https://github.com/Van-Nostrand/electronic-life" target="_blank" rel="noreferrer">
-          <img src={require('@/assets/github.svg')} alt="https://github.com/Van-Nostrand/electronic-life" />
-        </a>
-        <a className="iconlink" href="https://www.linkedin.com/in/mike-doull-34b9211a6/" target="_blank" rel="noreferrer">
-          <img src={require('@/assets/linkedin2.svg')} alt="https://www.linkedin.com/in/mike-doull-34b9211a6/" />
-        </a>
-      </footer>
+      <World worldMap={initdata.worldMap} critters={critters} />
+      <Footer />
     </div>
   )
 }

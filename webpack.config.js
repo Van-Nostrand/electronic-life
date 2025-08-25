@@ -41,24 +41,24 @@ const config = {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader']
       },
-      {
-        test: /\.s[ac]ss$/i,
-        exclude: /node_modules/,
-        use: [
-          'style-loader',
-          'css-loader',
-          {
-            loader: 'sass-loader',
-            options: {
-              implementation: require('sass'),
-            }
-          }
-        ]
-      }
+      // {
+      //   test: /\.s[ac]ss$/i,
+      //   exclude: /node_modules/,
+      //   use: [
+      //     'style-loader',
+      //     'css-loader',
+      //     {
+      //       loader: 'sass-loader',
+      //       options: {
+      //         implementation: require('sass'),
+      //       }
+      //     }
+      //   ]
+      // }
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.css', '.scss'],
+    extensions: ['.tsx', '.ts', '.js', '.css'],
     alias: {
       '@': path.resolve(__dirname, 'src/')
     }

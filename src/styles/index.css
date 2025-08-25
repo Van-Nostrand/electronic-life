@@ -1,0 +1,25 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+:root {
+  --tile-size: 2.5rem;
+
+  --plain-tile-color: rgb(149,149,149);
+  --bc-color: rgb(222,150,26);
+  --wall-follower-color: rgb(35,177,66);
+}
+
+html {
+  font-size: 62.5%;
+}
+
+li {
+  list-style: none;
+}
+
+

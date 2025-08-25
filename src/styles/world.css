@@ -1,5 +1,3 @@
-@use "../abstracts/vars";
-
 .world {
   border: 1px solid black;
   display: flex;
@@ -12,8 +10,8 @@
 }
 
 .wall {
-  width: vars.$default-tile-size;
-  height: vars.$default-tile-size;
+  width: var(--tile-size);
+  height: var(--tile-size);
   background: rgb(0,0,0);
 
 }
@@ -21,7 +19,7 @@
 .plain-tile {
   border: 1px solid white;
   box-sizing: border-box;
-  background: vars.$plain-tile-background-color;
-  width: vars.$default-tile-size;
-  height: vars.$default-tile-size;
+  background: var(--plain-tile-color);
+  width: var(--tile-size);
+  height: var(--tile-size);
 }

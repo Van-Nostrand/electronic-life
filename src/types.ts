@@ -37,7 +37,7 @@ export interface ICritterElementProps {
 export type TCoordVoidFunc = (x: number, y: number) => void
 
 export interface ICritter extends ICritterProps {
-  takeTurn: (() => this | Error) | ((world: string[][]) => this | Error)
+  takeTurn: (() => Error | void) | ((world: string[][]) => Error | void)
   // getLocation: () => { x:number, y:number }
   // setLocation: TCoordVoidFunc
   // getFacing: () => { x:number, y:number }

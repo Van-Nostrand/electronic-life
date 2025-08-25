@@ -2,9 +2,13 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import ElectronicLife from './ElectronicLife'
 import WorldProvider from '@/context'
-import '@/scss/main.scss'
+import '@/styles/index.css'
 
-const root = createRoot(document.getElementById('root'))
+const rootEl = document.getElementById('root')
+if (!rootEl) {
+  throw new Error('no root element found')
+}
+const root = createRoot(rootEl)
 root.render(
   <WorldProvider>
     <ElectronicLife />

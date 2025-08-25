@@ -12,10 +12,9 @@ import { faceNewRandomDirection } from '@/utils/helperFunctions'
 export default class BouncingCritter extends Critter {
   constructor (props: ICritterProps) {
     super(props)
-
   }
 
-  takeTurn (worldMap?: string[][]): this | Error {
+  takeTurn (worldMap?: string[][]): Error | void {
     // console.log(`critter.takeTurn at position(${this.x},${this.y}) is facing (${this.facing.x},${this.facing.y})`)
     if (worldMap === undefined) {
       return new Error('Error in BouncingCritter.takeTurn, worldMap is undefined')
